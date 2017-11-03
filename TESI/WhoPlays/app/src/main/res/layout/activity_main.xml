@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".WhoPlaysFragment">
+    tools:context=".MainActivity">
 
     <include layout="@layout/content_main" />
 
@@ -20,7 +20,5 @@
         app:backgroundTint="@android:color/holo_green_dark"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_add" />
-    
-
 
 </android.support.design.widget.CoordinatorLayout>
