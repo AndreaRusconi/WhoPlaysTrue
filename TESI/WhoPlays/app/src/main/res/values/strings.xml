@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WhoPlays</string>
+    <string name="menu_filter">filter</string>
+
 </resources>
