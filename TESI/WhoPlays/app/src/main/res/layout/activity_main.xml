@@ -21,4 +21,10 @@
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
+    <fragment android:name="com.example.user.whoplays.FilterFragment"
+        android:id="@+id/filter_fragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
 </android.support.design.widget.CoordinatorLayout>
