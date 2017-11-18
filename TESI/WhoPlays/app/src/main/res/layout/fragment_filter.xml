@@ -1,26 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-     android:layout_width="match_parent"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:layout_marginEnd="70dp"
+    android:layout_marginStart="70dp"
+    android:layout_marginTop="170dp"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/testoProva"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="100dp"
-        android:text="@string/app_name"/>
+    <TableRow>
 
-    <Button
-        android:id="@+id/provaBottone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="89dp"
-        android:layout_marginTop="122dp"
-        android:text="Button" />
+        <TextView
+            android:id="@+id/filtra"
+            android:layout_weight="1"
+            android:text="@string/filter_name"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ripristina"
+            android:layout_weight="1"
+            android:textAlignment="textEnd"
+            android:layout_marginRight="15sp"
+            android:text="@string/restore_all"
+            android:textSize="15sp"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="15sp">
+
+        <TextView
+            android:id="@+id/order"
+            android:layout_weight="1"
+            android:text="@string/order"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/spinnerOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <TextView
+            android:id="@+id/searchType"
+            android:layout_weight="1"
+            android:text="@string/search_type"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/spinnerSearchType"
+            android:layout_weight="1" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <TextView
+            android:id="@+id/matchType"
+            android:layout_weight="1"
+            android:text="@string/match_type"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/spinnerMatchType"
+            android:layout_weight="1" />
+    </TableRow>
 
 
-</RelativeLayout>
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <TextView
+            android:id="@+id/adsOf"
+            android:layout_weight="1"
+            android:text="@string/ads_of"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/spinnerAdsOf"
+            android:layout_weight="1" />
+    </TableRow>
+
+
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_weight="1"
+            android:text="@string/distance"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <SeekBar
+            android:id="@+id/seekBarDistance"
+            android:layout_weight="1" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <Button
+            android:id="@+id/provaBottone"
+            android:layout_span="2"
+            android:layout_weight="1"
+            android:text="Button" />
+
+    </TableRow>
+
+
+</TableLayout>

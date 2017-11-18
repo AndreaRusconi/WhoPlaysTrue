@@ -1,6 +1,33 @@
 <resources>
     <string name="app_name">WhoPlays</string>
     <string name="menu_filter">filter</string>
-    <string name="sceltaricerca1">tipo di partita</string>
+    <string name="filter_name">Filtra</string>
+    <string name="restore_all">Ripristina tutto</string>
+    <string name="search_type">Tipo ricerca</string>
+    <string name="order">Ordina per</string>
+    <string name="match_type">Tipo partita</string>
+    <string name="distance">Distanza</string>
+    <string name="ads_of">Annunci di</string>
+
+    <string-array name="array_order">
+        <item>Data</item>
+        <item>Vicinanza</item>
+    </string-array>
+
+    <string-array name="array_search_type">
+        <item>Giocatore</item>
+        <item>Squadra</item>
+    </string-array>
+
+    <string-array name="array_match_type">
+        <item>Calcio a 5</item>
+        <item>Calcio a 7</item>
+        <item>Calcio a 11</item>
+    </string-array>
+
+    <string-array name="array_ads_of">
+    <item>Solo amici</item>
+    <item>Tutti</item>
+    </string-array>
 
 </resources>
