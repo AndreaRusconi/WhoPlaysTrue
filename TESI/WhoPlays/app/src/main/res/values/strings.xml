@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">WhoPlays</string>
     <string name="menu_filter">filter</string>
+    <string name="sceltaricerca1">tipo di partita</string>
 
 </resources>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".WhoPlaysActivity">
 
     <include layout="@layout/content_main" />
 
@@ -22,9 +22,11 @@
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <fragment android:name="com.example.user.whoplays.FilterFragment"
-        android:id="@+id/filter_fragment"
+        android:id="@+id/filterFragment"
+        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_height="match_parent" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>
