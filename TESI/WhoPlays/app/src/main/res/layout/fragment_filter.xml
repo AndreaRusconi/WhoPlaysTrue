@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginEnd="70dp"
-    android:layout_marginStart="70dp"
-    android:layout_marginTop="170dp"
-    android:orientation="vertical">
+    android:padding="10sp"
+    android:orientation="vertical"
+    tools:context=".FilterFragment">
 
     <TableRow>
 
-        <TextView
-            android:id="@+id/filtra"
-            android:layout_weight="1"
-            android:text="@string/filter_name"
-            android:textSize="30sp"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ripristina"

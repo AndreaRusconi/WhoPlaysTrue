@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 
 public class FilterFragment extends Fragment implements OnClickListener{
 
-    private TextView filtra;
     private Button provaBottone;
     private Spinner spinnerOrder;
     private Spinner spinnerMatchType;
@@ -29,7 +28,6 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
         View view = inflater.inflate(R.layout.fragment_filter, container, false);
 
-            filtra = (TextView) view.findViewById(R.id.filtra);
             spinnerOrder = (Spinner) view.findViewById(R.id.spinnerOrder);
             spinnerMatchType = (Spinner) view.findViewById(R.id.spinnerMatchType);
             spinnerSearchType = (Spinner) view.findViewById(R.id.spinnerSearchType);
@@ -58,7 +56,7 @@ public class FilterFragment extends Fragment implements OnClickListener{
     }
 
     public void changeText() {
-        filtra.setText("Rusconi Coglione");
+
     }
 
     @Override

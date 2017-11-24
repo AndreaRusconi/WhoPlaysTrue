@@ -8,6 +8,9 @@
     <string name="match_type">Tipo partita</string>
     <string name="distance">Distanza</string>
     <string name="ads_of">Annunci di</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 
     <string-array name="array_order">
         <item>Data</item>
