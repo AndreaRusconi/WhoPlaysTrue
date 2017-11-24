@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name="com.example.user.whoplays.FilterActivity"
-            android:label="@string/filter_name"
+            android:label="@string/menu_filter"
             android:theme="@style/DialogTheme">
         </activity>
     </application>

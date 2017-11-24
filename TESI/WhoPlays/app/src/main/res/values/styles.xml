@@ -7,9 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="DialogTheme" parent="android:Theme.Holo.Light.Dialog" />
-    <style name="NoActionBarTheme" parent="android:Theme.NoTitleBar.OverlayActionModes" />
-    <style name="popup" parent="android:Theme.NoTitleBar.OverlayActionModes" />
+    <style name="DialogTheme" parent="android:Theme.Holo.Light.Dialog" /> />
 
 
 
