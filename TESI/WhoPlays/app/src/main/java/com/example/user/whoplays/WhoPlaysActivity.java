@@ -52,8 +52,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        Fragment fragment = null;
-        fragment = new WhoPlaysFragment();
+        Fragment fragment = new WhoPlaysFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
@@ -75,7 +74,7 @@ public class WhoPlaysActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.who_plays, menu);
+        getMenuInflater().inflate(R.menu.link_to_home, menu);
         return true;
     }
 
@@ -87,8 +86,13 @@ public class WhoPlaysActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_filter) {
-            startActivity(new Intent(this, FilterActivity.class));
+        if (id == R.id.home_button) {
+            Fragment fragment = new WhoPlaysFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+
+            ft.replace(R.id.screen_area,fragment);
+            ft.commit();
             return true;
         }
 

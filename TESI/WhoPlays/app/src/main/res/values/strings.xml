@@ -4,7 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="home">Home</string>
 
     <string name="menu_filter">Filtra</string>
@@ -14,7 +13,7 @@
     <string name="match_type">Tipo partita</string>
     <string name="distance">Distanza</string>
     <string name="ads_of">Annunci di</string>
-
+    <string name="home_button">Home</string>
 
     <string-array name="array_order">
         <item>Data</item>
