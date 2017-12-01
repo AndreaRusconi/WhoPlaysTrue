@@ -16,14 +16,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_who_plays);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,6 +50,16 @@ public class WhoPlaysActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        Fragment fragment = null;
+        fragment = new WhoPlaysFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        ft.replace(R.id.screen_area,fragment);
+        ft.commit();
+
     }
 
     @Override
@@ -85,31 +101,40 @@ public class WhoPlaysActivity extends AppCompatActivity
 
         Fragment fragment = null;
 
-
-
         int id = item.getItemId();
 
-        if (id == R.id.my_team) {
-            fragment = new MyTeamFragment();
-        } else if (id == R.id.calendar) {
-            fragment = new CalendarFragment();
-        } else if (id == R.id.messages) {
-
-        } else if (id == R.id.guide) {
-
-        } else if (id == R.id.settings) {
-
-        } else if (id == R.id.log_out) {
-
+        switch (id) {
+            case R.id.home:
+                fragment = new WhoPlaysFragment();
+                break;
+            case R.id.my_team:
+                fragment = new MyTeamFragment();
+                break;
+            case R.id.calendar:
+                fragment = new CalendarFragment();
+                break;
+            case R.id.messages:
+                fragment = new MessagesFragment();
+                break;
+            case R.id.guide:
+                fragment = new GuideFragment();
+                break;
+            case R.id.settings:
+                fragment = new SettingsFragment();
+                break;
+            case R.id.log_out:
+                break;
+            default:
+                fragment = new WhoPlaysFragment();
+                break;
         }
 
-        if(fragment != null){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction ft = fragmentManager.beginTransaction();
 
-            ft.replace(R.id.screen_area,fragment);
-            ft.commit();
-        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        ft.replace(R.id.screen_area,fragment);
+        ft.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

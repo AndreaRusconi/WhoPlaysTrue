@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 public class MyTeamFragment extends Fragment {
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.myTeam);
         return inflater.inflate(R.layout.fragment_my_team,null);
     }
 
