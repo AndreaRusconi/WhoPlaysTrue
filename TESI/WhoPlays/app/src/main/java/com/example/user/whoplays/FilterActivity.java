@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by filip on 24/11/2017.
+ * Created by User on 01/12/2017.
  */
 
 public class FilterActivity extends Activity {
@@ -16,7 +16,7 @@ public class FilterActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         getFragmentManager().beginTransaction()
-              .replace(android.R.id.content, new FilterFragment())
-            .commit();
+                .replace(android.R.id.content, new FilterFragment())
+                .commit();
     }
 }

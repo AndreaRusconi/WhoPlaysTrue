@@ -1,5 +1,10 @@
 package com.example.user.whoplays;
 
+/**
+ * Created by User on 01/12/2017.
+ */
+
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,11 +33,11 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
         View view = inflater.inflate(R.layout.fragment_filter, container, false);
 
-            spinnerOrder = (Spinner) view.findViewById(R.id.spinnerOrder);
-            spinnerMatchType = (Spinner) view.findViewById(R.id.spinnerMatchType);
-            spinnerSearchType = (Spinner) view.findViewById(R.id.spinnerSearchType);
-            spinnerAdsOf = (Spinner) view.findViewById(R.id.spinnerAdsOf);
-            provaBottone = (Button) view.findViewById(R.id.provaBottone);
+        spinnerOrder = (Spinner) view.findViewById(R.id.spinnerOrder);
+        spinnerMatchType = (Spinner) view.findViewById(R.id.spinnerMatchType);
+        spinnerSearchType = (Spinner) view.findViewById(R.id.spinnerSearchType);
+        spinnerAdsOf = (Spinner) view.findViewById(R.id.spinnerAdsOf);
+        provaBottone = (Button) view.findViewById(R.id.provaBottone);
 
 
         ArrayAdapter<CharSequence> adapter0 = ArrayAdapter.createFromResource(getActivity(), R.array.array_order, android.R.layout.simple_spinner_item);
@@ -50,7 +55,7 @@ public class FilterFragment extends Fragment implements OnClickListener{
         spinnerSearchType.setAdapter(adapter2);
         spinnerAdsOf.setAdapter(adapter3);
 
-            provaBottone.setOnClickListener(this);
+        provaBottone.setOnClickListener(this);
 
         return view;
     }
