@@ -23,6 +23,10 @@
             android:label="@string/menu_filter"
             android:theme="@style/DialogTheme">
         </activity>
+        <activity android:name=".NewAdsActivity"
+            android:label="@string/type_ads_new_event"
+            android:theme="@style/DialogTheme">
+        </activity>
     </application>
 
 </manifest>

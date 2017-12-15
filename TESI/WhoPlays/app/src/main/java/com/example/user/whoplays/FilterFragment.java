@@ -60,14 +60,11 @@ public class FilterFragment extends Fragment implements OnClickListener{
         return view;
     }
 
-    public void changeText() {
-
-    }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.provaBottone) {
-            changeText();
+            //changeText();
         }
     }
 }

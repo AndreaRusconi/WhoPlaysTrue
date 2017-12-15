@@ -43,4 +43,18 @@
     <string name="logOut">Log Out</string>
     <string name="calendar">Calendario</string>
 
+    <string name="item_type_who_plays">item_type</string>
+    <string name="item_place_who_plays">item_place</string>
+    <string name="item_date_who_plays">item_date</string>
+    <string name="item_creator_who_plays">item_creator</string>
+
+    <string name="item_image_my_team">item_image</string>
+    <string name="item_name_my_team">item_name</string>
+    <string name="item_foundation_my_team">item_foundation</string>
+    <string name="item_rating_my_team">item_rating</string>
+
+    <string name="type_ads_new_event">Tipo annuncio</string>
+    <string name="team_ads_new_event">Squadra</string>
+    <string name="player_ads_new_event">Giocatore</string>
+
 </resources>

@@ -6,26 +6,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
- * Created by User on 01/12/2017.
+ * Created by User on 15/12/2017.
  */
 
-public class MyTeamFragment extends Fragment {
-
+public class CreateTeamAdsFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(R.string.myTeam);
-        return inflater.inflate(R.layout.fragment_my_team,null);
-    }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view;
+        view = inflater.inflate(R.layout.fragment_create_team_ads, container, false);
 
-
+        getActivity().setTitle(R.string.app_name);
+        return view;
     }
 }
