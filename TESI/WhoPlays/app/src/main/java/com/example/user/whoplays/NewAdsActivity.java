@@ -20,7 +20,7 @@ import android.widget.Button;
  * Created by User on 15/12/2017.
  */
 
-public class NewAdsActivity extends AppCompatDialogFragment implements AlertDialog.OnClickListener {
+public class NewAdsActivity extends AppCompatDialogFragment implements View.OnClickListener {
 
 
     private Button teamAdsButton;
@@ -39,24 +39,27 @@ public class NewAdsActivity extends AppCompatDialogFragment implements AlertDial
 
 
 
+
+
         teamAdsButton = view.findViewById(R.id.teamAdsButton);
         playerAdsButton = view.findViewById(R.id.playerAdsButton);
 
 
 
-        teamAdsButton.setOnClickListener((View.OnClickListener) this);
-        playerAdsButton.setOnClickListener((View.OnClickListener) this);
+        teamAdsButton.setOnClickListener(this);
+        playerAdsButton.setOnClickListener(this);
         return builder.create();
     }
 
-
     @Override
-    public void onClick(DialogInterface dialogInterface,int which) {
+    public void onClick(View v) {
+
+        int id = v.getId();
 
         Fragment fragment = null;
 
 
-        switch (which) {
+        switch (id) {
             case R.id.teamAdsButton:
                 fragment = new CreateTeamAdsFragment();
                 break;
@@ -67,12 +70,10 @@ public class NewAdsActivity extends AppCompatDialogFragment implements AlertDial
                 break;
         }
 
+        dismiss();
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, fragment)
+                .replace(R.id.screen_area, fragment)
                 .commit();
     }
-
-
-
 
 }
