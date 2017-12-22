@@ -15,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,11 +54,19 @@ public class WhoPlaysActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         Fragment fragment = new WhoPlaysFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
+
+        Intent intent = getIntent();
+
+        String Ordine = intent.getStringExtra("Ordine");
+
+        if (Ordine != null) {
+            Toast toast = Toast.makeText(this, Ordine, Toast.LENGTH_SHORT);
+            toast.show();
+        }
         ft.replace(R.id.screen_area,fragment);
         ft.commit();
 
