@@ -11,9 +11,7 @@ import android.support.v4.app.ActivityCompat;
 
 public class FilterActivity extends Activity {
 
-
-
-    @Override
+  @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

@@ -17,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class WhoPlaysActivity extends AppCompatActivity
@@ -62,6 +65,13 @@ public class WhoPlaysActivity extends AppCompatActivity
         Intent intent = getIntent();
 
         String Ordine = intent.getStringExtra("Ordine");
+
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("kjhg");
+
+        myRef.setValue("Hello");
+
 
         if (Ordine != null) {
             Toast toast = Toast.makeText(this, Ordine, Toast.LENGTH_SHORT);
