@@ -6,6 +6,7 @@ package com.example.user.whoplays;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +65,7 @@ public class FilterFragment extends Fragment implements OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.provaBottone) {
-            //changeText();
+            startActivity(new Intent(getActivity(), WhoPlaysActivity.class));
         }
     }
 }
