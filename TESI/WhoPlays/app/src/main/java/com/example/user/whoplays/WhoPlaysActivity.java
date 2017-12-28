@@ -148,6 +148,7 @@ public class WhoPlaysActivity extends AppCompatActivity
                 fragment = new SettingsFragment();
                 break;
             case R.id.log_out:
+                fragment = new LogoutFragment();
                 break;
             default:
                 fragment = new WhoPlaysFragment();

@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
@@ -64,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +77,10 @@ public class LoginActivity extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
                 if(firebaseAuth.getCurrentUser() != null){
-                   startActivity(new Intent(LoginActivity.this, WhoPlaysActivity.class));
+
+                    startActivity(new Intent(LoginActivity.this, WhoPlaysActivity.class));
                 }
 
             }
@@ -86,11 +88,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     private void signIn() {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_SIGN_IN);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
