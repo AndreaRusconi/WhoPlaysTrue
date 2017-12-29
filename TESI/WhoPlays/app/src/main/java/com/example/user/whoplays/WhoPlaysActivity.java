@@ -1,6 +1,7 @@
 package com.example.user.whoplays;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,8 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -54,8 +58,30 @@ public class WhoPlaysActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            String uid = user.getUid();
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.nav_name);
+        TextView nav_mail = (TextView)hView.findViewById(R.id.nav_mail);
+        nav_user.setText((CharSequence) name);
+        nav_mail.setText((CharSequence) email);
+
 
         Fragment fragment = new WhoPlaysFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -79,7 +105,6 @@ public class WhoPlaysActivity extends AppCompatActivity
         }
         ft.replace(R.id.screen_area,fragment);
         ft.commit();
-
     }
 
     @Override

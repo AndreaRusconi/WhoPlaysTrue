@@ -37,14 +37,8 @@ public class NewAdsActivity extends AppCompatDialogFragment implements View.OnCl
         builder.setView(view)
                 .setTitle(R.string.type_ads_new_event);
 
-
-
-
-
         teamAdsButton = view.findViewById(R.id.teamAdsButton);
         playerAdsButton = view.findViewById(R.id.playerAdsButton);
-
-
 
         teamAdsButton.setOnClickListener(this);
         playerAdsButton.setOnClickListener(this);
