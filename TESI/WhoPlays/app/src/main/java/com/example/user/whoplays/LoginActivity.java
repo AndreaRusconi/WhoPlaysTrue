@@ -9,6 +9,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -36,6 +38,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginActivity extends AppCompatActivity {
 
     SignInButton button;
+    private EditText mEmailField;
+    private EditText mPasswordField;
+    private Button mSignUpButton;
+    private Button mLoginButton;
     FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 2;
@@ -57,8 +63,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mLoginButton = (Button) findViewById(R.id.button_login) ;
+        mSignUpButton = (Button) findViewById(R.id.button_sign_up) ;
         button = (SignInButton) findViewById(R.id.sign_in_button);
         mAuth = FirebaseAuth.getInstance();
+
+        mEmailField = findViewById(R.id.editText_email_login);
+        mPasswordField = findViewById(R.id.editText_password_login);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -73,6 +84,19 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        mSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(),SignUpActivity.class));           }
+        });
+
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
