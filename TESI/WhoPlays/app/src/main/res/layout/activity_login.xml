@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:orientation="vertical"
-    android:background="@drawable/login_background"
 
     >
 
-
+   <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:scaleType="centerCrop"
+       android:src="@drawable/login_background" />
 
    <EditText
        android:id="@+id/editText_email_login"
@@ -52,11 +54,11 @@
 
    <com.google.android.gms.common.SignInButton
        android:id="@+id/sign_in_button"
-       android:layout_width="wrap_content"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
        android:layout_marginBottom="175dp"></com.google.android.gms.common.SignInButton>
 
 
-</LinearLayout>
+</RelativeLayout>
