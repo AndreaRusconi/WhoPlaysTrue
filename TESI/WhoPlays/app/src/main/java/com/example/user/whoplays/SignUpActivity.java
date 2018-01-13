@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import static android.content.ContentValues.TAG;
 
@@ -60,7 +61,7 @@ public class SignUpActivity extends Activity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void createAccount (String email, String password){
+    private void createAccount (String email, String password) {
         // [START create_user_with_email]
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -71,8 +72,6 @@ public class SignUpActivity extends Activity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -81,31 +80,28 @@ public class SignUpActivity extends Activity {
                     }
                 });
         // [END create_user_with_email]
-    }
 
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        final FirebaseUser user = mAuth.getCurrentUser();
 
-            @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(SignUpActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+        String name = mNameField.getText().toString();
+        if (user != null) {
+            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build();
+
+            user.updateProfile(profile)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SignUpActivity.this, user.getDisplayName().toString(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-        // [END sign_in_with_email]
+
+                    });
+        }
     }
+
 
     private boolean validateForm() {
         boolean valid = true;
