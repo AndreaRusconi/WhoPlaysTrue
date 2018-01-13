@@ -1,64 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-
+   android:orientation="vertical"
+    android:background="@drawable/login_background"
+    android:layout_gravity="center"
     >
 
-   <ImageView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:scaleType="centerCrop"
-       android:src="@drawable/login_background" />
 
    <EditText
        android:id="@+id/editText_email_login"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
+       android:layout_width="294dp"
+       android:layout_height="63dp"
        android:layout_alignParentTop="true"
        android:layout_centerHorizontal="true"
-       android:layout_marginTop="116dp"
+       android:layout_gravity="center"
+       android:layout_marginTop="140dp"
        android:ems="10"
        android:hint="E-mail"
        android:inputType="textEmailAddress" />
 
    <EditText
        android:id="@+id/editText_password_login"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
+       android:layout_width="294dp"
+       android:layout_height="60dp"
        android:layout_alignStart="@+id/editText_email_login"
        android:layout_below="@+id/editText_email_login"
-       android:layout_marginTop="32dp"
+       android:layout_gravity="center"
+       android:layout_marginTop="50dp"
        android:ems="10"
-       android:inputType="textPassword" />
+       android:hint="Passowrd"
+       android:inputType="textPassword"
+
+      />
 
    <Button
        android:id="@+id/button_login"
-       android:layout_width="wrap_content"
+       android:layout_width="120dp"
        android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
        android:layout_centerVertical="true"
+       android:layout_gravity="center"
+       android:layout_marginTop="60dp"
        android:text="Login" />
 
    <Button
        android:id="@+id/button_sign_up"
-       android:layout_width="wrap_content"
+       android:layout_width="120dp"
        android:layout_height="wrap_content"
        android:layout_alignEnd="@+id/button_login"
        android:layout_alignParentBottom="true"
+       android:layout_gravity="center"
        android:layout_marginBottom="73dp"
+       android:layout_marginTop="40dp"
        android:text="Sing up" />
 
 
    <com.google.android.gms.common.SignInButton
        android:id="@+id/sign_in_button"
-       android:layout_width="match_parent"
+       android:layout_width="306dp"
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
-       android:layout_marginBottom="175dp"></com.google.android.gms.common.SignInButton>
+       android:layout_gravity="center"
+       android:layout_marginTop="80dp"></com.google.android.gms.common.SignInButton>
 
 
-</RelativeLayout>
+</LinearLayout>
