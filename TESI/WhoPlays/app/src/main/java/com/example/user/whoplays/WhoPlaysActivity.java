@@ -81,7 +81,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         TextView nav_mail = (TextView)hView.findViewById(R.id.nav_mail);
         nav_user.setText((CharSequence) name);
         nav_mail.setText((CharSequence) email);
-
+        Toast.makeText(this, user.getDisplayName().toString(), Toast.LENGTH_SHORT).show();
 
         Fragment fragment = new WhoPlaysFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();

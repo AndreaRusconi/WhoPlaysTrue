@@ -81,8 +81,6 @@ public class SignUpActivity extends Activity {
                 });
         // [END create_user_with_email]
 
-        final FirebaseUser user = mAuth.getCurrentUser();
-
         String name = mNameField.getText().toString();
         if (user != null) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
@@ -91,15 +89,12 @@ public class SignUpActivity extends Activity {
 
             user.updateProfile(profile)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SignUpActivity.this, user.getDisplayName().toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
-                    });
-        }
     }
 
 
@@ -117,7 +112,11 @@ public class SignUpActivity extends Activity {
         if (TextUtils.isEmpty(password)) {
             mPasswordField.setError("Required.");
             valid = false;
-        } else {
+        }
+        else if (password.length() < 6) {
+            mPasswordField.setError("Password too short");
+        }
+        else {
             mPasswordField.setError(null);
         }
 
