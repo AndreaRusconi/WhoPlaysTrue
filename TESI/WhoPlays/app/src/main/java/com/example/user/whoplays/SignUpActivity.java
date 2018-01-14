@@ -84,11 +84,9 @@ public class SignUpActivity extends Activity {
         final FirebaseUser user = mAuth.getCurrentUser();
 
         String name = mNameField.getText().toString();
-        String cognome = mSurnameField.getText().toString();
-        String displayName = name + " " + cognome;
         if (user != null) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(displayName)
+                    .setDisplayName(name)
                     .build();
 
             user.updateProfile(profile)

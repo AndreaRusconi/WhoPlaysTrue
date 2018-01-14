@@ -162,7 +162,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
-
         // [END sign_in_with_email]
     }
 
