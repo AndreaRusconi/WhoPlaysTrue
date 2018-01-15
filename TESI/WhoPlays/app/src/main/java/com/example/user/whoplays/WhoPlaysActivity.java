@@ -36,7 +36,10 @@ public class WhoPlaysActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_who_plays);
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user.getDisplayName() == null){
+            startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,16 +57,14 @@ public class WhoPlaysActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
+        // Name, email address, and profile photo Url
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        Uri photoUrl = user.getPhotoUrl();
 
             // Check if user's email is verified
             boolean emailVerified = user.isEmailVerified();
@@ -81,7 +82,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         TextView nav_mail = (TextView)hView.findViewById(R.id.nav_mail);
         nav_user.setText((CharSequence) name);
         nav_mail.setText((CharSequence) email);
-        Toast.makeText(this, user.getDisplayName().toString(), Toast.LENGTH_SHORT).show();
+
 
         Fragment fragment = new WhoPlaysFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();

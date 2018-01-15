@@ -32,7 +32,7 @@ public class SignUpActivity extends Activity {
     private EditText mPasswordField;
 
     private Button  mCreateAccountButton;
-
+    private FirebaseUser user;
     private FirebaseAuth mAuth;
 
 
@@ -72,6 +72,24 @@ public class SignUpActivity extends Activity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "createUserWithEmail:success");
+                            user = mAuth.getCurrentUser();
+                            String name = mNameField.getText().toString();
+                            String cognome = mSurnameField.getText().toString();
+                            if (user != null) {
+                                Log.d("TAG", name);
+                                UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name + " " +cognome)
+                                        .build();
+
+                                user.updateProfile(profile)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                            }
+
+                                        });
+
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -81,19 +99,7 @@ public class SignUpActivity extends Activity {
                 });
         // [END create_user_with_email]
 
-        String name = mNameField.getText().toString();
-        if (user != null) {
-            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(name)
-                    .build();
-
-            user.updateProfile(profile)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(SignUpActivity.this, user.getDisplayName().toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
+        final String name = mNameField.getText().toString();
 
     }
 
