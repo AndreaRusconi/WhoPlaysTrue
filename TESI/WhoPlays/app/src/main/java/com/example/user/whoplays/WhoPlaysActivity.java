@@ -95,9 +95,10 @@ public class WhoPlaysActivity extends AppCompatActivity
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("kjhg");
+        DatabaseReference myRef = database.getReference();
+        myRef.
 
-        myRef.setValue("Hello");
+
 
 
         if (Ordine != null) {

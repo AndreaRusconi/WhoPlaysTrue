@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Who Plays</string>
+    <string name="create_ads_team">Sfida una squadra</string>
+    <string name="create_ads_player">Cerca giocatori</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -56,5 +58,9 @@
     <string name="type_ads_new_event">Tipo annuncio</string>
     <string name="team_ads_new_event">Squadra</string>
     <string name="player_ads_new_event">Giocatore</string>
+
+    //fragment create team ads
+    <string name="soccer_field">Campo</string>
+
 
 </resources>

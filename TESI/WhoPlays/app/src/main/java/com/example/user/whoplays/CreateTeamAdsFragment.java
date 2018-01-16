@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by User on 15/12/2017.
@@ -20,7 +24,8 @@ public class CreateTeamAdsFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_create_team_ads, container, false);
 
-        getActivity().setTitle(R.string.app_name);
+        getActivity().setTitle(R.string.create_ads_team);
+
         return view;
     }
 }
