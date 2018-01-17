@@ -75,4 +75,20 @@
 
 
         </TableRow>
+        <TableRow>
+                <TextView
+                    android:id="@+id/set_place_textView"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/set_place"
+                    />
+                <Button
+                    android:id="@+id/set_place_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="setTime"
+                    android:text="@string/set_place_button" />
+        </TableRow>
 </TableLayout>

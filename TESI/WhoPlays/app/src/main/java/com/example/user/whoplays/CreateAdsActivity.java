@@ -39,7 +39,7 @@ public class CreateAdsActivity extends AppCompatActivity {
     private Button timeVIew;
     private int year, month, day, hour, minute;
     private Spinner spinnerTypeOfMatch;
-    private String selected;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,14 @@ public class CreateAdsActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_create_ads);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        button = (Button) findViewById(R.id.set_place_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(),MapFragment.class));
+            }
+        });
 
 
         dateView = (Button) findViewById(R.id.button1);
@@ -57,13 +65,10 @@ public class CreateAdsActivity extends AppCompatActivity {
         Calendar mcurrentTime = Calendar.getInstance();
         hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         minute = mcurrentTime.get(Calendar.MINUTE);
-        showTime(hour, minute);
-
 
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month + 1, day);
 
         spinnerTypeOfMatch = findViewById(R.id.type_of_match_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_match_type, android.R.layout.simple_spinner_item);

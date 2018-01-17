@@ -64,9 +64,8 @@
         <string name="set_time">Orario:</string>
         <string name="set_date_button">Set Date</string>
         <string name="set_time_button">Set Time</string>
-
-
-
+    <string name="set_place">Seleziona un luogo</string>
+    <string name="set_place_button">Seleziona campo</string>
 
 
 </resources>
