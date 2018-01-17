@@ -21,10 +21,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,10 +44,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                NewAdsActivity newAdsActivity = new NewAdsActivity();
-                newAdsActivity.show(getSupportFragmentManager(),"ciao");
-
+                startActivity(new Intent(getBaseContext(),CreateAdsActivity.class));
             }
         });
 
@@ -94,9 +87,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         String Ordine = intent.getStringExtra("Ordine");
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        myRef.
+
 
 
 
@@ -160,7 +151,7 @@ public class WhoPlaysActivity extends AppCompatActivity
                 fragment = new WhoPlaysFragment();
                 break;
             case R.id.my_team:
-                fragment = new MyTeamFragment();
+                fragment = new MyInfoFragment();
                 break;
             case R.id.calendar:
                 fragment = new CalendarFragment();

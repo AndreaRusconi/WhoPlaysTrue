@@ -6,22 +6,31 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 /**
- * Created by User on 15/12/2017.
+ * Created by User on 01/12/2017.
  */
 
-public class CreatePlayerAdsFragment extends Fragment {
+
+public class MyInfoFragment extends Fragment {
+
+
+    ListView listView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.myTeam);
 
-        View view;
-        view = inflater.inflate(R.layout.fragment_create_team_ads, container, false);
-
-        getActivity().setTitle(R.string.create_ads_player);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_my_info,null);
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+
 }

@@ -57,10 +57,16 @@
 
     <string name="type_ads_new_event">Tipo annuncio</string>
     <string name="team_ads_new_event">Squadra</string>
-    <string name="player_ads_new_event">Giocatore</string>
+    <string name="player_ads_new_event">Cerca giocatore</string>
 
     //fragment create team ads
-    <string name="soccer_field">Campo</string>
+        <string name="set_date">Data:</string>
+        <string name="set_time">Orario:</string>
+        <string name="set_date_button">Set Date</string>
+        <string name="set_time_button">Set Time</string>
+
+
+
 
 
 </resources>
