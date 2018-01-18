@@ -19,6 +19,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +31,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -40,15 +45,17 @@ public class CreateAdsActivity extends AppCompatActivity {
     private int year, month, day, hour, minute;
     private Spinner spinnerTypeOfMatch;
     private TextView textViewCampo;
+    private EditText numberOfPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_ads);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_menu_send);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
         setSupportActionBar(toolbar);
 
+        numberOfPlayer = findViewById(R.id.number_of_player_editText);
         textViewCampo = (TextView) findViewById(R.id.set_place_button);
         textViewCampo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +88,24 @@ public class CreateAdsActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerTypeOfMatch.setAdapter(adapter);
+        numberOfPlayer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(numberOfPlayer.getText())) {
+                    if (Integer.parseInt(numberOfPlayer.getText().toString()) < 1 || Integer.parseInt(numberOfPlayer.getText().toString()) > 11) {
+                        numberOfPlayer.setError("Numero di giocatori sbagliato.");
+                    }
+                }
+            }
+            });
 
 
     }
@@ -187,4 +212,5 @@ public class CreateAdsActivity extends AppCompatActivity {
             }
         }
     }
+
 }

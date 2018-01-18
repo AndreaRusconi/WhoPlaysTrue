@@ -106,4 +106,31 @@
                     android:onClick="setTime"
                     android:text="@string/set_place_button" />
         </TableRow>
+        <TableRow>
+                <TextView
+                    android:layout_marginTop="5sp"
+                    android:id="@+id/number_of_player_textView"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:text="@string/number_of_player"
+                    />
+
+                <EditText
+                    android:id="@+id/number_of_player_editText"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    />
+        </TableRow>
+        <TableRow>
+                <Button
+                    android:id="@+id/confirm_ads_creation_button"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/confirm_ads_creation_button"/>
+        </TableRow>
 </TableLayout>
