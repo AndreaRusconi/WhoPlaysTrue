@@ -52,7 +52,7 @@ public class CreateAdsActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(),MapFragment.class));
+                startActivity(new Intent(getBaseContext(),MapsActivity.class));
             }
         });
 

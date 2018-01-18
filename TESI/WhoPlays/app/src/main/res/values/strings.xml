@@ -60,12 +60,13 @@
     <string name="player_ads_new_event">Cerca giocatore</string>
 
     //fragment create team ads
-        <string name="set_date">Data:</string>
-        <string name="set_time">Orario:</string>
-        <string name="set_date_button">Set Date</string>
-        <string name="set_time_button">Set Time</string>
+    <string name="set_date">Data:</string>
+    <string name="set_time">Orario:</string>
+    <string name="set_date_button">Set Date</string>
+    <string name="set_time_button">Set Time</string>
     <string name="set_place">Seleziona un luogo</string>
     <string name="set_place_button">Seleziona campo</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>
