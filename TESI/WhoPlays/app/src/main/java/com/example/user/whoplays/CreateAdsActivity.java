@@ -35,21 +35,22 @@ import android.widget.Toast;
 public class CreateAdsActivity extends AppCompatActivity {
     private DatePicker datePicker;
     private Calendar calendar;
-    private Button dateView;
-    private Button timeVIew;
+    private TextView dateView;
+    private TextView timeVIew;
     private int year, month, day, hour, minute;
     private Spinner spinnerTypeOfMatch;
-    private Button button;
+    private TextView textViewCampo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_ads);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_send);
         setSupportActionBar(toolbar);
 
-        button = (Button) findViewById(R.id.set_place_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        textViewCampo = (TextView) findViewById(R.id.set_place_button);
+        textViewCampo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     // Start the SecondActivity
@@ -61,8 +62,8 @@ public class CreateAdsActivity extends AppCompatActivity {
         });
 
 
-        dateView = (Button) findViewById(R.id.button1);
-        timeVIew = (Button) findViewById(R.id.button);
+        dateView = (TextView) findViewById(R.id.button1);
+        timeVIew = (TextView) findViewById(R.id.button);
         calendar = Calendar.getInstance();
 
 
@@ -145,7 +146,7 @@ public class CreateAdsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.link_to_home, menu);
+        getMenuInflater().inflate(R.menu.create_ads, menu);
         return true;
     }
 
@@ -157,9 +158,13 @@ public class CreateAdsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.home_button) {
-            startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+        if (id == android.R.id.home) {
+            onBackPressed();
             return true;
+        }
+        else if(id == R.id.options_create_ads_menu){
+            Toast toast= Toast.makeText(this,"ciao",Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -178,7 +183,7 @@ public class CreateAdsActivity extends AppCompatActivity {
                 String returnString = data.getStringExtra("keyName");
 
                 // set text view with string
-                button.setText(returnString);
+                textViewCampo.setText(returnString);
             }
         }
     }

@@ -64,10 +64,11 @@
     <string name="set_time">Orario:</string>
     <string name="set_date_button">Set Date</string>
     <string name="set_time_button">Set Time</string>
-    <string name="set_place">Seleziona un luogo</string>
-    <string name="set_place_button">Seleziona campo</string>
+    <string name="set_place">Impianto sportivo:</string>
+    <string name="set_place_button">Set Soccer Field</string>
     <string name="title_activity_maps">Map</string>
     <string name="confirm_place_button">Continue</string>
+    <string name="options_create_ads_menu">opzioni</string>
 
 
 </resources>

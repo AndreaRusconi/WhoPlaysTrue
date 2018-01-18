@@ -20,10 +20,13 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.design.widget.AppBarLayout>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5sp">
                 <TextView
                     android:id="@+id/type_of_match_textView"
                     android:layout_weight="1"
+                    android:textStyle="italic"
+                    android:textSize="20sp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="@string/match_type"
@@ -37,36 +40,44 @@
                     />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+           android:layout_marginTop="5sp">
 
         <TextView
             android:id="@+id/set_date_textView"
             android:layout_weight="1"
+            android:textSize="20sp"
+            android:textStyle="italic"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/set_date"
             />
 
-        <Button
+        <TextView
             android:id="@+id/button1"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="setDate"
             android:text="@string/set_date_button" />
 </TableRow>
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5sp">
 
                 <TextView
                     android:id="@+id/set_time_textView"
+                    android:textSize="20sp"
                     android:layout_weight="1"
+                    android:textStyle="italic"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="@string/set_time"
                     />
 
-                <Button
+                <TextView
                     android:id="@+id/button"
+                    android:textSize="20sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -75,17 +86,21 @@
 
 
         </TableRow>
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5sp">
                 <TextView
                     android:id="@+id/set_place_textView"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
                     android:layout_width="match_parent"
                     android:text="@string/set_place"
                     />
-                <Button
+                <TextView
                     android:id="@+id/set_place_button"
                     android:layout_width="match_parent"
+                    android:textSize="20sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="setTime"
