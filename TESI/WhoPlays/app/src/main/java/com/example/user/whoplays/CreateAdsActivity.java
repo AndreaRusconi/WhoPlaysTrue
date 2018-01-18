@@ -52,8 +52,12 @@ public class CreateAdsActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(),MapsActivity.class));
-            }
+                    // Start the SecondActivity
+                    Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+                    startActivityForResult(intent, 5);
+                }
+
+
         });
 
 
@@ -161,8 +165,21 @@ public class CreateAdsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // This method is called when the second activity finishes
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        // check that it is the SecondActivity with an OK result
+        if (requestCode == 5) {
+            if (resultCode == RESULT_OK) {
 
+                // get String data from Intent
+                String returnString = data.getStringExtra("keyName");
 
-
+                // set text view with string
+                button.setText(returnString);
+            }
+        }
+    }
 }

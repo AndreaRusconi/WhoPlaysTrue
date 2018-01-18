@@ -1,8 +1,12 @@
 package com.example.user.whoplays;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -20,6 +24,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     PlaceAutocompleteFragment placeAutoComplete;
+    private Button confirmButton;
+    Place place0 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +33,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
 
+        confirmButton = findViewById(R.id.confirm_place_button);
         placeAutoComplete = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete);
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 addMarker(place);
-                Log.d("Maps", "Place selected: " + place.getName());
+                Log.d("Maps", "Place selected: " + place.getAddress());
+                place0 = place;
             }
 
             @Override
@@ -41,7 +49,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (place0 == null) {
+                    Toast.makeText(getBaseContext(), "Seleziona un campo", Toast.LENGTH_SHORT).show();
+                } else {
 
+                    Intent intent = new Intent();
+                    intent.putExtra("keyName", place0.getName());
+                    setResult(RESULT_OK, intent);
+                    finish();
+
+                }
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -64,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
     }
 
     public void addMarker(Place p){
@@ -76,7 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
     }
 
