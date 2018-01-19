@@ -67,7 +67,7 @@ public class WhoPlaysActivity extends AppCompatActivity
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getToken() instead.
-            String uid = user.getUid();
+
 
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
