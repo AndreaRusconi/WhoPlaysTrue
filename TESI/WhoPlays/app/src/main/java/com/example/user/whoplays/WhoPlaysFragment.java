@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,16 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,10 +36,12 @@ import java.util.Map;
 
 public class WhoPlaysFragment extends Fragment {
 
+
     DatabaseReference databaseReference;
     ListView listView;
-    ArrayList <String> list= new ArrayList<>();
-    ArrayAdapter <String> adapter;
+    ArrayList<String> arrayList = new ArrayList();
+    ArrayAdapter<String> adapter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,17 +54,18 @@ public class WhoPlaysFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_who_plays, container, false);
         getActivity().setTitle(R.string.app_name);
-        listView =  view.findViewById(R.id.listViewWhoPlays);
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line,list);
+        listView = view.findViewById(R.id.listViewWhoPlays);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                Map value= dataSnapshot.getValue(Map.class);
-                list.add(value.toString());
+                String place = dataSnapshot.child("place").getValue().toString();
+                arrayList.add(place);
                 adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -78,8 +88,6 @@ public class WhoPlaysFragment extends Fragment {
 
             }
         });
-
-
 
         return view;
     }
