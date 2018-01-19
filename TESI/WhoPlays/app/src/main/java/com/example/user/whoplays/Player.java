@@ -6,12 +6,12 @@ package com.example.user.whoplays;
 
 public class Player {
 
-    String playerId;
-    String typeOfMatch;
-    String date;
-    String time;
-    String place;
-    Integer numberOfPlayer;
+    public String playerId;
+    public String typeOfMatch;
+    public String date;
+    public String time;
+    public String place;
+    public Integer numberOfPlayer;
 
     public Player(){}
 
