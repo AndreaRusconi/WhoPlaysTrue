@@ -1,5 +1,7 @@
 package com.example.user.whoplays;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +28,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,9 @@ public class WhoPlaysActivity extends AppCompatActivity
             String uid = user.getUid();
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.nav_name);
         TextView nav_mail = (TextView)hView.findViewById(R.id.nav_mail);
@@ -106,7 +109,42 @@ public class WhoPlaysActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Fragment currentFragment = this.getSupportFragmentManager().findFragmentById(R.id.screen_area);
+            if(currentFragment instanceof WhoPlaysFragment ){
+
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Closing Activity")
+                        .setMessage("Are you sure you want to close Who Plays?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                intent.addCategory(Intent.CATEGORY_HOME);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                                System.exit(0);
+                            }
+
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
+            else{
+
+                navigationView.getMenu().getItem(0).setChecked(true);
+                Fragment fragment = new WhoPlaysFragment();
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+
+                ft.replace(R.id.screen_area,fragment);
+                ft.commit();
+
+            }
+
         }
     }
 
@@ -137,6 +175,9 @@ public class WhoPlaysActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
