@@ -69,7 +69,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="confirm_place_button">Continue</string>
     <string name="options_create_ads_menu">opzioni</string>
-    <string name="number_of_player">N° giocatori richiesti</string>
+    <string name="number_of_player">N° giocatori richiesti:</string>
     <string name="confirm_ads_creation_button">Crea annuncio</string>
 
 

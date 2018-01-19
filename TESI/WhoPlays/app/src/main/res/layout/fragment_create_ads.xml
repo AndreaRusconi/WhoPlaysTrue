@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="setDate"
-            android:text="@string/set_date_button" />
+            android:hint="@string/set_date_button" />
 </TableRow>
         <TableRow
             android:layout_marginTop="5sp">
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="setTime"
-                    android:text="@string/set_time_button" />
+                    android:hint="@string/set_time_button" />
 
 
         </TableRow>
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="setTime"
-                    android:text="@string/set_place_button" />
+                    android:hint="@string/set_place_button" />
         </TableRow>
         <TableRow>
                 <TextView

@@ -37,6 +37,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class CreateAdsActivity extends AppCompatActivity {
     private DatePicker datePicker;
     private Calendar calendar;
@@ -46,6 +52,8 @@ public class CreateAdsActivity extends AppCompatActivity {
     private Spinner spinnerTypeOfMatch;
     private TextView textViewCampo;
     private EditText numberOfPlayer;
+    private Button confirmCreation;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,36 @@ public class CreateAdsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
         setSupportActionBar(toolbar);
+
+       final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Partite");
+
+        confirmCreation = findViewById(R.id.confirm_ads_creation_button);
+
+        confirmCreation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateForm()) {
+                    id = databaseReference.push().getKey();
+                    Player player = new Player(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()));
+
+                    databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError != null) {
+                                Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
+                                Intent intent = new Intent(getBaseContext(),WhoPlaysActivity.class);
+                                startActivity(intent);
+                            }
+
+                        }
+                    });
+                }
+
+                }
+
+        });
 
         numberOfPlayer = findViewById(R.id.number_of_player_editText);
         textViewCampo = (TextView) findViewById(R.id.set_place_button);
@@ -211,6 +249,44 @@ public class CreateAdsActivity extends AppCompatActivity {
                 textViewCampo.setText(returnString);
             }
         }
+    }
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String time = timeVIew.getText().toString();
+        if (TextUtils.isEmpty(time)) {
+            timeVIew.setError("Required.");
+            valid = false;
+        } else {
+            timeVIew.setError(null);
+        }
+
+        String date = dateView.getText().toString();
+        if (TextUtils.isEmpty(date)) {
+            dateView.setError("Required.");
+            valid = false;
+        } else {
+            dateView.setError(null);
+        }
+
+        String field = textViewCampo.getText().toString();
+        if (TextUtils.isEmpty(field)) {
+            textViewCampo.setError("Required.");
+            valid = false;
+        } else {
+            textViewCampo.setError(null);
+        }
+
+        String number = numberOfPlayer.getText().toString();
+        if (TextUtils.isEmpty(number)) {
+            numberOfPlayer.setError("Required.");
+            valid = false;
+        } else {
+            numberOfPlayer.setError(null);
+        }
+
+           return valid;
     }
 
 }
