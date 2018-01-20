@@ -22,13 +22,11 @@
         <TextView
             android:id="@+id/itemDateWhoPlaysTextView"
             android:text="@string/item_date_who_plays"
-            android:layout_weight="1"
             android:textSize="18sp"
             />
         <TextView
             android:id="@+id/itemCreatorWhoPlaysTextView"
             android:text="@string/item_creator_who_plays"
-            android:layout_weight="1"
             android:textSize="18sp"
             android:textStyle="italic"
             />
