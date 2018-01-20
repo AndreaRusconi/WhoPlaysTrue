@@ -68,5 +68,34 @@
             android:layout_weight="1"
             />
     </TableRow>
+    <TableRow>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+
+            android:text="@string/date_textView"
+            />
+
+        <TextView
+            android:id="@+id/date_ads"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+
+            />
+       <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:text="@string/time_textView"
+        />
+
+    <TextView
+        android:id="@+id/time_ads"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        />
+</TableRow>
 
 </TableLayout>

@@ -21,12 +21,15 @@ public class FindPlayerActivity extends AppCompatActivity{
     private TextView creatorTextView;
     private TextView typeTextView;
     private TextView placeTextView;
+    private TextView dateTextView;
+    private TextView timeTextView;
 
     String place;
     String date;
     String type;
     String number;
     String user;
+    String time;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,17 +49,22 @@ public class FindPlayerActivity extends AppCompatActivity{
             type = extras.getString("type");
             number = extras.getString("numberOfPlayer");
             user = extras.getString("user");
-
+            time = extras.getString("time");
             //The key argument here must match that used in the other activity
         }
 
         creatorTextView = findViewById(R.id.creator_textView);
         typeTextView = findViewById(R.id.type_of_match_ads);
         placeTextView = findViewById(R.id.place_ads);
+        timeTextView = findViewById(R.id.time_ads);
+        dateTextView = findViewById(R.id.date_ads);
 
         creatorTextView.setText(user);
         typeTextView.setText(type);
         placeTextView.setText(place);
+        timeTextView.setText(time);
+        dateTextView.setText(date);
+
 
     }
 

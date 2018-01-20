@@ -74,6 +74,8 @@
     <string name="creator_textView">Creatore richiesta</string>
     <string name="place_textView">Campo:</string>
     <string name="title_list_ads">Annunci disponibili</string>
+    <string name="date_textView">Data:</string>
+    <string name="time_textView">Ora:</string>
 
 
 </resources>

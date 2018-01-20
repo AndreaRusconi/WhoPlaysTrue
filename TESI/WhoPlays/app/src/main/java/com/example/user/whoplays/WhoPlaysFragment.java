@@ -49,6 +49,7 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayDate = new ArrayList();
     ArrayList<String> arrayNumberOfPlayer = new ArrayList();
     ArrayList<String> arrayUser = new ArrayList();
+    ArrayList<String> arrayTime = new ArrayList();
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
 
 
@@ -79,17 +80,32 @@ public class WhoPlaysFragment extends Fragment {
                 String date = dataSnapshot.child("date").getValue().toString();
                 String type = dataSnapshot.child("typeOfMatch").getValue().toString();
                 String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
+                String time = dataSnapshot.child("time").getValue().toString();
 
 
                 //creo una hasHmap ad ogni ciclo
 
                 HashMap<String,String> map = new HashMap<>();
 
+                //resource è il layout di come voglio ogni singolo item
+                int resource = R.layout.listview_item_who_plays;
+
+                //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                String[] from = {"user","place","date","numberOfPlayer"};
+
+                //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                int[] to = {R.id.itemCreatorWhoPlaysTextView,R.id.itemPlaceWhoPlaysTextView,R.id.itemDateWhoPlaysTextView,R.id.itemTypeWhoPlaysTextView};
+
+
+                SimpleAdapter adapter = new SimpleAdapter(getActivity(),data,resource,from,to);
+                listView.setAdapter(adapter);
+
                 arrayDate.add(date);
                 arrayPlace.add(place);
                 arrayUser.add(user);
                 arrayNumberOfPlayer.add(numberOfPlayer);
                 arrayType.add(type);
+                arrayTime.add(time);
 
                 //inserisco i dati nell HashMAp
 
@@ -124,18 +140,7 @@ public class WhoPlaysFragment extends Fragment {
         });
 
 
-        //resource è il layout di come voglio ogni singolo item
-        int resource = R.layout.listview_item_who_plays;
 
-        //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-        String[] from = {"user","place","date","numberOfPlayer"};
-
-        //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-        int[] to = {R.id.itemCreatorWhoPlaysTextView,R.id.itemPlaceWhoPlaysTextView,R.id.itemDateWhoPlaysTextView,R.id.itemTypeWhoPlaysTextView};
-
-
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(),data,resource,from,to);
-        listView.setAdapter(adapter);
 
 
 
@@ -151,6 +156,7 @@ public class WhoPlaysFragment extends Fragment {
                 intent.putExtra("numberOfPlayer",arrayPlace.get(position));
                 intent.putExtra("type",arrayType.get(position));
                 intent.putExtra("user", arrayUser.get(position));
+                intent.putExtra("time", arrayTime.get(position));
                 startActivity(intent);
             }
         });
