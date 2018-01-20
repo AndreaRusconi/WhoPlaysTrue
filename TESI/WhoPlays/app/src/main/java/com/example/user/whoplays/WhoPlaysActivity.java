@@ -91,10 +91,6 @@ public class WhoPlaysActivity extends AppCompatActivity
 
 
 
-
-
-
-
         if (Ordine != null) {
             Toast toast = Toast.makeText(this, Ordine, Toast.LENGTH_SHORT);
             toast.show();
