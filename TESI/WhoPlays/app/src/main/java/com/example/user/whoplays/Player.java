@@ -12,18 +12,16 @@ public class Player {
     public String time;
     public String place;
     public Integer numberOfPlayer;
-    public String user;
 
     public Player(){}
 
-    public Player(String playerId, String typeOfMatch, String date, String time, String place, Integer numberOfPlayer, String user){
+    public Player(String playerId, String typeOfMatch, String date, String time, String place, Integer numberOfPlayer){
         this.playerId = playerId;
         this.typeOfMatch = typeOfMatch;
         this.date = date;
         this.time = time;
         this.place = place;
         this.numberOfPlayer = numberOfPlayer;
-        this.user = user;
     }
 
 }

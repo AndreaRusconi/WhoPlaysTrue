@@ -36,10 +36,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.graphics.Color;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -55,7 +52,6 @@ public class CreateAdsActivity extends AppCompatActivity {
     private EditText numberOfPlayer;
     private Button confirmCreation;
     private String id;
-    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +64,13 @@ public class CreateAdsActivity extends AppCompatActivity {
        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Partite");
 
         confirmCreation = findViewById(R.id.confirm_ads_creation_button);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
 
         confirmCreation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validateForm()) {
                     id = databaseReference.push().getKey();
-                    Player player = new Player(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), user.getDisplayName() );
+                    Player player = new Player(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()));
 
                     databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
                         @Override
