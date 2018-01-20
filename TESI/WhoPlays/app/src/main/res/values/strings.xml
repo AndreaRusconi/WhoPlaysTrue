@@ -71,6 +71,8 @@
     <string name="options_create_ads_menu">opzioni</string>
     <string name="number_of_player">N° giocatori richiesti:</string>
     <string name="confirm_ads_creation_button">Crea annuncio</string>
+    <string name="creator_textView">Creatore richiesta</string>
+    <string name="place_textView">Campo:</string>
 
 
 </resources>

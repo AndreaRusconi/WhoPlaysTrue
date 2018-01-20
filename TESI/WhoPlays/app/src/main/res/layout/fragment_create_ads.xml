@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    tools:context=".CreateAdsActivity">
+    tools:context=".CreateAdsActivity"
+    android:background="null">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -21,10 +22,14 @@
         </android.support.design.widget.AppBarLayout>
 
         <TableRow
-            android:layout_marginTop="5sp">
+            android:layout_marginTop="80sp"
+            android:layout_marginRight="30sp"
+            android:layout_marginLeft="30sp">
+
                 <TextView
                     android:id="@+id/type_of_match_textView"
                     android:layout_weight="1"
+                    android:textColor="#FFF"
                     android:textStyle="italic"
                     android:textSize="20sp"
                     android:layout_height="wrap_content"
