@@ -97,5 +97,26 @@
 
         />
 </TableRow>
+<TableRow>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="@string/number_of_player_ads"/>
 
+    <TextView
+        android:id="@+id/number_of_player_ads"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="match_parent"/>
+</TableRow>
+    <TableRow>
+        <Button
+            android:id="@+id/add_me_ads_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:text="ADD"/>
+
+    </TableRow>
 </TableLayout>

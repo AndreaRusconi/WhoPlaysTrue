@@ -76,6 +76,7 @@
     <string name="title_list_ads">Annunci disponibili</string>
     <string name="date_textView">Data:</string>
     <string name="time_textView">Ora:</string>
+    <string name="number_of_player_ads">N° di giocatori richiesti</string>
 
 
 </resources>

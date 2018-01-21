@@ -1,6 +1,7 @@
 package com.example.user.whoplays;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,6 +51,7 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayNumberOfPlayer = new ArrayList();
     ArrayList<String> arrayUser = new ArrayList();
     ArrayList<String> arrayTime = new ArrayList();
+    ArrayList<String> arrayKey = new ArrayList();
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
 
 
@@ -81,7 +83,7 @@ public class WhoPlaysFragment extends Fragment {
                 String type = dataSnapshot.child("typeOfMatch").getValue().toString();
                 String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
                 String time = dataSnapshot.child("time").getValue().toString();
-
+                String key = dataSnapshot.getKey();
 
                 //creo una hasHmap ad ogni ciclo
 
@@ -106,6 +108,7 @@ public class WhoPlaysFragment extends Fragment {
                 arrayNumberOfPlayer.add(numberOfPlayer);
                 arrayType.add(type);
                 arrayTime.add(time);
+                arrayKey.add(key);
 
                 //inserisco i dati nell HashMAp
 
@@ -149,14 +152,15 @@ public class WhoPlaysFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                Log.d("TAG",listView.getItemAtPosition(position).toString());
+
                 Intent intent = new Intent(getContext(), FindPlayerActivity.class);
                 intent.putExtra("place",arrayPlace.get(position));
                 intent.putExtra("date",arrayDate.get(position));
-                intent.putExtra("numberOfPlayer",arrayPlace.get(position));
+                intent.putExtra("numberOfPlayer",arrayNumberOfPlayer.get(position));
                 intent.putExtra("type",arrayType.get(position));
                 intent.putExtra("user", arrayUser.get(position));
                 intent.putExtra("time", arrayTime.get(position));
+                intent.putExtra("key", arrayKey.get(position));
                 startActivity(intent);
             }
         });
