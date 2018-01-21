@@ -140,10 +140,24 @@ public class CreateAdsActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                Integer max = 0;
                 if (!TextUtils.isEmpty(numberOfPlayer.getText())) {
-                    if (Integer.parseInt(numberOfPlayer.getText().toString()) < 1 || Integer.parseInt(numberOfPlayer.getText().toString()) > 11) {
-                        numberOfPlayer.setError("Numero di giocatori sbagliato.");
+
+                    switch (spinnerTypeOfMatch.getSelectedItem().toString()){
+                        case "Calcio a 5":
+                                max = 9;
+                                break;
+                        case "Calcio a 7":
+                                max = 13;
+                                break;
+                        case "Calcio a 11":
+                                max = 21;
+                                break;
                     }
+
+                    if (Integer.parseInt(numberOfPlayer.getText().toString()) < 1 || Integer.parseInt(numberOfPlayer.getText().toString()) > max) {
+                            numberOfPlayer.setError("Numero di giocatori sbagliato.");
+                        }
                 }
             }
             });
@@ -274,10 +288,15 @@ public class CreateAdsActivity extends AppCompatActivity {
         }
 
         String field = textViewCampo.getText().toString();
+
         if (TextUtils.isEmpty(field)) {
             textViewCampo.setError("Required.");
             valid = false;
-        } else {
+        }
+        else if(!TextUtils.isEmpty(field)){
+            valid = checkNumber();
+        }
+        else {
             textViewCampo.setError(null);
         }
 
@@ -285,11 +304,34 @@ public class CreateAdsActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(number)) {
             numberOfPlayer.setError("Required.");
             valid = false;
-        } else {
+        }
+        else {
             numberOfPlayer.setError(null);
         }
 
            return valid;
+    }
+
+    private boolean checkNumber() {
+        Integer max = 0;
+        switch (spinnerTypeOfMatch.getSelectedItem().toString()){
+            case "Calcio a 5":
+                max = 9;
+                break;
+            case "Calcio a 7":
+                max = 13;
+                break;
+            case "Calcio a 11":
+                max = 21;
+                break;
+        }
+
+        if (Integer.parseInt(numberOfPlayer.getText().toString()) < 1 || Integer.parseInt(numberOfPlayer.getText().toString()) > max) {
+            numberOfPlayer.setError("Numero di giocatori sbagliato.");
+            return false;
+        }
+        else
+            return true;
     }
 
 }
