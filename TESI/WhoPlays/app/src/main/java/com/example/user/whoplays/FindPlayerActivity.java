@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,8 +53,8 @@ public class FindPlayerActivity extends AppCompatActivity{
     String user;
     String time;
     String key;
-    String checkId = "ciccio";
     Boolean registered = false;
+    Integer playerType;
 
 
     @Override
@@ -98,8 +99,8 @@ public class FindPlayerActivity extends AppCompatActivity{
 
         setCheckId(new MyCallback() {
             @Override
-            public void onCallback(String value) {
-                checkId = value;
+            public void onCallback() {
+
                 setButton();
             }
         });
@@ -113,12 +114,30 @@ public class FindPlayerActivity extends AppCompatActivity{
         addMeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                switch (playerType){
+                    case 0:
+                        databaseReference.child(key).setValue(null);
+                        Toast.makeText(getBaseContext(), "Partita eliminata", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                        break;
+                    case 1:
+                        databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(null);
+                        Integer addNumber = Integer.parseInt(number) +1;
+                        databaseReference.child(key).child("numberOfPlayer").setValue(addNumber);
+                        Toast.makeText(getBaseContext(), "Hai annullato la partecipazione", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                        break;
 
-                Integer newNumber = Integer.parseInt(number) -1;
-                databaseReference.child(key).child("numberOfPlayer").setValue(newNumber);
-                databaseReference.child(key).child("playerAdded").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                    case 2:
+                        Integer subNumber = Integer.parseInt(number) -1;
+                        databaseReference.child(key).child("numberOfPlayer").setValue(subNumber);
+                        databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        Toast.makeText(getBaseContext(), "Ti sei aggiunto alla partita", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                        break;
+                }
+
             }
         });
 
@@ -130,20 +149,21 @@ public class FindPlayerActivity extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                String value = dataSnapshot.child("playerId").getValue().toString();
-                Log.d("TAG", "log zero");
-                if (dataSnapshot.child("playerAdded").exists()) {
-                    Log.d("TAG", "primo log");
-                    for (DataSnapshot issue : dataSnapshot.child("playerAdded").getChildren()) {
-                        // do something with the individual "issues"
-                        Log.d("TAG", "secondo log");
-                        if (issue.getValue().toString() == FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            registered = true;
 
+                Log.d("TAG", "log zero");
+                if (dataSnapshot.exists()) {
+                    Log.d("TAG", "primo log");
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        // do something with the individual "issues"
+                        Log.d("TAG", issue.getValue().toString());
+                        if (issue.getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+                            Log.d("TAG", issue.getValue().toString());
+                            registered = true;
+                        }
                     }
                 }
                 // ...
-                myCallback.onCallback(value);
+                myCallback.onCallback();
             }
 
             @Override
@@ -158,11 +178,17 @@ public class FindPlayerActivity extends AppCompatActivity{
 
 
     private void setButton() {
-        Log.d("TAG", checkId +", " +key);
-        if (checkId == key) {
+
+        if (user.equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
             addMeButton.setText("Cancella partita");
+            playerType = 0;
         } else if (registered) {
             addMeButton.setText("Togli partecipazione");
+            playerType = 1;
+        }
+        else {
+            addMeButton.setText("Aggiungimi alla partita");
+            playerType = 2;
         }
     }
 
@@ -196,7 +222,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
 
     public interface MyCallback {
-        void onCallback(String value);
+        void onCallback();
     }
 
 
