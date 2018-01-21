@@ -18,8 +18,8 @@
     <string name="home_button">Home</string>
 
     <string-array name="array_order">
-        <item>Data</item>
-        <item>Vicinanza</item>
+        <item>date</item>
+        <item>typeOfMatch</item>
     </string-array>
 
     <string-array name="array_search_type">

@@ -1,6 +1,8 @@
 package com.example.user.whoplays;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -116,9 +118,24 @@ public class FindPlayerActivity extends AppCompatActivity{
             public void onClick(View view) {
                 switch (playerType){
                     case 0:
-                        databaseReference.child(key).setValue(null);
-                        Toast.makeText(getBaseContext(), "Partita eliminata", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                        new AlertDialog.Builder(FindPlayerActivity.this)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setTitle("Delete match")
+                                .setMessage("Are you sure you want to delete the match?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        databaseReference.child(key).setValue(null);
+                                        Toast.makeText(getBaseContext(), "Partita eliminata", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+
+                                    }
+
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
                         break;
                     case 1:
                         databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(null);

@@ -39,6 +39,7 @@ public class WhoPlaysActivity extends AppCompatActivity
             startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
         }
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -85,16 +86,6 @@ public class WhoPlaysActivity extends AppCompatActivity
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
 
-        Intent intent = getIntent();
-
-        String Ordine = intent.getStringExtra("Ordine");
-
-
-
-        if (Ordine != null) {
-            Toast toast = Toast.makeText(this, Ordine, Toast.LENGTH_SHORT);
-            toast.show();
-        }
         ft.replace(R.id.screen_area,fragment);
         ft.commit();
     }

@@ -67,7 +67,7 @@ public class FilterFragment extends Fragment implements OnClickListener{
         if (v.getId() == R.id.provaBottone) {
             Intent intent = new Intent(getActivity(), WhoPlaysActivity.class);
 
-            intent.putExtra("Ordine",spinnerOrder.getSelectedItem().toString());
+            intent.putExtra("sort",spinnerOrder.getSelectedItem().toString());
 
             this.startActivity(intent);
         }

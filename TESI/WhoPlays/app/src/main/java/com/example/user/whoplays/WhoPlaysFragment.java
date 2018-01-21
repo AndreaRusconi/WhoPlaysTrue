@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayTime = new ArrayList();
     ArrayList<String> arrayKey = new ArrayList();
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
-
+    String Ordine;
 
 
     ListView listView;
@@ -64,6 +65,18 @@ public class WhoPlaysFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+
+       Ordine = getActivity().getIntent().getStringExtra("Sort");
+
+
+
+
+
+        if(Ordine == null){
+            Ordine = "date";
+            Log.d("TAAAAAAAAAAAAAAAAAAAG", Ordine);
+        }
+
     }
 
     @Nullable
@@ -73,8 +86,16 @@ public class WhoPlaysFragment extends Fragment {
         getActivity().setTitle(R.string.app_name);
         listView  = view.findViewById(R.id.listViewWhoPlays);
 
+
+
+
+       // final Query DBquery = FirebaseDatabase.getInstance().getReference().child("Partite")
+         //       .orderByChild("date").equalTo("Calcio a 7");
+
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
+        databaseReference.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String user = dataSnapshot.child("user").getValue().toString();
