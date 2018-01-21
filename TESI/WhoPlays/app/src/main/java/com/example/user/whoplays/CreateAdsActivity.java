@@ -128,6 +128,7 @@ public class CreateAdsActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+
         spinnerTypeOfMatch.setAdapter(adapter);
         numberOfPlayer.addTextChangedListener(new TextWatcher() {
             @Override
@@ -180,8 +181,10 @@ public class CreateAdsActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
         if (id == 999) {
-            return new DatePickerDialog(this,
-                    myDateListener, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, myDateListener, year, month, day);
+            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+            return datePickerDialog;
+
         }
         if (id == 998) {
             return new TimePickerDialog(this, myTimeListener, hour, minute, false);
@@ -195,6 +198,7 @@ public class CreateAdsActivity extends AppCompatActivity {
             TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int i, int i1) {
+
                     showTime(i, i1);
                 }
             };
@@ -293,11 +297,11 @@ public class CreateAdsActivity extends AppCompatActivity {
             textViewCampo.setError("Required.");
             valid = false;
         }
-        else if(!TextUtils.isEmpty(field)){
-            valid = checkNumber();
-        }
         else {
+            if (checkNumber())
             textViewCampo.setError(null);
+            else
+                valid = false;
         }
 
         String number = numberOfPlayer.getText().toString();
