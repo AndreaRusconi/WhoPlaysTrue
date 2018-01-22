@@ -138,6 +138,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
             android:layout_marginLeft="30sp"
             android:layout_marginRight="30sp"
             android:text="Add Me"/>
@@ -146,9 +148,8 @@
             android:layout_marginLeft="30sp"
             android:layout_marginRight="30sp"
             android:layout_weight="1"
-            android:divider="#000000"
+            android:divider="#FFF"
             android:dividerHeight="3dp"
-            android:listSelector="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/listViewFindPlayer"/>

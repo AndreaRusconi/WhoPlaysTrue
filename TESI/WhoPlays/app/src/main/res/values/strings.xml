@@ -29,6 +29,12 @@
         <item>Calcio a 11</item>
     </string-array>
 
+    <string-array name="array_match_type_new_ads">
+        <item>Calcio a 5</item>
+        <item>Calcio a 7</item>
+        <item>Calcio a 11</item>
+    </string-array>
+
 
     <string name="settings">Impostazioni</string>
     <string name="messages">Posta</string>

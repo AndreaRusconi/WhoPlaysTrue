@@ -166,6 +166,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         if (id == R.id.home_button) {
             navigationView.getMenu().getItem(0).setChecked(true);
             Fragment fragment = new WhoPlaysFragment();
+            fragment.setArguments(bundle);
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
 
