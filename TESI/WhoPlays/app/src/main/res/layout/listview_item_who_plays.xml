@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <TableRow>
         <TextView
@@ -10,6 +11,7 @@
             android:text="@string/item_type_who_plays"
             android:layout_weight="1"
             android:textSize="28sp"
+            android:textColor="#000"
             />
     </TableRow>
 
@@ -18,17 +20,20 @@
             android:id="@+id/itemPlaceWhoPlaysTextView"
             android:text="@string/item_place_who_plays"
             android:textSize="18sp"
+            android:textColor="#000"
             />
         <TextView
             android:id="@+id/itemDateWhoPlaysTextView"
             android:text="@string/item_date_who_plays"
             android:textSize="18sp"
+            android:textColor="#000"
             />
         <TextView
             android:id="@+id/itemCreatorWhoPlaysTextView"
             android:text="@string/item_creator_who_plays"
             android:textSize="18sp"
             android:textStyle="italic"
+            android:textColor="#000"
             />
     </TableRow>
 </TableLayout>

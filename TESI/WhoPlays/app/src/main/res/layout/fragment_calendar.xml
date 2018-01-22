@@ -5,7 +5,7 @@
     android:background="@drawable/field">
 
     <CalendarView
-        android:id="@+id/simple_calendar_view"
+        android:id="@+id/calendar_match"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
