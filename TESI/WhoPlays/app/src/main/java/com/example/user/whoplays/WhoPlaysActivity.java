@@ -39,6 +39,18 @@ public class WhoPlaysActivity extends AppCompatActivity
             startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
         }
 
+        Intent intent = getIntent();
+        String sort = intent.getStringExtra("sort");
+        String type = intent.getStringExtra("type");
+
+        if(sort == null){
+            sort = "date";
+        }
+        if(type == null){
+            type = "Tutte le partite";
+        }
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,7 +90,16 @@ public class WhoPlaysActivity extends AppCompatActivity
         nav_mail.setText((CharSequence) email);
 
 
+
+        Bundle bundle = new Bundle();
+        bundle.putString("sort", sort);
+        bundle.putString("type", type);
+
+
+
+
         Fragment fragment = new WhoPlaysFragment();
+        fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
 

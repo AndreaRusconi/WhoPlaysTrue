@@ -19,24 +19,16 @@
 
     <string-array name="array_order">
         <item>date</item>
-        <item>typeOfMatch</item>
-    </string-array>
-
-    <string-array name="array_search_type">
-        <item>Giocatore</item>
-        <item>Squadra</item>
+        <item>numberOfPlayer</item>
     </string-array>
 
     <string-array name="array_match_type">
+        <item>Tutte le partite</item>
         <item>Calcio a 5</item>
         <item>Calcio a 7</item>
         <item>Calcio a 11</item>
     </string-array>
 
-    <string-array name="array_ads_of">
-        <item>Solo amici</item>
-        <item>Tutti</item>
-    </string-array>
 
     <string name="settings">Impostazioni</string>
     <string name="messages">Posta</string>

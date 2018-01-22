@@ -55,6 +55,7 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayKey = new ArrayList();
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
     String Ordine;
+    String Tipo;
 
 
     ListView listView;
@@ -66,16 +67,10 @@ public class WhoPlaysFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
-       Ordine = getActivity().getIntent().getStringExtra("Sort");
+       Ordine = getArguments().getString("sort");
+       Tipo = getArguments().getString("type");
 
 
-
-
-
-        if(Ordine == null){
-            Ordine = "date";
-            Log.d("TAAAAAAAAAAAAAAAAAAAG", Ordine);
-        }
 
     }
 
@@ -108,42 +103,49 @@ public class WhoPlaysFragment extends Fragment {
 
                 //creo una hasHmap ad ogni ciclo
 
-                HashMap<String,String> map = new HashMap<>();
 
-                //resource è il layout di come voglio ogni singolo item
-                int resource = R.layout.listview_item_who_plays;
-
-                //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-                String[] from = {"user","place","date","numberOfPlayer"};
-
-                //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-                int[] to = {R.id.itemCreatorWhoPlaysTextView,R.id.itemPlaceWhoPlaysTextView,R.id.itemDateWhoPlaysTextView,R.id.itemTypeWhoPlaysTextView};
+                    if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
 
 
-                SimpleAdapter adapter = new SimpleAdapter(getActivity(),data,resource,from,to);
-                listView.setAdapter(adapter);
+                        HashMap<String, String> map = new HashMap<>();
 
-                arrayDate.add(date);
-                arrayPlace.add(place);
-                arrayUser.add(user);
-                arrayNumberOfPlayer.add(numberOfPlayer);
-                arrayType.add(type);
-                arrayTime.add(time);
-                arrayKey.add(key);
+                        //resource è il layout di come voglio ogni singolo item
+                        int resource = R.layout.listview_item_who_plays;
 
-                //inserisco i dati nell HashMAp
+                        //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                        String[] from = {"user", "place", "date", "numberOfPlayer"};
 
-                map.put("user", user);
-                map.put("date", date + ", ");
-                map.put("place", place + ", ");
-                if (Integer.parseInt(numberOfPlayer) >0) {
-                    map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori");
-                }
-                else {
-                    map.put("numberOfPlayer", "La partita é completa");
-                }
-                //inserisco l hashMap nell arrayList
-                data.add(map);
+                        //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                        int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
+
+
+                        SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                        listView.setAdapter(adapter);
+
+                        arrayDate.add(date);
+                        arrayPlace.add(place);
+                        arrayUser.add(user);
+                        arrayNumberOfPlayer.add(numberOfPlayer);
+                        arrayType.add(type);
+                        arrayTime.add(time);
+                        arrayKey.add(key);
+
+                        //inserisco i dati nell HashMAp
+
+                        map.put("user", user);
+                        map.put("date", date + ", ");
+                        map.put("place", place + ", ");
+                        if (Integer.parseInt(numberOfPlayer) > 0) {
+                            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori");
+                        } else {
+                            map.put("numberOfPlayer", "La partita é completa");
+                        }
+                        //inserisco l hashMap nell arrayList
+                        data.add(map);
+
+                    }
+
+
             }
 
             @Override
