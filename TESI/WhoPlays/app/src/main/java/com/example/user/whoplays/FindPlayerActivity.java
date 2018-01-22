@@ -153,6 +153,9 @@ public class FindPlayerActivity extends AppCompatActivity{
                         Toast.makeText(getBaseContext(), "Ti sei aggiunto alla partita", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
                         break;
+                    case 3:
+                        Toast.makeText(getBaseContext(), "La partita é giá completa", Toast.LENGTH_SHORT).show();
+                        break;
                 }
 
             }
@@ -204,10 +207,17 @@ public class FindPlayerActivity extends AppCompatActivity{
             playerType = 1;
         }
         else {
-            addMeButton.setText("Aggiungimi alla partita");
-            playerType = 2;
+            if (Integer.parseInt(number) > 0) {
+                addMeButton.setText("Aggiungimi alla partita");
+                playerType = 2;
         }
-    }
+            else {
+                addMeButton.setText("Partita completa");
+                playerType = 3;
+            }
+        }
+
+        }
 
 
     @Override

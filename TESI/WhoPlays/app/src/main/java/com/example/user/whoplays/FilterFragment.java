@@ -68,6 +68,8 @@ public class FilterFragment extends Fragment implements OnClickListener{
             Intent intent = new Intent(getActivity(), WhoPlaysActivity.class);
 
             intent.putExtra("sort",spinnerOrder.getSelectedItem().toString());
+            intent.putExtra("type", spinnerMatchType.getSelectedItem().toString());
+
 
             this.startActivity(intent);
         }

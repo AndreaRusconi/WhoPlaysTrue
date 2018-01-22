@@ -90,7 +90,7 @@ public class WhoPlaysFragment extends Fragment {
 
 
        // final Query DBquery = FirebaseDatabase.getInstance().getReference().child("Partite")
-         //       .orderByChild("date").equalTo("Calcio a 7");
+        //       .orderByChild("date").equalTo("Calcio a 7");
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -136,8 +136,12 @@ public class WhoPlaysFragment extends Fragment {
                 map.put("user", user);
                 map.put("date", date + ", ");
                 map.put("place", place + ", ");
-                map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori");
-
+                if (Integer.parseInt(numberOfPlayer) >0) {
+                    map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori");
+                }
+                else {
+                    map.put("numberOfPlayer", "La partita é completa");
+                }
                 //inserisco l hashMap nell arrayList
                 data.add(map);
             }
