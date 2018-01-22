@@ -4,6 +4,13 @@ android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent"
     >
 
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/player_added"
+            android:textColor="#FFF"/>
+    </TableRow>
 <TableRow>
     <TextView
         android:id="@+id/nome_giocatore_item_find_player"
@@ -11,17 +18,9 @@ android:layout_height="match_parent"
         android:text="nome_giocatore"
         android:layout_weight="1"
         android:textSize="28sp"
-        android:textColor="#000"
+        android:textColor="#FFF"
         />
 </TableRow>
 
-<TableRow>
-    <TextView
-        android:id="@+id/numero_partite_item_find_player"
-        android:text="item_n_partite"
-        android:textSize="18sp"
-        android:textColor="#000"
-        />
-</TableRow>
 </TableLayout>
 

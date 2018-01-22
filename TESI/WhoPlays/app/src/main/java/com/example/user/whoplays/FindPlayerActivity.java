@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by io on 20/01/2018.
@@ -46,6 +48,7 @@ public class FindPlayerActivity extends AppCompatActivity{
     private TextView dateTextView;
     private TextView timeTextView;
     private TextView numberTextView;
+    private ListView listView;
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
 
     private Button addMeButton;
@@ -93,6 +96,7 @@ public class FindPlayerActivity extends AppCompatActivity{
         timeTextView = findViewById(R.id.time_ads);
         dateTextView = findViewById(R.id.date_ads);
         numberTextView = findViewById(R.id.number_of_player_ads);
+        listView = findViewById(R.id.listViewFindPlayer);
 
         creatorTextView.setText(user);
         typeTextView.setText(type);
@@ -161,100 +165,43 @@ public class FindPlayerActivity extends AppCompatActivity{
         });
     }
 
-        /**
-
-        databaseReference.child(key).addChildEventListener(new ChildEventListener() {
-
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String giocatori = dataSnapshot.child("").getValue().toString();
-
-
-                //creo una hasHmap ad ogni ciclo
-
-
-                if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
-
-
-                    HashMap<String, String> map = new HashMap<>();
-
-                    //resource è il layout di come voglio ogni singolo item
-                    int resource = R.layout.listview_item_who_plays;
-
-                    //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-                    String[] from = {"user", "place", "date", "numberOfPlayer"};
-
-                    //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-                    int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
-
-
-                    SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
-                    listView.setAdapter(adapter);
-
-                    arrayDate.add(date);
-                    arrayPlace.add(place);
-                    arrayUser.add(user);
-                    arrayNumberOfPlayer.add(numberOfPlayer);
-                    arrayType.add(type);
-                    arrayTime.add(time);
-                    arrayKey.add(key);
-
-                    //inserisco i dati nell HashMAp
-
-                    map.put("user", user);
-                    map.put("date", date + ", ");
-                    map.put("place", place + ", ");
-                    if (Integer.parseInt(numberOfPlayer) > 0) {
-                        map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
-                    } else {
-                        map.put("numberOfPlayer", "La partita é completa");
-                    }
-                    //inserisco l hashMap nell arrayList
-                    data.add(map);
-
-                }
-
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-
-
-
-
-        });
-    }
-    */
     private void setCheckId(final MyCallback myCallback){
-        databaseReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(key).child("partecipanti").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
 
+
+
                 Log.d("TAG", "log zero");
                 if (dataSnapshot.exists()) {
+
+
+
                     Log.d("TAG", "primo log");
                     for (DataSnapshot issue : dataSnapshot.getChildren()) {
+
+                        String giocatore = issue.getValue().toString();
+                        //creo una hasHmap ad ogni ciclo
+                        HashMap<String, String> map = new HashMap<>();
+                        //resource è il layout di come voglio ogni singolo item
+                        int resource = R.layout.listview_item_find_player;
+                        //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                        String[] from = {"nome_giocatore", "numero_partite "};
+                        //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                        int[] to = {R.id.nome_giocatore_item_find_player};
+
+                        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), data, resource, from, to);
+                        listView.setAdapter(adapter);
+
+                        // do something with the individual "issues"
+                        Log.d("TAG",giocatore);
+
+                        map.put("nome_giocatore", giocatore);
+
+                        data.add(map);
+
                         // do something with the individual "issues"
                         Log.d("TAG", issue.getValue().toString());
                         if (issue.getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {

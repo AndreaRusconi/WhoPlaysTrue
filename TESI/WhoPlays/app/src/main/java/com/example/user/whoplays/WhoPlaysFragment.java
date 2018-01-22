@@ -91,6 +91,7 @@ public class WhoPlaysFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
 
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String user = dataSnapshot.child("user").getValue().toString();
