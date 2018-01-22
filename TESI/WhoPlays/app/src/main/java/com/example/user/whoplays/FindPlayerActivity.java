@@ -15,11 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by io on 20/01/2018.
@@ -43,11 +46,12 @@ public class FindPlayerActivity extends AppCompatActivity{
     private TextView dateTextView;
     private TextView timeTextView;
     private TextView numberTextView;
+    ArrayList<HashMap<String,String>> data = new ArrayList<>();
 
     private Button addMeButton;
 
     DatabaseReference databaseReference;
-
+    DatabaseReference databaseReference1;
     String place;
     String date;
     String type;
@@ -108,28 +112,22 @@ public class FindPlayerActivity extends AppCompatActivity{
         });
 
 
-
-
-
-
-
         addMeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (playerType){
+                switch (playerType) {
                     case 0:
                         new AlertDialog.Builder(FindPlayerActivity.this)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .setTitle("Delete match")
                                 .setMessage("Are you sure you want to delete the match?")
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                                {
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         databaseReference.child(key).setValue(null);
                                         Toast.makeText(getBaseContext(), "Partita eliminata", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                                        startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
 
                                     }
 
@@ -138,20 +136,21 @@ public class FindPlayerActivity extends AppCompatActivity{
                                 .show();
                         break;
                     case 1:
-                        databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(null);
-                        Integer addNumber = Integer.parseInt(number) +1;
+                        databaseReference.child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(null);
+                        Integer addNumber = Integer.parseInt(number) + 1;
                         databaseReference.child(key).child("numberOfPlayer").setValue(addNumber);
                         Toast.makeText(getBaseContext(), "Hai annullato la partecipazione", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                        startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
                         break;
 
 
                     case 2:
-                        Integer subNumber = Integer.parseInt(number) -1;
+                        Integer subNumber = Integer.parseInt(number) - 1;
                         databaseReference.child(key).child("numberOfPlayer").setValue(subNumber);
-                        databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        //databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        databaseReference.child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         Toast.makeText(getBaseContext(), "Ti sei aggiunto alla partita", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+                        startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
                         break;
                     case 3:
                         Toast.makeText(getBaseContext(), "La partita é giá completa", Toast.LENGTH_SHORT).show();
@@ -160,9 +159,91 @@ public class FindPlayerActivity extends AppCompatActivity{
 
             }
         });
-
     }
 
+        /**
+
+        databaseReference.child(key).addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String giocatori = dataSnapshot.child("").getValue().toString();
+
+
+                //creo una hasHmap ad ogni ciclo
+
+
+                if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
+
+
+                    HashMap<String, String> map = new HashMap<>();
+
+                    //resource è il layout di come voglio ogni singolo item
+                    int resource = R.layout.listview_item_who_plays;
+
+                    //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                    String[] from = {"user", "place", "date", "numberOfPlayer"};
+
+                    //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                    int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
+
+
+                    SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                    listView.setAdapter(adapter);
+
+                    arrayDate.add(date);
+                    arrayPlace.add(place);
+                    arrayUser.add(user);
+                    arrayNumberOfPlayer.add(numberOfPlayer);
+                    arrayType.add(type);
+                    arrayTime.add(time);
+                    arrayKey.add(key);
+
+                    //inserisco i dati nell HashMAp
+
+                    map.put("user", user);
+                    map.put("date", date + ", ");
+                    map.put("place", place + ", ");
+                    if (Integer.parseInt(numberOfPlayer) > 0) {
+                        map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
+                    } else {
+                        map.put("numberOfPlayer", "La partita é completa");
+                    }
+                    //inserisco l hashMap nell arrayList
+                    data.add(map);
+
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+
+
+
+        });
+    }
+    */
     private void setCheckId(final MyCallback myCallback){
         databaseReference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -218,6 +299,8 @@ public class FindPlayerActivity extends AppCompatActivity{
         }
 
         }
+
+
 
 
     @Override

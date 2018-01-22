@@ -71,6 +71,12 @@ public class WhoPlaysFragment extends Fragment {
        Tipo = getArguments().getString("type");
 
 
+        if(Ordine == null){
+            Ordine = "date";
+        }
+        if(Tipo == null){
+            Tipo = "Tutte le partite";
+        }
 
     }
 
@@ -80,12 +86,6 @@ public class WhoPlaysFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_who_plays, container, false);
         getActivity().setTitle(R.string.app_name);
         listView  = view.findViewById(R.id.listViewWhoPlays);
-
-
-
-
-       // final Query DBquery = FirebaseDatabase.getInstance().getReference().child("Partite")
-        //       .orderByChild("date").equalTo("Calcio a 7");
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -136,7 +136,7 @@ public class WhoPlaysFragment extends Fragment {
                         map.put("date", date + ", ");
                         map.put("place", place + ", ");
                         if (Integer.parseInt(numberOfPlayer) > 0) {
-                            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori");
+                            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type  );
                         } else {
                             map.put("numberOfPlayer", "La partita é completa");
                         }

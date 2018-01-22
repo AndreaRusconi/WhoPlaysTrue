@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    Bundle bundle = new Bundle();
     NavigationView navigationView;
 
     @Override
@@ -43,12 +43,9 @@ public class WhoPlaysActivity extends AppCompatActivity
         String sort = intent.getStringExtra("sort");
         String type = intent.getStringExtra("type");
 
-        if(sort == null){
-            sort = "date";
-        }
-        if(type == null){
-            type = "Tutte le partite";
-        }
+        bundle = new Bundle();
+        bundle.putString("sort", sort);
+        bundle.putString("type", type);
 
 
 
@@ -91,9 +88,7 @@ public class WhoPlaysActivity extends AppCompatActivity
 
 
 
-        Bundle bundle = new Bundle();
-        bundle.putString("sort", sort);
-        bundle.putString("type", type);
+
 
 
 
@@ -141,7 +136,7 @@ public class WhoPlaysActivity extends AppCompatActivity
 
                 navigationView.getMenu().getItem(0).setChecked(true);
                 Fragment fragment = new WhoPlaysFragment();
-
+                fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
