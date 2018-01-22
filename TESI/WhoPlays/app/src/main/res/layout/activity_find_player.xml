@@ -2,13 +2,14 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/field2">
 
 
 
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -21,23 +22,30 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TableRow>
+    <TableRow android:layout_marginTop="80sp"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp">
         <TextView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             android:text="@string/creator_textView"
             />
 
         <TextView
+            android:textColor="#FFF"
             android:id="@+id/creator_textView"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:layout_weight="1"
             />
     </TableRow>
-    <TableRow>
+    <TableRow
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp">
         <TextView
+            android:textColor="#FFF"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -45,6 +53,7 @@
             />
 
         <TextView
+            android:textColor="#FFF"
             android:id="@+id/type_of_match_ads"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -52,9 +61,12 @@
             />
 
     </TableRow>
-    <TableRow>
+    <TableRow
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp">
 
         <TextView
+            android:textColor="#FFF"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -62,15 +74,19 @@
         />
 
         <TextView
+            android:textColor="#FFF"
             android:id="@+id/place_ads"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:layout_weight="1"
             />
     </TableRow>
-    <TableRow>
+    <TableRow
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp">
 
         <TextView
+            android:textColor="#FFF"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
 
@@ -78,6 +94,7 @@
             />
 
         <TextView
+            android:textColor="#FFF"
             android:id="@+id/date_ads"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -86,37 +103,44 @@
        <TextView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-
+        android:textColor="#FFF"
         android:text="@string/time_textView"
         />
 
     <TextView
+        android:textColor="#FFF"
         android:id="@+id/time_ads"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
 
         />
 </TableRow>
-<TableRow>
+<TableRow android:layout_marginLeft="30sp"
+    android:layout_marginRight="30sp">
     <TextView
+        android:textColor="#FFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/number_of_player_ads"/>
 
     <TextView
+        android:textColor="#FFF"
         android:id="@+id/number_of_player_ads"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_width="match_parent"/>
 </TableRow>
-    <TableRow>
+
         <Button
+            android:textColor="#008000"
             android:id="@+id/add_me_ads_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="7dp"
+            android:padding="5dp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="30sp"
             android:text="ADD"/>
 
-    </TableRow>
+
 </TableLayout>
