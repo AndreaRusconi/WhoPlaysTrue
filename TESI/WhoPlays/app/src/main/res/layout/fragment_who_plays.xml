@@ -17,9 +17,9 @@
     <ListView
 
 
-        android:divider="#000000"
+        android:divider="#FFF"
         android:dividerHeight="3dp"
-        android:listSelector="#FFFFFF"
+        android:listSelector="#999"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listViewWhoPlays"/>
