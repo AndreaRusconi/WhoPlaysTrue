@@ -47,10 +47,12 @@
 
     <Button
         android:id="@+id/button_create_account"
-        android:layout_gravity="center"
+        style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
         android:layout_width="400px"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="60px"
-        android:text="Create Account"/>
+        android:textColor="#008000"
+        android:text="Create Account" />
 
 </LinearLayout>
