@@ -32,6 +32,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     PlaceAutocompleteFragment placeAutoComplete;
     private Button confirmButton;
     Place place0 = null;
+    String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 addMarker(place);
                 Log.d("Maps", "Place selected: " + place.getAddress());
                 place0 = place;
+                address = (String) place.getAddress();
+
             }
 
             @Override
@@ -64,6 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     Intent intent = new Intent();
                     intent.putExtra("keyName", place0.getName());
+                    intent.putExtra("keyLatLng", address);
                     setResult(RESULT_OK, intent);
                     finish();
 

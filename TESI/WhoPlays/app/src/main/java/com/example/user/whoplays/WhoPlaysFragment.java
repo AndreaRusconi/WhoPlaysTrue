@@ -1,9 +1,15 @@
 package com.example.user.whoplays;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +29,9 @@ import android.widget.Toast;
 
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,7 +59,9 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class WhoPlaysFragment extends Fragment {
 
+    FusedLocationProviderClient mFusedLocationClient;
 
+    Location myPosition;
     DatabaseReference databaseReference;
     ArrayList<String> arrayPlace = new ArrayList();
     ArrayList<String> arrayType = new ArrayList();
@@ -59,11 +70,10 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayUser = new ArrayList();
     ArrayList<String> arrayTime = new ArrayList();
     ArrayList<String> arrayKey = new ArrayList();
-    ArrayList<HashMap<String,String>> data = new ArrayList<>();
+    ArrayList<HashMap<String, String>> data = new ArrayList<>();
     ArrayList<String> arrayDelete = new ArrayList<>();
     String Ordine;
     String Tipo;
-
 
 
     ListView listView;
@@ -73,16 +83,16 @@ public class WhoPlaysFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        Ordine = getArguments().getString("sort");
+        Tipo = getArguments().getString("type");
 
 
-       Ordine = getArguments().getString("sort");
-       Tipo = getArguments().getString("type");
-
-
-        if(Ordine == null){
+        if (Ordine == null) {
             Ordine = "date";
         }
-        if(Tipo == null){
+        if (Tipo == null) {
             Tipo = "Tutte le partite";
         }
 
@@ -93,8 +103,31 @@ public class WhoPlaysFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_who_plays, container, false);
         getActivity().setTitle(R.string.app_name);
-        listView  = view.findViewById(R.id.listViewWhoPlays);
+        listView = view.findViewById(R.id.listViewWhoPlays);
 
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        else {
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            myPosition = location;
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                            }
+                        }
+                    });
+        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
@@ -111,7 +144,7 @@ public class WhoPlaysFragment extends Fragment {
                 String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
                 String time = dataSnapshot.child("time").getValue().toString();
                 String key = dataSnapshot.getKey();
-
+                String address = dataSnapshot.child("latLng").getValue().toString();
 
                 Calendar calendar1 = Calendar.getInstance();
                 SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
@@ -165,6 +198,32 @@ public class WhoPlaysFragment extends Fragment {
                         }
                         //inserisco l hashMap nell arrayList
                         data.add(map);
+
+                        try {
+
+
+                            Geocoder selected_place_geocoder = new Geocoder(getContext());
+                            List<Address> address1;
+                            address1 = selected_place_geocoder.getFromLocationName(address, 1);
+                            if(address1 == null) {
+                                //do nothing
+                            } else {
+                                Address location = address1.get(0);
+
+                                double lat= location.getLatitude();
+                                double lng = location.getLongitude();
+
+                                Location targetLocation = new Location("");//provider name is unnecessary
+                                targetLocation.setLatitude(lat);//your coords of course
+                                targetLocation.setLongitude(lng);
+
+                                float distanceInMeters =  myPosition.distanceTo(targetLocation);
+                                Log.d("TAG", lat +"," +lng);
+                                Log.d("TAG", String.valueOf(distanceInMeters));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     }
 

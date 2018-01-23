@@ -13,10 +13,11 @@ public class Player {
     public String place;
     public Integer numberOfPlayer;
     public String user;
+    public String latLng;
 
     public Player(){}
 
-    public Player(String playerId, String typeOfMatch, String date, String time, String place, Integer numberOfPlayer, String user){
+    public Player(String playerId, String typeOfMatch, String date, String time, String place, Integer numberOfPlayer, String user, String latLng){
         this.playerId = playerId;
         this.typeOfMatch = typeOfMatch;
         this.date = date;
@@ -24,6 +25,7 @@ public class Player {
         this.place = place;
         this.numberOfPlayer = numberOfPlayer;
         this.user = user;
+        this.latLng = latLng;
     }
 
 }
