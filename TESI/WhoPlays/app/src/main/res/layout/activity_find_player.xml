@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/field2">
-
-
+    android:background="@drawable/login_background">
 
 
     <android.support.design.widget.AppBarLayout
@@ -25,8 +23,10 @@
     <TableRow android:layout_marginTop="80sp"
         android:layout_marginLeft="30sp"
         android:layout_marginRight="30sp">
+
         <TextView
             android:textColor="#FFF"
+            android:textSize="22dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_weight="1"
@@ -34,6 +34,7 @@
             />
 
         <TextView
+            android:textSize="22dp"
             android:textColor="#FFF"
             android:id="@+id/creator_textView"
             android:layout_height="match_parent"
@@ -44,7 +45,9 @@
     <TableRow
         android:layout_marginLeft="30sp"
         android:layout_marginRight="30sp">
+
         <TextView
+            android:textSize="22dp"
             android:textColor="#FFF"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -53,6 +56,7 @@
             />
 
         <TextView
+            android:textSize="22dp"
             android:textColor="#FFF"
             android:id="@+id/type_of_match_ads"
             android:layout_height="match_parent"
@@ -66,14 +70,15 @@
         android:layout_marginRight="30sp">
 
         <TextView
+            android:layout_width="121dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/place_textView"
             android:textColor="#FFF"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:text="@string/place_textView"
-        />
+            android:textSize="22dp" />
 
         <TextView
+            android:textSize="22dp"
             android:textColor="#FFF"
             android:id="@+id/place_ads"
             android:layout_height="match_parent"
@@ -81,13 +86,6 @@
             android:layout_weight="1"
             />
 
-        <Button
-            android:id="@+id/let_me_see_textView"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:textColor="#FFF"
-            android:textStyle="italic"
-            android:text="@string/address_textView"/>
 
     </TableRow>
     <TableRow
@@ -95,38 +93,41 @@
         android:layout_marginRight="30sp">
 
         <TextView
-            android:textColor="#FFF"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-
+            android:layout_height="match_parent"
+            android:layout_weight="0"
             android:text="@string/date_textView"
-            />
+
+            android:textColor="#FFF"
+            android:textSize="22dp" />
 
         <TextView
-            android:textColor="#FFF"
             android:id="@+id/date_ads"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
+            android:textColor="#FFF"
 
-            />
-       <TextView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:textColor="#FFF"
-        android:text="@string/time_textView"
-        />
+            android:textSize="22dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/time_textView"
+            android:textColor="#FFF"
+            android:textSize="22dp" />
 
     <TextView
+        android:textSize="22dp"
         android:textColor="#FFF"
         android:id="@+id/time_ads"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-
         />
 </TableRow>
 <TableRow android:layout_marginLeft="30sp"
     android:layout_marginRight="30sp">
     <TextView
+        android:textSize="22dp"
         android:textColor="#FFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -134,34 +135,50 @@
         android:text="@string/number_of_player_ads"/>
 
     <TextView
+        android:textSize="22dp"
         android:textColor="#FFF"
         android:id="@+id/number_of_player_ads"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_width="match_parent"/>
 </TableRow>
+<TableRow
+    android:layout_marginLeft="30sp"
+    android:layout_marginRight="30sp">
 
-        <Button
-            android:textColor="#008000"
-            android:id="@+id/add_me_ads_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"
-            android:layout_marginLeft="30sp"
-            android:layout_marginRight="30sp"
-            android:text="Add Me"/>
+    <Button
+        android:id="@+id/add_me_ads_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
 
-        <ListView
+        android:padding="5dp"
+        android:text="Add Me"
+        android:textColor="#008000" />
+
+    <Button
+        android:id="@+id/let_me_see_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:layout_weight="4"
+        android:text="@string/address_textView"
+        android:textColor="#008000"
+        android:textStyle="italic" />
+
+</TableRow>
+
+    <ListView
+
             android:layout_marginLeft="30sp"
-            android:layout_marginRight="30sp"
+            android:layout_marginRight="40sp"
             android:layout_weight="1"
             android:divider="#FFF"
             android:dividerHeight="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/listViewFindPlayer"/>
+
 
 
 </TableLayout>
