@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 
 public class FilterFragment extends Fragment implements OnClickListener{
-
+    
     private Button provaBottone;
     private Spinner spinnerOrder;
     private Spinner spinnerMatchType;

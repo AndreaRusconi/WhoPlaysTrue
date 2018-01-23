@@ -7,13 +7,17 @@
 
     <TableRow>
 
+        <TextView android:layout_weight="28" />
 
-        <TextView
+        <Button
             android:id="@+id/ripristina"
             android:layout_weight="1"
             android:textAlignment="textEnd"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_marginRight="15sp"
             android:text="@string/restore_all"
+            android:textColor="#008000"
             android:textSize="15sp"
             android:textStyle="italic" />
     </TableRow>
