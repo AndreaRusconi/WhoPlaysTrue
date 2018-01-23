@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:background="@drawable/field"
+    android:background="@drawable/login_background"
     tools:context=".CreateAdsActivity">
 
         <android.support.design.widget.AppBarLayout
