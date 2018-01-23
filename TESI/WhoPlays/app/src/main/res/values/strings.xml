@@ -19,8 +19,8 @@
     <string name="home_button">Home</string>
 
     <string-array name="array_order">
-        <item>Data</item>
-        <item>Numero di giocatori</item>
+        <item>date</item>
+        <item>numberOfPlayer</item>
     </string-array>
 
     <string-array name="array_match_type">
