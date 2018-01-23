@@ -31,7 +31,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,8 +60,10 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayTime = new ArrayList();
     ArrayList<String> arrayKey = new ArrayList();
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
+    ArrayList<String> arrayDelete = new ArrayList<>();
     String Ordine;
     String Tipo;
+
 
 
     ListView listView;
@@ -94,6 +102,8 @@ public class WhoPlaysFragment extends Fragment {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+
                 String user = dataSnapshot.child("user").getValue().toString();
                 String place = dataSnapshot.child("place").getValue().toString();
                 String date = dataSnapshot.child("date").getValue().toString();
@@ -102,7 +112,19 @@ public class WhoPlaysFragment extends Fragment {
                 String time = dataSnapshot.child("time").getValue().toString();
                 String key = dataSnapshot.getKey();
 
-                //creo una hasHmap ad ogni ciclo
+
+                Calendar calendar1 = Calendar.getInstance();
+                SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
+                String currentDate = formatter1.format(calendar1.getTime());
+
+                final String dateString = date;
+                final String timeString = time;
+                String datadb =dateString+" "+timeString;
+
+//  Toast.makeText(context,"databse date:-"+datadb+"Current Date :-"+currentDate,Toast.LENGTH_LONG).show();
+
+                if(currentDate.compareTo(datadb)<=0) {
+                    //creo una hasHmap ad ogni ciclo
 
 
                     if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
@@ -137,7 +159,7 @@ public class WhoPlaysFragment extends Fragment {
                         map.put("date", date + ", ");
                         map.put("place", place + ", ");
                         if (Integer.parseInt(numberOfPlayer) > 0) {
-                            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type  );
+                            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
                         } else {
                             map.put("numberOfPlayer", "La partita é completa");
                         }
@@ -146,8 +168,17 @@ public class WhoPlaysFragment extends Fragment {
 
                     }
 
+                }
+                else {
+                    Log.d("TAG", key);
+                    DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
+                    databaseReference1.child("Partite").child(key).setValue(null);
 
+                }
             }
+
+
+
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -169,6 +200,8 @@ public class WhoPlaysFragment extends Fragment {
 
             }
         });
+
+
 
 
 

@@ -4,6 +4,7 @@ package com.example.user.whoplays;
  * Created by io on 17/01/2018.
  */
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -275,7 +276,7 @@ public class CreateAdsActivity extends AppCompatActivity {
     private boolean validateForm() {
         boolean valid = true;
 
-        String time = timeVIew.getText().toString();
+        final String time = timeVIew.getText().toString();
         if (TextUtils.isEmpty(time)) {
             timeVIew.setError("Required.");
             valid = false;
@@ -283,7 +284,7 @@ public class CreateAdsActivity extends AppCompatActivity {
             timeVIew.setError(null);
         }
 
-        String date = dateView.getText().toString();
+        final String date = dateView.getText().toString();
         if (TextUtils.isEmpty(date)) {
             dateView.setError("Required.");
             valid = false;
@@ -291,8 +292,22 @@ public class CreateAdsActivity extends AppCompatActivity {
             dateView.setError(null);
         }
 
-        String field = textViewCampo.getText().toString();
+        if (!TextUtils.isEmpty(time) && !TextUtils.isEmpty(date)) {
+            Calendar calendar1 = Calendar.getInstance();
+            SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
+            String currentDate = formatter1.format(calendar1.getTime());
 
+            String datadb =date+" "+time;
+
+//  Toast.makeText(context,"databse date:-"+datadb+"Current Date :-"+currentDate,Toast.LENGTH_LONG).show();
+
+            if(currentDate.compareTo(datadb) > 0){
+                valid = false;
+                Toast.makeText(getApplicationContext(), "Hai inserito un orario passato", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        String field = textViewCampo.getText().toString();
         if (TextUtils.isEmpty(field)) {
             textViewCampo.setError("Required.");
             valid = false;

@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,6 +71,10 @@ public class WhoPlaysActivity extends AppCompatActivity
         // Name, email address, and profile photo Url
         String name = user.getDisplayName();
         String email = user.getEmail();
+
+
+
+        Log.d("TAG", "hey" +user.getPhoneNumber());
 
             // Check if user's email is verified
             boolean emailVerified = user.isEmailVerified();
