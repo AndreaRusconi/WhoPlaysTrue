@@ -6,6 +6,7 @@ package com.example.user.whoplays;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -13,6 +14,7 @@ import android.app.Dialog;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -38,6 +40,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
@@ -56,6 +59,7 @@ public class CreateAdsActivity extends AppCompatActivity {
     private Button confirmCreation;
     private String id;
     FirebaseUser user;
+    private String latLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +80,7 @@ public class CreateAdsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (validateForm()) {
                     id = databaseReference.push().getKey();
-                    Player player = new Player(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), user.getDisplayName() );
+                    Player player = new Player(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), user.getDisplayName(), latLng );
 
                     databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
                         @Override
@@ -266,6 +270,7 @@ public class CreateAdsActivity extends AppCompatActivity {
 
                 // get String data from Intent
                 String returnString = data.getStringExtra("keyName");
+                latLng = data.getStringExtra("keyLatLng");
 
                 // set text view with string
                 textViewCampo.setText(returnString);
@@ -290,21 +295,6 @@ public class CreateAdsActivity extends AppCompatActivity {
             valid = false;
         } else {
             dateView.setError(null);
-        }
-
-        if (!TextUtils.isEmpty(time) && !TextUtils.isEmpty(date)) {
-            Calendar calendar1 = Calendar.getInstance();
-            SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
-            String currentDate = formatter1.format(calendar1.getTime());
-
-            String datadb =date+" "+time;
-
-//  Toast.makeText(context,"databse date:-"+datadb+"Current Date :-"+currentDate,Toast.LENGTH_LONG).show();
-
-            if(currentDate.compareTo(datadb) > 0){
-                valid = false;
-                Toast.makeText(getApplicationContext(), "Hai inserito un orario passato", Toast.LENGTH_SHORT).show();
-            }
         }
 
         String field = textViewCampo.getText().toString();
