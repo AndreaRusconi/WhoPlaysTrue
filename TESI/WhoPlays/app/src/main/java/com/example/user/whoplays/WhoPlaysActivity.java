@@ -44,10 +44,12 @@ public class WhoPlaysActivity extends AppCompatActivity
         Intent intent = getIntent();
         String sort = intent.getStringExtra("sort");
         String type = intent.getStringExtra("type");
+        Integer distance = intent.getIntExtra("distance", 0 );
 
         bundle = new Bundle();
         bundle.putString("sort", sort);
         bundle.putString("type", type);
+        bundle.putInt("distance", distance );
 
 
 

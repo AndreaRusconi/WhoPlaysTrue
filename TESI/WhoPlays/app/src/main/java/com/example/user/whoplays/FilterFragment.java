@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
@@ -23,8 +24,8 @@ public class FilterFragment extends Fragment implements OnClickListener{
     private Button provaBottone;
     private Spinner spinnerOrder;
     private Spinner spinnerMatchType;
-    private Spinner spinnerAdsOf;
-    private Spinner spinnerSearchType;
+    private SeekBar seekBarDistance;
+    private TextView t;
 
 
 
@@ -37,9 +38,9 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
         spinnerOrder = (Spinner) view.findViewById(R.id.spinnerOrder);
         spinnerMatchType = (Spinner) view.findViewById(R.id.spinnerMatchType);
-
+        seekBarDistance = (SeekBar) view.findViewById(R.id.seekBarDistance);
         provaBottone = (Button) view.findViewById(R.id.provaBottone);
-
+        t = view.findViewById(R.id.percent_textView);
 
         ArrayAdapter<CharSequence> adapter0 = ArrayAdapter.createFromResource(getActivity(), R.array.array_order, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(), R.array.array_match_type, android.R.layout.simple_spinner_item);
@@ -48,8 +49,31 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
         spinnerOrder.setAdapter(adapter0);
         spinnerMatchType.setAdapter(adapter1);
-
+        seekBarDistance.setProgress(10);
+        t.setText(5 +" km");
         provaBottone.setOnClickListener(this);
+
+
+        seekBarDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                t.setText(String.valueOf(progress) +" km");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+        });
+
 
         return view;
     }
@@ -60,9 +84,9 @@ public class FilterFragment extends Fragment implements OnClickListener{
         if (v.getId() == R.id.provaBottone) {
             Intent intent = new Intent(getActivity(), WhoPlaysActivity.class);
 
-            intent.putExtra("sort",spinnerOrder.getSelectedItem().toString());
+            intent.putExtra("sort", spinnerOrder.getSelectedItem().toString());
             intent.putExtra("type", spinnerMatchType.getSelectedItem().toString());
-
+            intent.putExtra("distance", seekBarDistance.getProgress());
 
             this.startActivity(intent);
         }
