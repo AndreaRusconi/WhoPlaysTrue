@@ -76,6 +76,7 @@
     <string name="time_textView">Ora:</string>
     <string name="number_of_player_ads">N° di giocatori richiesti</string>
     <string name="player_added">Giocatori giá registrati:</string>
+    <string name="address_textView">portami al campo</string>
 
 
 </resources>

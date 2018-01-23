@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -48,6 +49,7 @@ public class FindPlayerActivity extends AppCompatActivity{
     private TextView dateTextView;
     private TextView timeTextView;
     private TextView numberTextView;
+    private Button  letMeSee;
     private ListView listView;
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
 
@@ -89,6 +91,8 @@ public class FindPlayerActivity extends AppCompatActivity{
         }
 
         addMeButton = findViewById(R.id.add_me_ads_button);
+        letMeSee = findViewById(R.id.let_me_see_textView);
+
 
         creatorTextView = findViewById(R.id.creator_textView);
         typeTextView = findViewById(R.id.type_of_match_ads);
@@ -97,6 +101,7 @@ public class FindPlayerActivity extends AppCompatActivity{
         dateTextView = findViewById(R.id.date_ads);
         numberTextView = findViewById(R.id.number_of_player_ads);
         listView = findViewById(R.id.listViewFindPlayer);
+
 
         creatorTextView.setText(user);
         typeTextView.setText(type);
@@ -163,6 +168,17 @@ public class FindPlayerActivity extends AppCompatActivity{
 
             }
         });
+
+        letMeSee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" +place);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
+
     }
 
     private void setCheckId(final MyCallback myCallback){
@@ -277,10 +293,11 @@ public class FindPlayerActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-
     public interface MyCallback {
         void onCallback();
     }
 
-
 }
+
+
+
