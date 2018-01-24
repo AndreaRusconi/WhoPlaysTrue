@@ -1,11 +1,14 @@
 package com.example.user.whoplays;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,6 +77,11 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayDelete = new ArrayList<>();
     String Ordine;
     String Tipo;
+    Integer Distance;
+    Boolean flag;
+    Float distanceInMeters;
+    Double latitude;
+    Double longitude;
 
 
     ListView listView;
@@ -87,6 +95,7 @@ public class WhoPlaysFragment extends Fragment {
 
         Ordine = getArguments().getString("sort");
         Tipo = getArguments().getString("type");
+        Distance = getArguments().getInt("distance", 0);
 
 
         if (Ordine == null) {
@@ -94,6 +103,11 @@ public class WhoPlaysFragment extends Fragment {
         }
         if (Tipo == null) {
             Tipo = "Tutte le partite";
+        }
+        if (Distance == 0) {
+            flag = true;
+        } else {
+            flag = false;
         }
 
     }
@@ -105,168 +119,233 @@ public class WhoPlaysFragment extends Fragment {
         getActivity().setTitle(R.string.app_name);
         listView = view.findViewById(R.id.listViewWhoPlays);
 
-        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return null;
-        }
-        else {
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            myPosition = location;
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                // Logic to handle location object
-                            }
-                        }
-                    });
-        }
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
 
 
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+        if (flag) {
+
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
 
 
-                String user = dataSnapshot.child("user").getValue().toString();
-                String place = dataSnapshot.child("place").getValue().toString();
-                String date = dataSnapshot.child("date").getValue().toString();
-                String type = dataSnapshot.child("typeOfMatch").getValue().toString();
-                String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
-                String time = dataSnapshot.child("time").getValue().toString();
-                String key = dataSnapshot.getKey();
-                String address = dataSnapshot.child("latLng").getValue().toString();
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                Calendar calendar1 = Calendar.getInstance();
-                SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
-                String currentDate = formatter1.format(calendar1.getTime());
 
-                final String dateString = date;
-                final String timeString = time;
-                String datadb =dateString+" "+timeString;
+                    String user = dataSnapshot.child("user").getValue().toString();
+                    String place = dataSnapshot.child("place").getValue().toString();
+                    String date = dataSnapshot.child("date").getValue().toString();
+                    String type = dataSnapshot.child("typeOfMatch").getValue().toString();
+                    String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
+                    String time = dataSnapshot.child("time").getValue().toString();
+                    String key = dataSnapshot.getKey();
+                    String address = dataSnapshot.child("latLng").getValue().toString();
+
+                    Calendar calendar1 = Calendar.getInstance();
+                    SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
+                    String currentDate = formatter1.format(calendar1.getTime());
+
+                    final String dateString = date;
+                    final String timeString = time;
+                    String datadb = dateString + " " + timeString;
 
 //  Toast.makeText(context,"databse date:-"+datadb+"Current Date :-"+currentDate,Toast.LENGTH_LONG).show();
 
-                if(currentDate.compareTo(datadb)<=0) {
-                    //creo una hasHmap ad ogni ciclo
+                    if (currentDate.compareTo(datadb) <= 0) {
+                        //creo una hasHmap ad ogni ciclo
 
 
-                    if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
+                        if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
 
 
-                        HashMap<String, String> map = new HashMap<>();
+                            HashMap<String, String> map = new HashMap<>();
 
-                        //resource è il layout di come voglio ogni singolo item
-                        int resource = R.layout.listview_item_who_plays;
+                            //resource è il layout di come voglio ogni singolo item
+                            int resource = R.layout.listview_item_who_plays;
 
-                        //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-                        String[] from = {"user", "place", "date", "numberOfPlayer"};
+                            //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                            String[] from = {"user", "place", "date", "numberOfPlayer"};
 
-                        //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-                        int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
-
-
-                        SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
-                        listView.setAdapter(adapter);
-
-                        arrayDate.add(date);
-                        arrayPlace.add(place);
-                        arrayUser.add(user);
-                        arrayNumberOfPlayer.add(numberOfPlayer);
-                        arrayType.add(type);
-                        arrayTime.add(time);
-                        arrayKey.add(key);
-
-                        //inserisco i dati nell HashMAp
-
-                        map.put("user", user);
-                        map.put("date", date + ", ");
-                        map.put("place", place + ", ");
-                        if (Integer.parseInt(numberOfPlayer) > 0) {
-                            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
-                        } else {
-                            map.put("numberOfPlayer", "La partita é completa");
-                        }
-                        //inserisco l hashMap nell arrayList
-                        data.add(map);
-
-                        try {
+                            //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                            int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
 
 
-                            Geocoder selected_place_geocoder = new Geocoder(getContext());
-                            List<Address> address1;
-                            address1 = selected_place_geocoder.getFromLocationName(address, 1);
-                            if(address1 == null) {
-                                //do nothing
+                            SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                            listView.setAdapter(adapter);
+
+                            arrayDate.add(date);
+                            arrayPlace.add(place);
+                            arrayUser.add(user);
+                            arrayNumberOfPlayer.add(numberOfPlayer);
+                            arrayType.add(type);
+                            arrayTime.add(time);
+                            arrayKey.add(key);
+
+                            //inserisco i dati nell HashMAp
+
+                            map.put("user", user);
+                            map.put("date", date + ", ");
+                            map.put("place", place + ", ");
+                            if (Integer.parseInt(numberOfPlayer) > 0) {
+                                map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
                             } else {
-                                Address location = address1.get(0);
-
-                                double lat= location.getLatitude();
-                                double lng = location.getLongitude();
-
-                                Location targetLocation = new Location("");//provider name is unnecessary
-                                targetLocation.setLatitude(lat);//your coords of course
-                                targetLocation.setLongitude(lng);
-
-                                float distanceInMeters =  myPosition.distanceTo(targetLocation);
-                                Log.d("TAG", lat +"," +lng);
-                                Log.d("TAG", String.valueOf(distanceInMeters));
+                                map.put("numberOfPlayer", "La partita é completa");
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            //inserisco l hashMap nell arrayList
+                            data.add(map);
                         }
+
+                    } else {
+                        Log.d("TAG", key);
+                        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
+                        databaseReference1.child("Partite").child(key).setValue(null);
 
                     }
+                }
+
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
                 }
-                else {
-                    Log.d("TAG", key);
-                    DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
-                    databaseReference1.child("Partite").child(key).setValue(null);
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
                 }
-            }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else {
+
+            DatabaseReference mdatabaseReference1 = FirebaseDatabase.getInstance().getReference();
+            mdatabaseReference1.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
+
+
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+
+                    String user = dataSnapshot.child("user").getValue().toString();
+                    String place = dataSnapshot.child("place").getValue().toString();
+                    String date = dataSnapshot.child("date").getValue().toString();
+                    String type = dataSnapshot.child("typeOfMatch").getValue().toString();
+                    String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
+                    String time = dataSnapshot.child("time").getValue().toString();
+                    String key = dataSnapshot.getKey();
+                    String address = dataSnapshot.child("latLng").getValue().toString();
+
+
+                        if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
+
+                            Log.d("TAG", "Entrato2");
+
+                            HashMap<String, String> map = new HashMap<>();
+
+                            //resource è il layout di come voglio ogni singolo item
+                            int resource = R.layout.listview_item_who_plays;
+
+                            //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                            String[] from = {"user", "place", "date", "numberOfPlayer"};
+
+                            //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                            int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
+
+
+                            SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                            listView.setAdapter(adapter);
 
 
 
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                            try {
 
 
+                                Geocoder selected_place_geocoder = new Geocoder(getContext());
+                                List<Address> address1;
+                                address1 = selected_place_geocoder.getFromLocationName(address, 1);
+                                if (address1 == null) {
+                                    //do nothing
+
+                                } else {
+                                    Address location = address1.get(0);
+
+                                    double lat = location.getLatitude();
+                                    double lng = location.getLongitude();
+
+                                    Location targetLocation = new Location("");//provider name is unnecessary
+                                    targetLocation.setLatitude(lat);//your coords of course
+                                    targetLocation.setLongitude(lng);
 
 
+                                    Location yourPosition = new Location("");
+                                    yourPosition.setLatitude(44.403342);
+                                    yourPosition.setLongitude(8.958401);
+                                    distanceInMeters = yourPosition.distanceTo(targetLocation);
+                                }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    }
+
+                            if (distanceInMeters < (Distance * 1000)) {
+                                    arrayDate.add(date);
+                                    arrayPlace.add(place);
+                                    arrayUser.add(user);
+                                    arrayNumberOfPlayer.add(numberOfPlayer);
+                                    arrayType.add(type);
+                                    arrayTime.add(time);
+                                    arrayKey.add(key);
+
+                                    //inserisco i dati nell HashMAp
+
+                                    map.put("user", user);
+                                    map.put("date", date + ", ");
+                                    map.put("place", place + ", ");
+                                    if (Integer.parseInt(numberOfPlayer) > 0) {
+                                        map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
+                                    } else {
+                                        map.put("numberOfPlayer", "La partita é completa");
+                                    }
+                                    //inserisco l hashMap nell arrayList
+                                    data.add(map);
+                            }
 
 
+                        }
 
 
+                }
+
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -284,8 +363,9 @@ public class WhoPlaysFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        return view;
+            return view;
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -311,6 +391,4 @@ public class WhoPlaysFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

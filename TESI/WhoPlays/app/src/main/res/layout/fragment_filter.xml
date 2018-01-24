@@ -67,7 +67,7 @@
         <SeekBar
             android:id="@+id/seekBarDistance"
             android:layout_weight="1"
-            android:progress="10"
+            android:progress="0"
             android:max="100"/>
 
         <TextView

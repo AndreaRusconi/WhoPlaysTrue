@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 
 public class FilterFragment extends Fragment implements OnClickListener{
-    
+    private Button ripristina;
     private Button provaBottone;
     private Spinner spinnerOrder;
     private Spinner spinnerMatchType;
@@ -41,6 +41,8 @@ public class FilterFragment extends Fragment implements OnClickListener{
         seekBarDistance = (SeekBar) view.findViewById(R.id.seekBarDistance);
         provaBottone = (Button) view.findViewById(R.id.provaBottone);
         t = view.findViewById(R.id.percent_textView);
+        ripristina = view.findViewById(R.id.ripristina);
+
 
         ArrayAdapter<CharSequence> adapter0 = ArrayAdapter.createFromResource(getActivity(), R.array.array_order, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(), R.array.array_match_type, android.R.layout.simple_spinner_item);
@@ -49,9 +51,12 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
         spinnerOrder.setAdapter(adapter0);
         spinnerMatchType.setAdapter(adapter1);
-        seekBarDistance.setProgress(10);
-        t.setText(5 +" km");
+        seekBarDistance.setProgress(0);
+        t.setText(0 +" km");
         provaBottone.setOnClickListener(this);
+         ripristina.setOnClickListener(this);
+
+
 
 
         seekBarDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
@@ -81,6 +86,10 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.ripristina){
+            seekBarDistance.setProgress(0);
+        }
+
         if (v.getId() == R.id.provaBottone) {
             Intent intent = new Intent(getActivity(), WhoPlaysActivity.class);
 
