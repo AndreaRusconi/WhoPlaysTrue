@@ -166,7 +166,14 @@
         android:textColor="#008000"
         android:textStyle="italic" />
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_added"
+        android:textSize="20sp"
+        android:layout_marginBottom="3sp"
+        android:layout_marginTop="8sp"
+        android:textColor="#FFF"/>
 
     <ListView
 

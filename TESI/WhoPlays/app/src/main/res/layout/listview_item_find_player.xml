@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent"
     >
 
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/player_added"
-            android:textSize="20sp"
-            android:layout_marginBottom="3sp"
-            android:layout_marginTop="8sp"
-            android:textColor="#FFF"/>
-    </TableRow>
-<TableRow>
     <TextView
         android:id="@+id/nome_giocatore_item_find_player"
         android:layout_span="3"
@@ -23,7 +12,7 @@ android:layout_height="match_parent"
         android:textSize="28sp"
         android:textColor="#FFF"
         />
-</TableRow>
 
-</TableLayout>
+
+</LinearLayout>
 
