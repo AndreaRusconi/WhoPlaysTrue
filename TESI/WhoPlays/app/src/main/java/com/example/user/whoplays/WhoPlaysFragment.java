@@ -131,7 +131,6 @@ public class WhoPlaysFragment extends Fragment {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-
                     String user = dataSnapshot.child("user").getValue().toString();
                     String place = dataSnapshot.child("place").getValue().toString();
                     String date = dataSnapshot.child("date").getValue().toString();
@@ -141,19 +140,36 @@ public class WhoPlaysFragment extends Fragment {
                     String key = dataSnapshot.getKey();
                     String address = dataSnapshot.child("latLng").getValue().toString();
 
-                    Calendar calendar1 = Calendar.getInstance();
-                    SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
-                    String currentDate = formatter1.format(calendar1.getTime());
 
-                    final String dateString = date;
-                    final String timeString = time;
-                    String datadb = dateString + " " + timeString;
 
-//  Toast.makeText(context,"databse date:-"+datadb+"Current Date :-"+currentDate,Toast.LENGTH_LONG).show();
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String inputDateStr = date;
+                    String inputTimeStr = time;
+                    Date date1 = null;
+                    try {
+                        date1 = inputFormat.parse(inputDateStr + " " +inputTimeStr);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    String outputDateStr = outputFormat.format(date1);
 
-                    if (currentDate.compareTo(datadb) <= 0) {
-                        //creo una hasHmap ad ogni ciclo
+                    Log.d("TAG", String.valueOf((date1.getTime())));
+                    Log.d("TAG", String.valueOf(System.currentTimeMillis()));
 
+
+
+                    if ((date1.getTime() -  System.currentTimeMillis()) < 0) {
+
+                        Log.d("TAG", key);
+                        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
+                        databaseReference1.child("Partite").child(key).setValue(null);
+
+
+                    }
+                    //creo una hasHmap ad ogni ciclo
+
+                    else {
 
                         if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
 
@@ -194,11 +210,6 @@ public class WhoPlaysFragment extends Fragment {
                             //inserisco l hashMap nell arrayList
                             data.add(map);
                         }
-
-                    } else {
-                        Log.d("TAG", key);
-                        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
-                        databaseReference1.child("Partite").child(key).setValue(null);
 
                     }
                 }
@@ -245,81 +256,81 @@ public class WhoPlaysFragment extends Fragment {
                     String address = dataSnapshot.child("latLng").getValue().toString();
 
 
-                        if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
+                    if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
 
-                            Log.d("TAG", "Entrato2");
+                        Log.d("TAG", "Entrato2");
 
-                            HashMap<String, String> map = new HashMap<>();
+                        HashMap<String, String> map = new HashMap<>();
 
-                            //resource è il layout di come voglio ogni singolo item
-                            int resource = R.layout.listview_item_who_plays;
+                        //resource è il layout di come voglio ogni singolo item
+                        int resource = R.layout.listview_item_who_plays;
 
-                            //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-                            String[] from = {"user", "place", "date", "numberOfPlayer"};
+                        //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                        String[] from = {"user", "place", "date", "numberOfPlayer"};
 
-                            //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-                            int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
-
-
-                            SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
-                            listView.setAdapter(adapter);
+                        //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                        int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
 
 
-
-                            try {
-
-
-                                Geocoder selected_place_geocoder = new Geocoder(getContext());
-                                List<Address> address1;
-                                address1 = selected_place_geocoder.getFromLocationName(address, 1);
-                                if (address1 == null) {
-                                    //do nothing
-
-                                } else {
-                                    Address location = address1.get(0);
-
-                                    double lat = location.getLatitude();
-                                    double lng = location.getLongitude();
-
-                                    Location targetLocation = new Location("");//provider name is unnecessary
-                                    targetLocation.setLatitude(lat);//your coords of course
-                                    targetLocation.setLongitude(lng);
+                        SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                        listView.setAdapter(adapter);
 
 
-                                    Location yourPosition = new Location("");
-                                    yourPosition.setLatitude(44.403342);
-                                    yourPosition.setLongitude(8.958401);
-                                    distanceInMeters = yourPosition.distanceTo(targetLocation);
-                                }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    }
 
-                            if (distanceInMeters < (Distance * 1000)) {
-                                    arrayDate.add(date);
-                                    arrayPlace.add(place);
-                                    arrayUser.add(user);
-                                    arrayNumberOfPlayer.add(numberOfPlayer);
-                                    arrayType.add(type);
-                                    arrayTime.add(time);
-                                    arrayKey.add(key);
+                        try {
 
-                                    //inserisco i dati nell HashMAp
 
-                                    map.put("user", user);
-                                    map.put("date", date + ", ");
-                                    map.put("place", place + ", ");
-                                    if (Integer.parseInt(numberOfPlayer) > 0) {
-                                        map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
-                                    } else {
-                                        map.put("numberOfPlayer", "La partita é completa");
-                                    }
-                                    //inserisco l hashMap nell arrayList
-                                    data.add(map);
+                            Geocoder selected_place_geocoder = new Geocoder(getContext());
+                            List<Address> address1;
+                            address1 = selected_place_geocoder.getFromLocationName(address, 1);
+                            if (address1 == null) {
+                                //do nothing
+
+                            } else {
+                                Address location = address1.get(0);
+
+                                double lat = location.getLatitude();
+                                double lng = location.getLongitude();
+
+                                Location targetLocation = new Location("");//provider name is unnecessary
+                                targetLocation.setLatitude(lat);//your coords of course
+                                targetLocation.setLongitude(lng);
+
+
+                                Location yourPosition = new Location("");
+                                yourPosition.setLatitude(44.403342);
+                                yourPosition.setLongitude(8.958401);
+                                distanceInMeters = yourPosition.distanceTo(targetLocation);
                             }
-
-
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
+                        if (distanceInMeters < (Distance * 1000)) {
+                            arrayDate.add(date);
+                            arrayPlace.add(place);
+                            arrayUser.add(user);
+                            arrayNumberOfPlayer.add(numberOfPlayer);
+                            arrayType.add(type);
+                            arrayTime.add(time);
+                            arrayKey.add(key);
+
+                            //inserisco i dati nell HashMAp
+
+                            map.put("user", user);
+                            map.put("date", date + ", ");
+                            map.put("place", place + ", ");
+                            if (Integer.parseInt(numberOfPlayer) > 0) {
+                                map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
+                            } else {
+                                map.put("numberOfPlayer", "La partita é completa");
+                            }
+                            //inserisco l hashMap nell arrayList
+                            data.add(map);
+                        }
+
+
+                    }
 
 
                 }
@@ -363,7 +374,7 @@ public class WhoPlaysFragment extends Fragment {
                 startActivity(intent);
             }
         });
-            return view;
+        return view;
     }
 
 

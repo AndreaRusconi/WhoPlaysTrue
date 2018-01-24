@@ -1,15 +1,21 @@
 package com.example.user.whoplays;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.util.TimeZone;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -33,7 +39,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -159,6 +170,7 @@ public class FindPlayerActivity extends AppCompatActivity{
                         //databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         databaseReference.child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         Toast.makeText(getBaseContext(), "Ti sei aggiunto alla partita", Toast.LENGTH_SHORT).show();
+                        startAlarm();
                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
                         break;
                     case 3:
@@ -254,14 +266,14 @@ public class FindPlayerActivity extends AppCompatActivity{
             if (Integer.parseInt(number) > 0) {
                 addMeButton.setText("Aggiungimi alla partita");
                 playerType = 2;
-        }
+            }
             else {
                 addMeButton.setText("Partita completa");
                 playerType = 3;
             }
         }
 
-        }
+    }
 
 
 
@@ -297,7 +309,34 @@ public class FindPlayerActivity extends AppCompatActivity{
         void onCallback();
     }
 
+    private void startAlarm() {
+
+        AlarmManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent myIntent;
+        PendingIntent pendingIntent;
+
+        myIntent = new Intent(this, AlarmNotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String inputDateStr = date;
+        String inputTimeStr = time;
+        Date date = null;
+        try {
+            date = inputFormat.parse(inputDateStr + " " +inputTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String outputDateStr = outputFormat.format(date);
+
+
+        Log.d("TAG", String.valueOf(date.getTime()));
+        Log.d("TAG", String.valueOf(System.currentTimeMillis()));
+
+        Long difference = date.getTime() - System.currentTimeMillis();
+        manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + difference, pendingIntent);
+
+    }
+
 }
-
-
-
