@@ -5,14 +5,14 @@ android:layout_height="match_parent"
     >
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/nome_giocatore_item_find_player"
-        android:layout_span="3"
         android:text="nome_giocatore"
         android:layout_weight="1"
         android:textSize="28sp"
         android:textColor="#FFF"
         />
-
 
 </LinearLayout>
 
