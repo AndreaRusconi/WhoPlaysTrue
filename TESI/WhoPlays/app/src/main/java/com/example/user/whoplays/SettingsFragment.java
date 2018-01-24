@@ -1,5 +1,7 @@
 package com.example.user.whoplays;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 /**
  * Created by User on 01/12/2017.
  */
+
+
 
 public class SettingsFragment extends Fragment{
 
@@ -37,6 +42,7 @@ public class SettingsFragment extends Fragment{
         modpass = (Button) view.findViewById(R.id.button_modifica_password);
         elimina = (Button) view.findViewById(R.id.button_elimina_account);
         email = (EditText) view.findViewById(R.id.edit_text_email);
+
 
 
         applica.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +68,25 @@ public class SettingsFragment extends Fragment{
             }
         });
 
+        elimina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(getContext())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Cancella account")
+                        .setMessage("Sei sicuro di voler eliminare il tuo account? ")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(getContext(), LoginActivity.class));
 
+                            }
+
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
+        });
 
 
         return view;

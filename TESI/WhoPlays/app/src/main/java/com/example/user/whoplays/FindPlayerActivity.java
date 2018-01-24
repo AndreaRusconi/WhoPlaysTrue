@@ -128,8 +128,8 @@ public class FindPlayerActivity extends AppCompatActivity{
                     case 0:
                         new AlertDialog.Builder(FindPlayerActivity.this)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setTitle("Delete match")
-                                .setMessage("Are you sure you want to delete the match?")
+                                .setTitle("Cancella annuncio")
+                                .setMessage("Sei sicuro di voler eliminare l'annuncio?")
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
