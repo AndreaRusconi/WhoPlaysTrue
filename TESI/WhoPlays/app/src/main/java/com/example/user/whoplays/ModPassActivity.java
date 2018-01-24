@@ -85,9 +85,10 @@ public class ModPassActivity extends Activity {
                                                     snackbar_fail.show();
                                                 } else {
                                                     Log.d("tag","if1");
-                                                    Snackbar snackbar_su = Snackbar
-                                                            .make(getCurrentFocus(), "Password Successfully Modified", Snackbar.LENGTH_LONG);
-                                                    snackbar_su.show();
+                                                    
+                                                    mAuth.signOut();
+                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
                                                 }
                                             }
                                         });
