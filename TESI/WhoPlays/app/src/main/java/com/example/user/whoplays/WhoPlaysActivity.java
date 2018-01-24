@@ -3,7 +3,6 @@ package com.example.user.whoplays;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -19,19 +18,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Bundle bundle = new Bundle();
+    boolean check = false;
     NavigationView navigationView;
 
     @Override
@@ -73,8 +82,8 @@ public class WhoPlaysActivity extends AppCompatActivity
         toggle.syncState();
 
         // Name, email address, and profile photo Url
-        String name = user.getDisplayName();
-        String email = user.getEmail();
+       final String name = user.getDisplayName();
+       final String email = user.getEmail();
 
 
 
@@ -102,27 +111,35 @@ public class WhoPlaysActivity extends AppCompatActivity
 
         //inserisco il nodo giocatore nel database
 
+
+
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
 
+        Query query = databaseReference.orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    String id = databaseReference.push().getKey();
+                    Player player = new Player(id, name, email);
+                    databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError != null) {
+                                Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
+                            }
+                        }
+                    });
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
+        });
 
 
         Fragment fragment = new WhoPlaysFragment();
