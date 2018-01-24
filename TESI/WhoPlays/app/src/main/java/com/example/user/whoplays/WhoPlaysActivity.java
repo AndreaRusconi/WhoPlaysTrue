@@ -49,7 +49,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         bundle = new Bundle();
         bundle.putString("sort", sort);
         bundle.putString("type", type);
-        bundle.putInt("distance", distance );
+        bundle.putInt("distance", distance);
 
 
 
@@ -93,6 +93,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         TextView nav_mail = (TextView)hView.findViewById(R.id.nav_mail);
         nav_user.setText((CharSequence) name);
         nav_mail.setText((CharSequence) email);
+
 
 
 

@@ -146,15 +146,23 @@
                     android:inputType="number"
                     />
 
-
+        </TableRow>
                 <Button
                     android:id="@+id/confirm_ads_creation_button"
                     style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-                    android:layout_height="match_parent"
+
                     android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="200dp"
+                    android:textAlignment="center"
+                    android:textSize="18dp"
+                    android:text="@string/confirm_ads_creation_button"
+                    android:layout_marginLeft="200dp"
+                    android:textColor="#008000" />
                     />
 
-        </TableRow>
+
 
 
 
