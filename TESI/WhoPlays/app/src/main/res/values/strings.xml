@@ -9,6 +9,8 @@
     <string name="home">Home</string>
     <string name="add_me">Add me</string>
     <string name="mod_pass">Modifica Password</string>
+    <string name="item_time_who_plays">item_time</string>
+    <string name="title_list_calendar">Le mie partite:</string>
 
     <string name="menu_filter">Filtra</string>
     <string name="restore_all">Ripristina tutto</string>

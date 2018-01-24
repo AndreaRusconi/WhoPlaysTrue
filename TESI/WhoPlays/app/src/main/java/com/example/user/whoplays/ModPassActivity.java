@@ -29,23 +29,26 @@ public class ModPassActivity extends Activity {
         newpass = (EditText) findViewById(R.id.edit_text_newpass);
         modifica = (Button) findViewById(R.id.button_newpass);
         super.onCreate(savedInstanceState);
-    }
 
-  protected void onClick( View view)  {
+        modifica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        if ( view.getId() == R.id.button_newpass) {
+                if ( view.getId() == R.id.button_newpass) {
+                    if (oldpass.getText().toString().isEmpty() || newpass.getText().toString().isEmpty())
+                        Toast.makeText(getApplicationContext(), "campi vuoti", Toast.LENGTH_LONG).show();
 
-            if ( oldpass.getText().toString().equals(null) || newpass.getText().toString().equals(null)){
+                    else {
+                        if (oldpass.getText().toString().equals(newpass.getText().toString())) {
+                            Toast.makeText(getApplicationContext(), "la nuova password deve essere diversa", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "password modificata con successo ", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
+                        }
 
-                if (oldpass.getText().toString().equals(newpass.getText().toString())) {
-                    Toast.makeText(this, "la nuova password deve essere diversa", Toast.LENGTH_LONG).show();
-                } else
-                    Toast.makeText(this, "password modificata con successo ", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
+                    }
+                }
             }
-           else
-                Toast.makeText(this, "campi vuoti ", Toast.LENGTH_LONG).show();
-
-        }
-  }
+        });
+    }
 }
