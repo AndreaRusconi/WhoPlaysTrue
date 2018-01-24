@@ -316,7 +316,10 @@ public class FindPlayerActivity extends AppCompatActivity{
         PendingIntent pendingIntent;
 
         myIntent = new Intent(this, AlarmNotificationReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
+        pendingIntent = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), myIntent, 0);
+
+
+
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -335,7 +338,7 @@ public class FindPlayerActivity extends AppCompatActivity{
         Log.d("TAG", String.valueOf(System.currentTimeMillis()));
 
         Long difference = date.getTime() - System.currentTimeMillis();
-        manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + difference, pendingIntent);
+        manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + difference - 30*60*1000, pendingIntent);
 
     }
 
