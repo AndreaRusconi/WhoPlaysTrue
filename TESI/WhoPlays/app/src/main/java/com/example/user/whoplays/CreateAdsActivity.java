@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,9 +34,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class CreateAdsActivity extends AppCompatActivity {
     private DatePicker datePicker;
@@ -59,20 +63,54 @@ public class CreateAdsActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
         setSupportActionBar(toolbar);
 
-       final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Partite");
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         confirmCreation = findViewById(R.id.confirm_ads_creation_button);
         user = FirebaseAuth.getInstance().getCurrentUser();
+        final String emailG = user.getEmail();
 
 
         confirmCreation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validateForm()) {
-                    id = databaseReference.push().getKey();
+                    id = databaseReference.child("Partite").push().getKey();
                     Team team = new Team(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), user.getDisplayName(), latLng );
 
-                    databaseReference.child(id).setValue(team, new DatabaseReference.CompletionListener() {
+                    Query query = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                String keyG = null;
+                                for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                    // do with your result
+                                   keyG = issue.child("playerId").getValue().toString();
+                                }
+
+                                Log.d("TAG KEY", keyG);
+
+                                databaseReference.child("Giocatori").child(keyG).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+
+
+
+
+                    databaseReference.child("Partite").child(id).setValue(team, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             if (databaseError != null) {
