@@ -121,7 +121,12 @@ public class FindPlayerActivity extends AppCompatActivity{
         dateTextView.setText(date);
         numberTextView.setText(number);
 
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Partite");
+
+        FirebaseUser userFireBase = FirebaseAuth.getInstance().getCurrentUser();
+        String userG = userFireBase.getDisplayName();
+        final String emailG = userFireBase.getEmail();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         setCheckId(new MyCallback() {
             @Override
@@ -145,7 +150,7 @@ public class FindPlayerActivity extends AppCompatActivity{
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        databaseReference.child(key).setValue(null);
+                                        databaseReference.child("Partite").child(key).setValue(null);
                                         Toast.makeText(getBaseContext(), "Partita eliminata", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
 
@@ -156,9 +161,49 @@ public class FindPlayerActivity extends AppCompatActivity{
                                 .show();
                         break;
                     case 1:
-                        databaseReference.child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(null);
+                        databaseReference.child("Partite").child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(null);
                         Integer addNumber = Integer.parseInt(number) + 1;
-                        databaseReference.child(key).child("numberOfPlayer").setValue(addNumber);
+                        databaseReference.child("Partite").child(key).child("numberOfPlayer").setValue(addNumber);
+
+                        //******************************************************************************
+
+                        Query query = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    String keyG = null;
+                                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                        // do with your result
+                                        keyG = issue.child("playerId").getValue().toString();
+                                    }
+
+                                    Log.d("TAG KEY", keyG);
+
+                                    databaseReference.child("Giocatori").child(keyG).child("idPartita").child(key).setValue(null, new DatabaseReference.CompletionListener() {
+                                        @Override
+                                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                            if (databaseError != null) {
+                                                Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+
+
+
+
+
+
+
+                         //************************************************************************
                         Toast.makeText(getBaseContext(), "Hai annullato la partecipazione", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
                         break;
@@ -166,9 +211,42 @@ public class FindPlayerActivity extends AppCompatActivity{
 
                     case 2:
                         Integer subNumber = Integer.parseInt(number) - 1;
-                        databaseReference.child(key).child("numberOfPlayer").setValue(subNumber);
-                        //databaseReference.child(key).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                        databaseReference.child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        databaseReference.child("Partite").child(key).child("numberOfPlayer").setValue(subNumber);
+                        databaseReference.child("Partite").child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        //*****************************************************************
+
+                        Query query1 = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
+                        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    String keyG = null;
+                                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                                        // do with your result
+                                        keyG = issue.child("playerId").getValue().toString();
+                                    }
+
+                                    Log.d("TAG KEY", keyG);
+
+                                    databaseReference.child("Giocatori").child(keyG).child("idPartita").child(key).setValue(key, new DatabaseReference.CompletionListener() {
+                                        @Override
+                                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                            if (databaseError != null) {
+                                                Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+
+
+                        //*********************************************************
                         Toast.makeText(getBaseContext(), "Ti sei aggiunto alla partita", Toast.LENGTH_SHORT).show();
                         startAlarm();
                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
@@ -194,7 +272,7 @@ public class FindPlayerActivity extends AppCompatActivity{
     }
 
     private void setCheckId(final MyCallback myCallback){
-        databaseReference.child(key).child("partecipanti").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Partite").child(key).child("partecipanti").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
