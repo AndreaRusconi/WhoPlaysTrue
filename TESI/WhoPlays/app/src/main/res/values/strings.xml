@@ -8,6 +8,7 @@
 
     <string name="home">Home</string>
     <string name="add_me">Add me</string>
+    <string name="mod_pass">Modifica Password</string>
 
     <string name="menu_filter">Filtra</string>
     <string name="restore_all">Ripristina tutto</string>

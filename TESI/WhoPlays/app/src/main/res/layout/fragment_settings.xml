@@ -18,12 +18,13 @@
             android:textSize="22dp" />
 
         <EditText
+            android:id="@+id/edit_text_email"
             style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="textEmailAddress"
             android:hint="email"
+            android:inputType="textEmailAddress"
             android:textColor="#008000" />
 
 
@@ -32,6 +33,7 @@
 
 
     <Button
+        android:id="@+id/button_applica"
         style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +56,7 @@
             android:textSize="22dp" />
 
         <Button
+            android:id="@+id/button_modifica_password"
             style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,6 +78,7 @@
             android:textSize="22dp" />
 
         <Button
+            android:id="@+id/button_elimina_account"
             style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
