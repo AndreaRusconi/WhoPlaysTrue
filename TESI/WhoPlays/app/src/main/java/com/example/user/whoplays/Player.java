@@ -1,31 +1,21 @@
 package com.example.user.whoplays;
 
 /**
- * Created by io on 19/01/2018.
+ * Created by filip on 24/01/2018.
  */
 
 public class Player {
 
     public String playerId;
-    public String typeOfMatch;
-    public String date;
-    public String time;
-    public String place;
-    public Integer numberOfPlayer;
-    public String user;
-    public String latLng;
+    public String name;
+    public String email;
 
     public Player(){}
 
-    public Player(String playerId, String typeOfMatch, String date, String time, String place, Integer numberOfPlayer, String user, String latLng){
+    public Player(String playerId, String name, String email){
         this.playerId = playerId;
-        this.typeOfMatch = typeOfMatch;
-        this.date = date;
-        this.time = time;
-        this.place = place;
-        this.numberOfPlayer = numberOfPlayer;
-        this.user = user;
-        this.latLng = latLng;
+        this.name = name;
+        this.email = email;
     }
 
 }
