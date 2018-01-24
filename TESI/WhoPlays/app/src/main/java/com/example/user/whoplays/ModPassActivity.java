@@ -54,18 +54,18 @@ public class ModPassActivity extends Activity {
             public void onClick(View view) {
 
                 if (view.getId() == R.id.button_newpass) {
-                    Log.d("tag","if1");
+
                     if (oldpass.getText().toString().isEmpty() || newpass.getText().toString().isEmpty()) {
-                        Log.d("tag", "if2");
+
                         Toast.makeText(getApplicationContext(), "campi vuoti", Toast.LENGTH_LONG).show();
                     }
 
                     else {
                         if (oldpass.getText().toString().equals(newpass.getText().toString())) {
-                            Log.d("tag","if3");
+
                             Toast.makeText(getApplicationContext(), "la nuova password deve essere diversa", Toast.LENGTH_LONG).show();
                         } else {
-                            Log.d("tag","else1");
+
                             user = mAuth.getCurrentUser();
                             email = user.getEmail();
                             AuthCredential credential = EmailAuthProvider.getCredential(email, oldpass.getText().toString());
@@ -74,18 +74,18 @@ public class ModPassActivity extends Activity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("tag","reauthcomplete");
+
                                         user.updatePassword(newpass.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (!task.isSuccessful()) {
-                                                    Log.d("tag","if5");
+
                                                     Snackbar snackbar_fail = Snackbar
                                                             .make(getCurrentFocus(), "Something went wrong. Please try again later", Snackbar.LENGTH_LONG);
                                                     snackbar_fail.show();
                                                 } else {
-                                                    Log.d("tag","if1");
-                                                    
+
+
                                                     mAuth.signOut();
                                                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
@@ -93,7 +93,7 @@ public class ModPassActivity extends Activity {
                                             }
                                         });
                                     } else {
-                                        Log.d("tag","authfailed");
+
                                         Snackbar snackbar_su = Snackbar
                                                 .make(getCurrentFocus(), "Authentication Failed", Snackbar.LENGTH_LONG);
                                         snackbar_su.show();

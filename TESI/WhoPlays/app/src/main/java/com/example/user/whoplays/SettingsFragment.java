@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
@@ -30,6 +32,8 @@ public class SettingsFragment extends Fragment{
     private EditText email;
 
     private DatabaseReference databaseReference;
+    private FirebaseUser user;
+    FirebaseAuth auth;
 
     @Nullable
     @Override
@@ -51,9 +55,16 @@ public class SettingsFragment extends Fragment{
 
                 String taken =  email.getText().toString();
                 if (!taken.isEmpty()) {
-                    startActivity(new Intent(getContext(), WhoPlaysActivity.class));
-                    Toast.makeText(getContext(), taken, Toast.LENGTH_LONG).show();
+                    Log.d ( "sett", "log e 1");
+                    user = auth.getCurrentUser();
+                    String oldemail= user.getEmail();
+                    user.updateEmail(email.getText().toString());
+                    if ( !oldemail.equals(user.getEmail())){
+                        startActivity(new Intent(getContext(),LoginActivity.class));
+                        Toast.makeText(getContext(), "E-mail modificata con successo", Toast.LENGTH_LONG).show();}
 
+                    else
+                        Toast.makeText(getContext(), "something goes wrong", Toast.LENGTH_LONG).show();
                 }
                 else
                     Toast.makeText(getContext(), "nessuna mail inserita", Toast.LENGTH_LONG).show();
@@ -78,6 +89,7 @@ public class SettingsFragment extends Fragment{
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                    user.delete();
                                     startActivity(new Intent(getContext(), LoginActivity.class));
 
                             }
