@@ -19,11 +19,11 @@ public class AlarmNotificationReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Alarm Actived!")
-                .setContentText("This is the alarm")
+                .setSmallIcon(R.drawable.whistle)
+                .setContentTitle("Partita tra 30 minuti!")
+                .setContentText("Ricordati che hai una partita tra 30 minuti")
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
-                .setContentInfo("INFO");
+                .setContentInfo("Reminder");
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, builder.build());

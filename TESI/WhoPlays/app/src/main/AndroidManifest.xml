@@ -64,8 +64,12 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"/>
+        <receiver android:name=".AlarmNotificationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
-        <receiver android:name=".AlarmNotificationReceiver"/>
     </application>
 
 </manifest>

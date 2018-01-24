@@ -7,7 +7,9 @@ package com.example.user.whoplays;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+
 public class FilterFragment extends Fragment implements OnClickListener{
     private Button ripristina;
     private Button provaBottone;
@@ -26,6 +29,7 @@ public class FilterFragment extends Fragment implements OnClickListener{
     private Spinner spinnerMatchType;
     private SeekBar seekBarDistance;
     private TextView t;
+    private SharedPreferences savedValues;
 
 
 
@@ -35,6 +39,9 @@ public class FilterFragment extends Fragment implements OnClickListener{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_filter, container, false);
+
+        savedValues = PreferenceManager.getDefaultSharedPreferences (getActivity());
+
 
         spinnerOrder = (Spinner) view.findViewById(R.id.spinnerOrder);
         spinnerMatchType = (Spinner) view.findViewById(R.id.spinnerMatchType);
@@ -99,5 +106,26 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
             this.startActivity(intent);
         }
+    }
+
+    @Override
+    public void onPause() {
+        SharedPreferences.Editor editor = savedValues.edit();
+        editor.putInt("spinnerSelectionOrder", spinnerOrder.getSelectedItemPosition());
+        editor.putInt("spinnerSelectionType", spinnerMatchType.getSelectedItemPosition());
+        editor.putInt("seekbarDistance", seekBarDistance.getProgress());
+        editor.commit();
+
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        spinnerOrder.setSelection(savedValues.getInt("spinnerSelectionOrder",-1));
+        spinnerMatchType.setSelection(savedValues.getInt("spinnerSelectionType",-1));
+        seekBarDistance.setProgress(savedValues.getInt("seekbarDistance",-1));
+
     }
 }
