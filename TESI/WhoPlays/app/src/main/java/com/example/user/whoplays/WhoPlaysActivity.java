@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -93,6 +95,27 @@ public class WhoPlaysActivity extends AppCompatActivity
         TextView nav_mail = (TextView)hView.findViewById(R.id.nav_mail);
         nav_user.setText((CharSequence) name);
         nav_mail.setText((CharSequence) email);
+
+
+
+        /*****************************************************************/
+
+        //inserisco il nodo giocatore nel database
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

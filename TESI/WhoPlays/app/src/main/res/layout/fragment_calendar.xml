@@ -4,9 +4,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/field">
 
-    <CalendarView
-        android:id="@+id/calendar_match"
+    <TextView
+        android:id="@+id/title_list_calendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="2sp"
+        android:text="@string/title_list_calendar"/>
+
+
+    <ListView
+
+        android:divider="#FFF"
+        android:dividerHeight="3dp"
+        android:listSelector="#008000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listViewCalendar"/>
 
 </LinearLayout>
