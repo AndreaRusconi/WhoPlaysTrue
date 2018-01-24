@@ -200,6 +200,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         switch (id) {
             case R.id.home:
                 fragment = new WhoPlaysFragment();
+                fragment.setArguments(bundle);
                 break;
             case R.id.my_team:
                 fragment = new MyInfoFragment();
