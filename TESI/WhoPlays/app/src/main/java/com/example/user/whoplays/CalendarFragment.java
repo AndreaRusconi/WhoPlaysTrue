@@ -55,7 +55,7 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         listView = view.findViewById(R.id.listViewCalendar);
 
-
+/*
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -168,7 +168,7 @@ public class CalendarFragment extends Fragment {
 
 
 
-
+*/
 
 
         return inflater.inflate(R.layout.fragment_calendar,container,false);
