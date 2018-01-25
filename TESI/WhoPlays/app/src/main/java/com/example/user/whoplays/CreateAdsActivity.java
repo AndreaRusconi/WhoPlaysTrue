@@ -90,6 +90,7 @@ public class CreateAdsActivity extends AppCompatActivity {
 
                                 Log.d("TAG KEY", keyG);
 
+                                databaseReference.child("Partite").child(id).child("partecipanti").child(keyG).setValue(user.getDisplayName());
                                 databaseReference.child("Giocatori").child(keyG).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -123,6 +124,7 @@ public class CreateAdsActivity extends AppCompatActivity {
 
                         }
                     });
+
                 }
 
                 }
