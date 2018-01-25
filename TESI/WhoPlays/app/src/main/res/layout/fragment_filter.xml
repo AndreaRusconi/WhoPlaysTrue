@@ -68,7 +68,7 @@
             android:id="@+id/seekBarDistance"
             android:layout_weight="1"
             android:progress="0"
-            android:max="100"/>
+            android:max="50"/>
 
         <TextView
             android:id="@+id/percent_textView"
