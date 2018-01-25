@@ -62,8 +62,6 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class WhoPlaysFragment extends Fragment {
 
-    FusedLocationProviderClient mFusedLocationClient;
-
     Location myPosition;
     DatabaseReference databaseReference;
     ArrayList<String> arrayPlace = new ArrayList();
@@ -91,7 +89,7 @@ public class WhoPlaysFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
 
         Ordine = getArguments().getString("sort");
         Tipo = getArguments().getString("type");
@@ -186,32 +184,35 @@ public class WhoPlaysFragment extends Fragment {
                             int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
 
 
-                            SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
-                            listView.setAdapter(adapter);
+                            if (getActivity() != null) {
+// Code goes here.
 
-                            arrayDate.add(date);
-                            arrayPlace.add(place);
-                            arrayUser.add(user);
-                            arrayNumberOfPlayer.add(numberOfPlayer);
-                            arrayType.add(type);
-                            arrayTime.add(time);
-                            arrayKey.add(key);
+                                SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                                listView.setAdapter(adapter);
 
-                            //inserisco i dati nell HashMAp
+                                arrayDate.add(date);
+                                arrayPlace.add(place);
+                                arrayUser.add(user);
+                                arrayNumberOfPlayer.add(numberOfPlayer);
+                                arrayType.add(type);
+                                arrayTime.add(time);
+                                arrayKey.add(key);
 
-                            map.put("user", user);
-                            map.put("date", date + ", ");
-                            map.put("place", place + ", ");
-                            if (Integer.parseInt(numberOfPlayer) > 0) {
-                                map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
-                            } else {
-                                map.put("numberOfPlayer", "La partita é completa");
+                                //inserisco i dati nell HashMAp
+
+                                map.put("user", user);
+                                map.put("date", date + ", ");
+                                map.put("place", place + ", ");
+                                if (Integer.parseInt(numberOfPlayer) > 0) {
+                                    map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
+                                } else {
+                                    map.put("numberOfPlayer", "La partita é completa");
+                                }
+                                //inserisco l hashMap nell arrayList
+                                data.add(map);
                             }
-                            //inserisco l hashMap nell arrayList
-                            data.add(map);
                         }
-
-                    }
+                        }
                 }
 
 
