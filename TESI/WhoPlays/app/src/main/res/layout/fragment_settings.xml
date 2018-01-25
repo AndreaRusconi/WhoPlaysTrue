@@ -9,43 +9,6 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="40dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="modifica e_mail : "
-            android:textAlignment="textEnd"
-            android:textColor="#fff"
-            android:textSize="22dp" />
-
-        <EditText
-            android:id="@+id/edit_text_email"
-            style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="email"
-            android:inputType="textEmailAddress"
-            android:textColor="#008000" />
-
-
-
-    </TableRow>
-
-
-    <Button
-        android:id="@+id/button_applica"
-        style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginRight="200dp"
-        android:text="applica "
-        android:textColor="#008000"/>
-
-    <TableRow
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="50dp">
 
         <TextView
             android:layout_width="wrap_content"
