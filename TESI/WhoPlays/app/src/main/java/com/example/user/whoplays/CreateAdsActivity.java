@@ -54,6 +54,7 @@ public class CreateAdsActivity extends AppCompatActivity {
     private String id;
     FirebaseUser user;
     private String latLng;
+    public String keyG = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,18 +80,21 @@ public class CreateAdsActivity extends AppCompatActivity {
 
                     Query query = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                String keyG = null;
+
                                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
                                     // do with your result
                                    keyG = issue.child("playerId").getValue().toString();
+
                                 }
 
                                 Log.d("TAG KEY", keyG);
 
-                                databaseReference.child("Partite").child(id).child("partecipanti").child(keyG).setValue(user.getDisplayName());
+
                                 databaseReference.child("Giocatori").child(keyG).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -118,6 +122,7 @@ public class CreateAdsActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
+                                databaseReference.child("partecipanti").child(keyG).setValue(user.getDisplayName());
                                 Intent intent = new Intent(getBaseContext(),WhoPlaysActivity.class);
                                 startActivity(intent);
                             }

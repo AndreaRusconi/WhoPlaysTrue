@@ -3,6 +3,7 @@ package com.example.user.whoplays;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -78,6 +79,7 @@ public class FindPlayerActivity extends AppCompatActivity{
     String key;
     Boolean registered = false;
     Integer playerType;
+    String keyG ;
 
 
     @Override
@@ -248,7 +250,7 @@ public class FindPlayerActivity extends AppCompatActivity{
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
-                                    String keyG = null;
+                                    keyG = null;
                                     for (DataSnapshot issue : dataSnapshot.getChildren()) {
                                         // do with your result
                                         keyG = issue.child("playerId").getValue().toString();
@@ -266,6 +268,8 @@ public class FindPlayerActivity extends AppCompatActivity{
                                             }
                                         }
                                     });
+
+                                    databaseReference.child("Partite").child(key).child("partecipanti").child(keyG).setValue(null);
                                 }
                             }
                             @Override
@@ -278,9 +282,9 @@ public class FindPlayerActivity extends AppCompatActivity{
 
 
 
-
                          //************************************************************************
                         Toast.makeText(getBaseContext(), "Hai annullato la partecipazione", Toast.LENGTH_SHORT).show();
+                        stopAlarm();
                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
                         break;
 
@@ -334,6 +338,8 @@ public class FindPlayerActivity extends AppCompatActivity{
                 }
 
             }
+
+
         });
 
 
@@ -469,7 +475,9 @@ public class FindPlayerActivity extends AppCompatActivity{
         PendingIntent pendingIntent;
 
         myIntent = new Intent(this, AlarmNotificationReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), myIntent, 0);
+        String codice = date + time;
+        Integer id = codice.hashCode();
+        pendingIntent = PendingIntent.getBroadcast(this, id, myIntent, 0);
 
 
 
@@ -486,13 +494,26 @@ public class FindPlayerActivity extends AppCompatActivity{
         }
         String outputDateStr = outputFormat.format(date);
 
-
-        Log.d("TAG", String.valueOf(date.getTime()));
-        Log.d("TAG", String.valueOf(System.currentTimeMillis()));
-
         Long difference = date.getTime() - System.currentTimeMillis();
         manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + difference - 30*60*1000, pendingIntent);
 
     }
+
+
+
+    private void stopAlarm() {
+
+        AlarmManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+        String codice = date + time;
+        Integer id = codice.hashCode();
+
+        Intent myIntent = new Intent(this, AlarmNotificationReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(this, id , myIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(sender);
+
+    }
+
 
 }
