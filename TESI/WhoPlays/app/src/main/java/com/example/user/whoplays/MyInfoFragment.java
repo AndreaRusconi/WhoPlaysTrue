@@ -21,7 +21,7 @@ public class MyInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(R.string.myTeam);
+        getActivity().setTitle(R.string.myInfo);
 
         return inflater.inflate(R.layout.fragment_my_info,null);
     }
