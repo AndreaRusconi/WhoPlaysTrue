@@ -89,18 +89,29 @@ public class FilterFragment extends Fragment implements OnClickListener{
 
         return view;
     }
-
+String sort;
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ripristina){
             seekBarDistance.setProgress(0);
+            spinnerOrder.setSelection(0);
+            spinnerMatchType.setSelection(0);
         }
 
         if (v.getId() == R.id.provaBottone) {
+
+            if(spinnerOrder.getSelectedItem().toString().equals("numero di giocatori")){
+                sort = "numberOfPlayer" ;
+            }
+            else{
+                sort = "date";
+            }
+
+
             Intent intent = new Intent(getActivity(), WhoPlaysActivity.class);
 
-            intent.putExtra("sort", spinnerOrder.getSelectedItem().toString());
+            intent.putExtra("sort", sort);
             intent.putExtra("type", spinnerMatchType.getSelectedItem().toString());
             intent.putExtra("distance", seekBarDistance.getProgress());
 

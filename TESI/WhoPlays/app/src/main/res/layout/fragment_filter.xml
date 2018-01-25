@@ -85,7 +85,7 @@
             android:id="@+id/provaBottone"
             android:layout_span="2"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/button_filter" />
 
     </TableRow>
 

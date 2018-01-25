@@ -22,8 +22,8 @@
     <string name="home_button">Home</string>
 
     <string-array name="array_order">
-        <item>date</item>
-        <item>numberOfPlayer</item>
+        <item>data</item>
+        <item>numero di giocatori</item>
     </string-array>
 
     <string-array name="array_match_type">
@@ -82,6 +82,7 @@
     <string name="player_added">Giocatori giá registrati:</string>
     <string name="address_textView">portami al campo</string>
     <string name="percentage">%</string>
+    <string name="button_filter">Applica</string>
 
 
 </resources>

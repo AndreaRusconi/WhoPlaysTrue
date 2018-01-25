@@ -279,10 +279,6 @@ public class CreateAdsActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         }
-        else if(id == R.id.options_create_ads_menu){
-            Toast toast= Toast.makeText(this,"ciao",Toast.LENGTH_SHORT);
-            toast.show();
-        }
 
         return super.onOptionsItemSelected(item);
     }
