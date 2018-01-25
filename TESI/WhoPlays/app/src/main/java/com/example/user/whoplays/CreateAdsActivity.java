@@ -4,7 +4,10 @@ package com.example.user.whoplays;
  * Created by io on 17/01/2018.
  */
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -76,6 +79,12 @@ public class CreateAdsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (validateForm()) {
                     id = databaseReference.child("Partite").push().getKey();
+
+
+
+
+
+
                     Team team = new Team(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), user.getDisplayName(), latLng );
 
                     Query query = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
@@ -349,7 +358,33 @@ public class CreateAdsActivity extends AppCompatActivity {
             numberOfPlayer.setError(null);
         }
 
-           return valid;
+
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String inputDateStr = date;
+        String inputTimeStr = time;
+        Date date1 = null;
+        try {
+            date1 = inputFormat.parse(inputDateStr + " " +inputTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String outputDateStr = outputFormat.format(date1);
+
+        Log.d("TAG", String.valueOf((date1.getTime())));
+        Log.d("TAG", String.valueOf(System.currentTimeMillis()));
+
+
+
+        if ((date1.getTime() -  System.currentTimeMillis()) < 0) {
+            valid = false;
+            Toast.makeText(getBaseContext(), "Inserito orario passato", Toast.LENGTH_SHORT).show();
+        }
+
+
+        return valid;
+
     }
 
     private boolean checkNumber() {
