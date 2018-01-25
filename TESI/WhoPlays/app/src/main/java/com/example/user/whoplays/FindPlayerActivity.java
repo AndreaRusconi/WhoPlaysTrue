@@ -63,6 +63,7 @@ public class FindPlayerActivity extends AppCompatActivity{
     private Button  letMeSee;
     private ListView listView;
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
+    ArrayList<String> arrayIdPartita = new ArrayList<>();
 
     private Button addMeButton;
 
@@ -103,6 +104,8 @@ public class FindPlayerActivity extends AppCompatActivity{
 
         addMeButton = findViewById(R.id.add_me_ads_button);
         letMeSee = findViewById(R.id.let_me_see_textView);
+
+
 
 
         creatorTextView = findViewById(R.id.creator_textView);
@@ -149,6 +152,78 @@ public class FindPlayerActivity extends AppCompatActivity{
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+
+                                        //***************************************
+
+
+
+                                        databaseReference.child("Giocatori").addChildEventListener(new ChildEventListener() {
+
+
+                                            @Override
+                                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                                String kG = dataSnapshot.child("playerId").getValue().toString();
+                                                
+                                                    for (DataSnapshot issue : dataSnapshot.child("idPartita").getChildren()) {
+                                                        // do with your result
+
+                                                        Log.d("TEG", kG + "     " + issue.getValue().toString());
+
+                                                        if (issue.getValue().toString().equals(key)){
+                                                                arrayIdPartita.add(kG);
+                                                            Log.d("TEG", "yeeeeeeeeeeeeeeeeeeeeee");
+                                                        }
+
+
+                                                    }
+
+
+
+
+                                            }
+
+
+                                            @Override
+                                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                      //  Log.d("TAG POLO", arrayIdPartita.get(0));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        //***************************************************************************************
 
                                         databaseReference.child("Partite").child(key).setValue(null);
                                         Toast.makeText(getBaseContext(), "Partita eliminata", Toast.LENGTH_SHORT).show();
@@ -212,7 +287,6 @@ public class FindPlayerActivity extends AppCompatActivity{
                     case 2:
                         Integer subNumber = Integer.parseInt(number) - 1;
                         databaseReference.child("Partite").child(key).child("numberOfPlayer").setValue(subNumber);
-                        databaseReference.child("Partite").child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         //*****************************************************************
 
                         Query query1 = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
@@ -227,6 +301,8 @@ public class FindPlayerActivity extends AppCompatActivity{
                                     }
 
                                     Log.d("TAG KEY", keyG);
+
+                                    databaseReference.child("Partite").child(key).child("partecipanti").child(keyG).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
                                     databaseReference.child("Giocatori").child(keyG).child("idPartita").child(key).setValue(key, new DatabaseReference.CompletionListener() {
                                         @Override
@@ -258,6 +334,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
             }
         });
+
 
         letMeSee.setOnClickListener(new View.OnClickListener() {
             @Override
