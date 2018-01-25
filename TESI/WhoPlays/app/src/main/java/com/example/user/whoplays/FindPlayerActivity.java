@@ -170,7 +170,8 @@ public class FindPlayerActivity extends AppCompatActivity{
                                                         Log.d("TEG", kG + "     " + issue.getValue().toString());
 
                                                         if (issue.getValue().toString().equals(key)){
-                                                                arrayIdPartita.add(kG);
+                                                               DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
+                                                               databaseReference2.child("Giocatori").child(kG).child("idPartita").child(issue.getValue().toString()).removeValue();
                                                             Log.d("TEG", "yeeeeeeeeeeeeeeeeeeeeee");
                                                         }
 

@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:textColor="#FFF"
         android:layout_marginBottom="2sp"
         android:text="@string/title_list_calendar"/>
 

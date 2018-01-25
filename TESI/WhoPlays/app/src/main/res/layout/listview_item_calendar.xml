@@ -11,6 +11,7 @@
                 android:layout_span="3"
                 android:layout_weight="1"
                 android:text="@string/item_place_who_plays"
+                android:textColor="#FFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
@@ -21,18 +22,21 @@
             android:id="@+id/itemDateCalendarTextView"
             android:textSize="18sp"
             android:text="@string/item_date_who_plays"
+            android:textColor="#FFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/itemTimeCalendarTextView"
             android:textSize="18sp"
             android:text="@string/item_time_who_plays"
+            android:textColor="#FFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/itemTypeCalendarTextView"
             android:textSize="18sp"
             android:text="@string/item_type_who_plays"
+            android:textColor="#FFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </TableRow>
