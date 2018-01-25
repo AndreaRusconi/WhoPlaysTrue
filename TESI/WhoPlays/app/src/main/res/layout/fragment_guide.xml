@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background">
 
+    <TextView
+        android:layout_marginTop="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:text="FAQ"/>
+
+
+    <TextView
+        android:layout_marginTop="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="Come posso creare un evento? "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="#fff"
+        android:textSize="22sp"
+        android:text="Per creare un evento, clicca il tasto in basso a destra. Seleziona ora il tipo di partita, il numero di giocatori richiesti e tutte le informazioni riguardanti la partita come il luogo, data e ora."
+        />
+
+    <TextView
+        android:layout_marginTop="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="Come posso modificare la mia password? "/>
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textStyle="italic"
+    android:textColor="#fff"
+    android:textSize="22sp"
+    android:text="Seleziona impostazioni nel menù laterale. Qui potrai modificare la tua password e cancellare il tuo account."
+    />
+
+    <TextView
+        android:layout_marginTop="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="Come faccio ad arrivare al campo di gioco? "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="#fff"
+        android:textSize="22sp"
+        android:text="Non conosci la strada? Clicca sull'evento e poi premi 'Portami li'. Grazie a GoogleMaps potrai raggiungere il campo di gioco trovando la strada piu comoda e veloce. "
+        />
+
+    <TextView
+        android:layout_marginTop="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="Come posso cercare le partite vicino alla mia posizione?  "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="#fff"
+        android:textSize="22sp"
+        android:text="Per trovare gli annunci vicino a te, attraverso i filtri seleziona la distanza massima desiderata, riuscirai a vedere solo gli annunci che ti interessano in modo veloce e semplice"
+        />
+
+    <TextView
+        android:layout_marginTop="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="Come posso vedere e partite a cui parteciperò?  "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="#fff"
+        android:textSize="22sp"
+        android:text="Attraverso il Calendario, potrai vedere le partite a cui parteciperai in futuro. In ogni caso riceverai una notifica mezz'ora prima l'inizio della partita. "
+        />
 </LinearLayout>
