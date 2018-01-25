@@ -48,8 +48,43 @@ public class WhoPlaysActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_who_plays);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String name = user.getDisplayName();
+        final String email = user.getEmail();
+
+
         if (user.getDisplayName() == null){
             startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
+        }
+        else {
+
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
+
+            Query query = databaseReference.orderByChild("email").equalTo(email);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        String id = databaseReference.push().getKey();
+                        Player player = new Player(id, name, email);
+                        databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                if (databaseError != null) {
+                                    Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
         Intent intent = getIntent();
@@ -82,12 +117,10 @@ public class WhoPlaysActivity extends AppCompatActivity
         toggle.syncState();
 
         // Name, email address, and profile photo Url
-       final String name = user.getDisplayName();
-       final String email = user.getEmail();
 
 
 
-        Log.d("TAG", "hey" +user.getPhoneNumber());
+
 
             // Check if user's email is verified
             boolean emailVerified = user.isEmailVerified();
@@ -113,33 +146,6 @@ public class WhoPlaysActivity extends AppCompatActivity
 
 
 
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
-
-        Query query = databaseReference.orderByChild("email").equalTo(email);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()) {
-                    String id = databaseReference.push().getKey();
-                    Player player = new Player(id, name, email);
-                    databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                            if (databaseError != null) {
-                                Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
-                            }
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
         Fragment fragment = new WhoPlaysFragment();
