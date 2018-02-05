@@ -40,13 +40,7 @@ public class WhoPlaysFragment extends Fragment {
 
     Location myPosition;
     DatabaseReference databaseReference;
-    ArrayList<String> arrayPlace = new ArrayList();
-    ArrayList<String> arrayType = new ArrayList();
-    ArrayList<String> arrayDate = new ArrayList();
-    ArrayList<String> arrayNumberOfPlayer = new ArrayList();
-    ArrayList<String> arrayUser = new ArrayList();
-    ArrayList<String> arrayTime = new ArrayList();
-    ArrayList<String> arrayKey = new ArrayList();
+    ArrayList<String> arrayKey = new ArrayList<>();
     ArrayList<HashMap<String, String>> data = new ArrayList<>();
     ArrayList<String> arrayDelete = new ArrayList<>();
     String Ordine;
@@ -271,12 +265,6 @@ public class WhoPlaysFragment extends Fragment {
                                     long id) {
 
                 Intent intent = new Intent(getContext(), FindPlayerActivity.class);
-                intent.putExtra("place", arrayPlace.get(position));
-                intent.putExtra("date", arrayDate.get(position));
-                intent.putExtra("numberOfPlayer", arrayNumberOfPlayer.get(position));
-                intent.putExtra("type", arrayType.get(position));
-                intent.putExtra("user", arrayUser.get(position));
-                intent.putExtra("time", arrayTime.get(position));
                 intent.putExtra("key", arrayKey.get(position));
                 startActivity(intent);
             }
@@ -313,12 +301,6 @@ public class WhoPlaysFragment extends Fragment {
 
     // salviamo i dati negli array
     public void populateArray(String date, String place, String user, String numberOfPlayer, String type, String time, String key) {
-        arrayDate.add(date);
-        arrayPlace.add(place);
-        arrayUser.add(user);
-        arrayNumberOfPlayer.add(numberOfPlayer);
-        arrayType.add(type);
-        arrayTime.add(time);
         arrayKey.add(key);
     }
 
@@ -348,7 +330,6 @@ public class WhoPlaysFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String outputDateStr = outputFormat.format(date1);
 
         Log.d("TAG", String.valueOf((date1.getTime())));
         Log.d("TAG", String.valueOf(System.currentTimeMillis()));

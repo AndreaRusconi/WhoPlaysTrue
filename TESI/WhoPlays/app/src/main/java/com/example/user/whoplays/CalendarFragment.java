@@ -31,45 +31,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-/**
- * Created by User on 01/12/2017.
- */
-
 public class CalendarFragment extends Fragment {
     DatabaseReference databaseReference;
-    ArrayList<String> arrayPlace = new ArrayList();
-    ArrayList<String> arrayType = new ArrayList();
-    ArrayList<String> arrayDate = new ArrayList();
-    ArrayList<String> arrayNumberOfPlayer = new ArrayList();
-    ArrayList<String> arrayUser = new ArrayList();
-    ArrayList<String> arrayTime = new ArrayList();
-    ArrayList<String> arrayKey = new ArrayList();
+    ArrayList<String> arrayKey = new ArrayList<>();
     ArrayList<HashMap<String, String>> data = new ArrayList<>();
-    ArrayList<String> arrayDelete = new ArrayList<>();
-
-
-
     ListView listView;
-    private String emailG;
-
+    private String emailUser;
 
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         listView = view.findViewById(R.id.listViewCalendar);
-
-        emailG = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         Log.d("TEG", "ECCOMI");
-
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
 
-
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
 
                 for (DataSnapshot issue : dataSnapshot.child("partecipanti").getChildren()) {
 
@@ -84,7 +65,6 @@ public class CalendarFragment extends Fragment {
                         String key = dataSnapshot.getKey();
                         String address = dataSnapshot.child("latLng").getValue().toString();
 
-
                         HashMap<String, String> map = new HashMap<>();
 
                         //resource è il layout di come voglio ogni singolo item
@@ -95,17 +75,10 @@ public class CalendarFragment extends Fragment {
 
                         //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
                         int[] to = {R.id.itemPlaceCalendarTextView, R.id.itemDateCalendarTextView, R.id.itemTimeCalendarTextView, R.id.itemTypeCalendarTextView};
-
-
+                        
                         SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
                         listView.setAdapter(adapter);
 
-                        arrayDate.add(date);
-                        arrayPlace.add(place);
-                        arrayUser.add(user);
-                        arrayNumberOfPlayer.add(numberOfPlayer);
-                        arrayType.add(type);
-                        arrayTime.add(time);
                         arrayKey.add(key);
 
                         //inserisco i dati nell HashMAp
@@ -143,29 +116,12 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
                 Intent intent = new Intent(getContext(), FindPlayerActivity.class);
-                intent.putExtra("place",arrayPlace.get(position));
-                intent.putExtra("date",arrayDate.get(position));
-                intent.putExtra("numberOfPlayer",arrayNumberOfPlayer.get(position));
-                intent.putExtra("type",arrayType.get(position));
-                intent.putExtra("user", arrayUser.get(position));
-                intent.putExtra("time", arrayTime.get(position));
                 intent.putExtra("key", arrayKey.get(position));
                 startActivity(intent);
             }

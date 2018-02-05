@@ -94,14 +94,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            place = extras.getString("place");
-            date = extras.getString("date");
-            type = extras.getString("type");
-            number = extras.getString("numberOfPlayer");
-            user = extras.getString("user");
-            time = extras.getString("time");
             key = extras.getString("key");
-            //The key argument here must match that used in the other activity
         }
 
         addMeButton = findViewById(R.id.add_me_ads_button);
@@ -117,21 +110,63 @@ public class FindPlayerActivity extends AppCompatActivity{
         dateTextView = findViewById(R.id.date_ads);
         numberTextView = findViewById(R.id.number_of_player_ads);
         listView = findViewById(R.id.listViewFindPlayer);
+//*************************************************************************************************************************
 
 
-        creatorTextView.setText(user);
-        typeTextView.setText(type);
-        placeTextView.setText(place);
-        timeTextView.setText(time);
-        dateTextView.setText(date);
-        numberTextView.setText(number);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
+
+
+                                                                     @Override
+                                                                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                                                         String keyCompare = dataSnapshot.getKey();
+                                                                         if (keyCompare.equals(key)) {
+
+                                                                             user = dataSnapshot.child("user").getValue().toString();
+                                                                             place = dataSnapshot.child("place").getValue().toString();
+                                                                             date = dataSnapshot.child("date").getValue().toString();
+                                                                             type = dataSnapshot.child("typeOfMatch").getValue().toString();
+                                                                             number = dataSnapshot.child("numberOfPlayer").getValue().toString();
+                                                                             time = dataSnapshot.child("time").getValue().toString();
+
+                                                                             creatorTextView.setText(user);
+                                                                             typeTextView.setText(type);
+                                                                             placeTextView.setText(place);
+                                                                             timeTextView.setText(time);
+                                                                             dateTextView.setText(date);
+                                                                             numberTextView.setText(number);
+                                                                         }
+                                                                     }
+
+                                                                     @Override
+                                                                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                                                     }
+
+                                                                     @Override
+                                                                     public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                                                     }
+
+                                                                     @Override
+                                                                     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                                                     }
+
+                                                                     @Override
+                                                                     public void onCancelled(DatabaseError databaseError) {
+
+                                                                     }
+                                                                 });
+
 
 
         FirebaseUser userFireBase = FirebaseAuth.getInstance().getCurrentUser();
         String userG = userFireBase.getDisplayName();
         final String emailG = userFireBase.getEmail();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         setCheckId(new MyCallback() {
             @Override
