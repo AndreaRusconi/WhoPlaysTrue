@@ -116,19 +116,6 @@ public class WhoPlaysActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Name, email address, and profile photo Url
-
-
-
-
-
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -138,17 +125,9 @@ public class WhoPlaysActivity extends AppCompatActivity
         nav_user.setText((CharSequence) name);
         nav_mail.setText((CharSequence) email);
 
-
-
-        /*****************************************************************/
-
         //inserisco il nodo giocatore nel database
 
-
-
-
-
-        Fragment fragment = new WhoPlaysFragment();
+     Fragment fragment = new WhoPlaysFragment();
         fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();

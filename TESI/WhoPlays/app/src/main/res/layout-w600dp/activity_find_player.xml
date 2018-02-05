@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TableRow android:layout_marginTop="30sp"
+    <TableRow android:layout_marginTop="80sp"
         android:layout_marginLeft="30sp"
         android:layout_marginRight="30sp">
 
@@ -147,9 +147,9 @@
     <Button
         android:id="@+id/add_me_ads_button"
         style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="200dp"
         android:layout_height="wrap_content"
         android:text="@string/add_me"
         android:textColor="#008000" />
@@ -157,22 +157,22 @@
     <Button
         android:id="@+id/let_me_see_textView"
         style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="200dp"
         android:layout_gravity="start"
         android:text="@string/address_textView"
         android:textColor="#008000"
         android:textStyle="italic" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/player_added"
         android:textSize="20sp"
-        android:layout_marginLeft="15sp"
-        android:layout_marginRight="15sp"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp"
         android:layout_marginBottom="3sp"
         android:layout_marginTop="8sp"
         android:textColor="#FFF"/>

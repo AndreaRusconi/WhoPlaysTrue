@@ -10,7 +10,7 @@ android:layout_height="match_parent"
         android:id="@+id/nome_giocatore_item_find_player"
         android:text="nome_giocatore"
         android:layout_weight="1"
-        android:textSize="20sp"
+        android:textSize="28sp"
         android:textColor="#FFF"
         />
 

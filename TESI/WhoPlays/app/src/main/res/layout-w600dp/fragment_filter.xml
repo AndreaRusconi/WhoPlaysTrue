@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10sp"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/ripristina"
+        style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
+        android:layout_width="351dp"
+        android:layout_height="25dp"
+        android:layout_gravity="right"
+        android:text="@string/restore_all"
+        android:textAlignment="center"
+        android:textColor="#008000"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        android:visibility="visible" />
+
+
+    <TableRow android:layout_marginTop="15sp">
+
+        <TextView
+            android:id="@+id/order"
+            android:layout_weight="1"
+            android:text="@string/order"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/spinnerOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+    </TableRow>
+
+
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <TextView
+            android:id="@+id/matchType"
+            android:layout_weight="1"
+            android:text="@string/match_type"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/spinnerMatchType"
+            android:layout_weight="1" />
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_weight="1"
+            android:text="@string/distance"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+
+        <SeekBar
+            android:id="@+id/seekBarDistance"
+            android:layout_weight="1"
+            android:progress="0"
+            android:max="50"/>
+
+        <TextView
+            android:id="@+id/percent_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/percentage"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10sp">
+
+        <Button
+            android:id="@+id/provaBottone"
+            android:layout_span="2"
+            android:layout_weight="1"
+            android:text="@string/button_filter" />
+
+    </TableRow>
+
+
+</TableLayout>

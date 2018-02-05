@@ -10,7 +10,7 @@
             android:layout_span="3"
             android:text="@string/item_type_who_plays"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:textSize="28sp"
             android:textColor="#FFF"
             />
     </TableRow>
@@ -19,19 +19,19 @@
         <TextView
             android:id="@+id/itemPlaceWhoPlaysTextView"
             android:text="@string/item_place_who_plays"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textColor="#FFF"
             />
         <TextView
             android:id="@+id/itemDateWhoPlaysTextView"
             android:text="@string/item_date_who_plays"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textColor="#FFF"
             />
         <TextView
             android:id="@+id/itemCreatorWhoPlaysTextView"
             android:text="@string/item_creator_who_plays"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="italic"
             android:textColor="#FFF"
             />

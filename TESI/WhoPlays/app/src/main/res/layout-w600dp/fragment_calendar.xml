@@ -4,26 +4,23 @@
     android:layout_height="match_parent"
     android:background="@drawable/login_background">
 
-
     <TextView
-        android:id="@+id/title_list_ads"
+        android:id="@+id/title_list_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="26sp"
         android:textColor="#FFF"
         android:layout_marginBottom="2sp"
-        android:text="@string/title_list_ads"/>
+        android:text="@string/title_list_calendar"/>
 
 
     <ListView
 
-
         android:divider="#FFF"
-        android:dividerHeight="1.5dp"
+        android:dividerHeight="3dp"
         android:listSelector="#008000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewWhoPlays"/>
-
+        android:id="@+id/listViewCalendar"/>
 
 </LinearLayout>

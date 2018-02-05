@@ -17,7 +17,7 @@
        android:layout_alignParentTop="true"
        android:layout_centerHorizontal="true"
        android:layout_gravity="center"
-       android:layout_marginTop="60dp"
+       android:layout_marginTop="140dp"
        android:ems="10"
        android:hint="E-mail"
        android:inputType="textEmailAddress" />
@@ -54,18 +54,19 @@
        android:layout_alignEnd="@+id/button_login"
        android:layout_alignParentBottom="true"
        android:layout_gravity="center"
+       android:layout_marginBottom="73dp"
        android:layout_marginTop="40dp"
        android:text="Sing up" />
 
 
    <com.google.android.gms.common.SignInButton
        android:id="@+id/sign_in_button"
-       android:layout_width="150dp"
+       android:layout_width="306dp"
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
        android:layout_gravity="center"
-       android:layout_marginTop="20dp"></com.google.android.gms.common.SignInButton>
+       android:layout_marginTop="80dp"></com.google.android.gms.common.SignInButton>
 
 
 </LinearLayout>

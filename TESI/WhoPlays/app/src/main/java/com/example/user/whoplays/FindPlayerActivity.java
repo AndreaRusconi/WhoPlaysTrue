@@ -155,9 +155,6 @@ public class FindPlayerActivity extends AppCompatActivity{
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        //***************************************
-
-
 
                                         databaseReference.child("Giocatori").addChildEventListener(new ChildEventListener() {
 
@@ -206,24 +203,6 @@ public class FindPlayerActivity extends AppCompatActivity{
 
                                             }
                                         });
-
-
-                                      //  Log.d("TAG POLO", arrayIdPartita.get(0));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                                         //***************************************************************************************

@@ -1,20 +1,12 @@
 package com.example.user.whoplays;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,38 +15,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 /**
  * Created by User on 01/12/2017.
@@ -95,7 +71,6 @@ public class WhoPlaysFragment extends Fragment {
         Tipo = getArguments().getString("type");
         Distance = getArguments().getInt("distance", 0);
 
-
         if (Ordine == null) {
             Ordine = "date";
         }
@@ -117,11 +92,8 @@ public class WhoPlaysFragment extends Fragment {
         getActivity().setTitle(R.string.app_name);
         listView = view.findViewById(R.id.listViewWhoPlays);
 
-
-
-
+        // Leggiamo i dati senza il filtro sulla distanza
         if (flag) {
-
             databaseReference = FirebaseDatabase.getInstance().getReference();
             databaseReference.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
 
@@ -138,39 +110,10 @@ public class WhoPlaysFragment extends Fragment {
                     String key = dataSnapshot.getKey();
                     String address = dataSnapshot.child("latLng").getValue().toString();
 
-
-
-                    SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
-                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    String inputDateStr = date;
-                    String inputTimeStr = time;
-                    Date date1 = null;
-                    try {
-                        date1 = inputFormat.parse(inputDateStr + " " +inputTimeStr);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    String outputDateStr = outputFormat.format(date1);
-
-                    Log.d("TAG", String.valueOf((date1.getTime())));
-                    Log.d("TAG", String.valueOf(System.currentTimeMillis()));
-
-
-
-                    if ((date1.getTime() -  System.currentTimeMillis()) < 0) {
-
-                        Log.d("TAG", key);
-                        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
-                        databaseReference1.child("Partite").child(key).setValue(null);
-
-
-                    }
-                    //creo una hasHmap ad ogni ciclo
-
-                    else {
+                    //controllo scadenza della partita
+                    if (!checkDeadline(date, time, key)) {
 
                         if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
-
 
                             HashMap<String, String> map = new HashMap<>();
 
@@ -183,36 +126,18 @@ public class WhoPlaysFragment extends Fragment {
                             //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
                             int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
 
-
                             if (getActivity() != null) {
 // Code goes here.
-
                                 SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
                                 listView.setAdapter(adapter);
 
-                                arrayDate.add(date);
-                                arrayPlace.add(place);
-                                arrayUser.add(user);
-                                arrayNumberOfPlayer.add(numberOfPlayer);
-                                arrayType.add(type);
-                                arrayTime.add(time);
-                                arrayKey.add(key);
+                                populateArray(date, place, user, numberOfPlayer, type, time, key);
 
-                                //inserisco i dati nell HashMAp
-
-                                map.put("user", user);
-                                map.put("date", date + ", ");
-                                map.put("place", place + ", ");
-                                if (Integer.parseInt(numberOfPlayer) > 0) {
-                                    map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
-                                } else {
-                                    map.put("numberOfPlayer", "La partita é completa");
-                                }
-                                //inserisco l hashMap nell arrayList
-                                data.add(map);
+                               //inserisco i dati nell HashMAp
+                                populateMap(map, user, date, place, numberOfPlayer, type);
                             }
                         }
-                        }
+                    }
                 }
 
 
@@ -236,8 +161,7 @@ public class WhoPlaysFragment extends Fragment {
 
                 }
             });
-        }
-        else {
+        } else {
 
             DatabaseReference mdatabaseReference1 = FirebaseDatabase.getInstance().getReference();
             mdatabaseReference1.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
@@ -276,8 +200,6 @@ public class WhoPlaysFragment extends Fragment {
                         SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
                         listView.setAdapter(adapter);
 
-
-
                         try {
 
 
@@ -308,26 +230,10 @@ public class WhoPlaysFragment extends Fragment {
                         }
 
                         if (distanceInMeters < (Distance * 1000)) {
-                            arrayDate.add(date);
-                            arrayPlace.add(place);
-                            arrayUser.add(user);
-                            arrayNumberOfPlayer.add(numberOfPlayer);
-                            arrayType.add(type);
-                            arrayTime.add(time);
-                            arrayKey.add(key);
+                            populateArray(date, place, user, numberOfPlayer, type, time, key);
 
                             //inserisco i dati nell HashMAp
-
-                            map.put("user", user);
-                            map.put("date", date + ", ");
-                            map.put("place", place + ", ");
-                            if (Integer.parseInt(numberOfPlayer) > 0) {
-                                map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
-                            } else {
-                                map.put("numberOfPlayer", "La partita é completa");
-                            }
-                            //inserisco l hashMap nell arrayList
-                            data.add(map);
+                            populateMap(map, user, date, place, numberOfPlayer, type);
                         }
 
 
@@ -365,10 +271,10 @@ public class WhoPlaysFragment extends Fragment {
                                     long id) {
 
                 Intent intent = new Intent(getContext(), FindPlayerActivity.class);
-                intent.putExtra("place",arrayPlace.get(position));
-                intent.putExtra("date",arrayDate.get(position));
-                intent.putExtra("numberOfPlayer",arrayNumberOfPlayer.get(position));
-                intent.putExtra("type",arrayType.get(position));
+                intent.putExtra("place", arrayPlace.get(position));
+                intent.putExtra("date", arrayDate.get(position));
+                intent.putExtra("numberOfPlayer", arrayNumberOfPlayer.get(position));
+                intent.putExtra("type", arrayType.get(position));
                 intent.putExtra("user", arrayUser.get(position));
                 intent.putExtra("time", arrayTime.get(position));
                 intent.putExtra("key", arrayKey.get(position));
@@ -402,5 +308,57 @@ public class WhoPlaysFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    // salviamo i dati negli array
+    public void populateArray(String date, String place, String user, String numberOfPlayer, String type, String time, String key) {
+        arrayDate.add(date);
+        arrayPlace.add(place);
+        arrayUser.add(user);
+        arrayNumberOfPlayer.add(numberOfPlayer);
+        arrayType.add(type);
+        arrayTime.add(time);
+        arrayKey.add(key);
+    }
+
+    public void populateMap(HashMap<String, String> map, String user, String date, String place, String numberOfPlayer, String type){
+        map.put("user", user);
+        map.put("date", date + ", ");
+        map.put("place", place + ", ");
+        if (Integer.parseInt(numberOfPlayer) > 0) {
+            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
+        } else {
+            map.put("numberOfPlayer", "La partita é completa");
+        }
+        //inserisco l hashMap nell arrayList
+        data.add(map);
+
+    }
+
+    //controlliamo che la data della partita sia una data futura( TRUE se passata, FALSE se futura)
+    public boolean checkDeadline(String date, String time, String key) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String inputDateStr = date;
+        String inputTimeStr = time;
+        Date date1 = null;
+        try {
+            date1 = inputFormat.parse(inputDateStr + " " + inputTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String outputDateStr = outputFormat.format(date1);
+
+        Log.d("TAG", String.valueOf((date1.getTime())));
+        Log.d("TAG", String.valueOf(System.currentTimeMillis()));
+
+        if ((date1.getTime() - System.currentTimeMillis()) < 0) {
+            DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
+            databaseReference1.child("Partite").child(key).setValue(null);
+            return true;
+        }
+
+        return false;
     }
 }
