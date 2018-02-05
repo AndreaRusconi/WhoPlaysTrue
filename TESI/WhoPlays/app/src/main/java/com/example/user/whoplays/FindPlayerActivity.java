@@ -198,25 +198,14 @@ public class FindPlayerActivity extends AppCompatActivity{
                                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                                 String kG = dataSnapshot.child("playerId").getValue().toString();
                                                 
-                                                    for (DataSnapshot issue : dataSnapshot.child("idPartita").getChildren()) {
-                                                        // do with your result
-
-                                                        Log.d("TEG", kG + "     " + issue.getValue().toString());
-
-                                                        if (issue.getValue().toString().equals(key)){
-                                                               DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
-                                                               databaseReference2.child("Giocatori").child(kG).child("idPartita").child(issue.getValue().toString()).removeValue();
-                                                            Log.d("TEG", "yeeeeeeeeeeeeeeeeeeeeee");
-                                                        }
-
-
+                                                for (DataSnapshot issue : dataSnapshot.child("idPartita").getChildren()) {
+                                                    // do with your result
+                                                    if (issue.getValue().toString().equals(key)){
+                                                        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
+                                                        databaseReference2.child("Giocatori").child(kG).child("idPartita").child(issue.getValue().toString()).removeValue();
                                                     }
-
-
-
-
+                                                }
                                             }
-
 
                                             @Override
                                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
