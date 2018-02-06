@@ -228,6 +228,9 @@ public class WhoPlaysActivity extends AppCompatActivity
                 fragment = new WhoPlaysFragment();
                 fragment.setArguments(bundle);
                 break;
+            case R.id.my_team:
+                fragment = new MyTeamFragment();
+                break;
             case R.id.calendar:
                 fragment = new CalendarFragment();
                 break;

@@ -9,13 +9,13 @@
 
     <ListView
         android:id="@+id/listViewWhoPlays"
-        android:layout_width="362dp"
-        android:layout_height="756dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="756sp"
+        android:layout_marginBottom="8sp"
+        android:layout_marginEnd="8sp"
 
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8sp"
+        android:layout_marginTop="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

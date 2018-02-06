@@ -9,6 +9,11 @@
             android:icon="@drawable/home2"
             android:title="@string/home" />
         <item
+            android:id="@+id/my_team"
+            android:icon="@drawable/whistle"
+            android:title="@string/my_team"
+            />
+        <item
             android:id="@+id/calendar"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/calendar" />
