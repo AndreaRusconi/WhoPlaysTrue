@@ -1,11 +1,17 @@
 package com.example.user.whoplays;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,13 +38,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 /**
  * Created by User on 01/12/2017.
  */
 
 public class WhoPlaysFragment extends Fragment {
 
-    Location myPosition;
+    static final int REQUESR_LOCATION = 1;
+    LocationManager locationManager;
     DatabaseReference databaseReference;
     ArrayList<String> arrayKey = new ArrayList<>();
     ArrayList<HashMap<String, String>> data = new ArrayList<>();
@@ -61,6 +71,8 @@ public class WhoPlaysFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
+
+
         Ordine = getArguments().getString("sort");
         Tipo = getArguments().getString("type");
         Distance = getArguments().getInt("distance", 0);
@@ -74,6 +86,8 @@ public class WhoPlaysFragment extends Fragment {
         if (Distance == 0) {
             flag = true;
         } else {
+            locationManager = (LocationManager)getActivity().getSystemService(getContext().LOCATION_SERVICE);
+            getLocation();
             flag = false;
         }
 
@@ -177,8 +191,6 @@ public class WhoPlaysFragment extends Fragment {
 
                     if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
 
-                        Log.d("TAG", "Entrato2");
-
                         HashMap<String, String> map = new HashMap<>();
 
                         //resource è il layout di come voglio ogni singolo item
@@ -202,8 +214,7 @@ public class WhoPlaysFragment extends Fragment {
                             address1 = selected_place_geocoder.getFromLocationName(address, 1);
                             if (address1 == null) {
                                 //do nothing
-
-                            } else {
+                             } else {
                                 Address location = address1.get(0);
 
                                 double lat = location.getLatitude();
@@ -213,10 +224,9 @@ public class WhoPlaysFragment extends Fragment {
                                 targetLocation.setLatitude(lat);//your coords of course
                                 targetLocation.setLongitude(lng);
 
-
                                 Location yourPosition = new Location("");
-                                yourPosition.setLatitude(44.403342);
-                                yourPosition.setLongitude(8.958401);
+                                yourPosition.setLatitude(latitude);
+                                yourPosition.setLongitude(longitude);
                                 distanceInMeters = yourPosition.distanceTo(targetLocation);
                             }
                         } catch (Exception e) {
@@ -225,7 +235,7 @@ public class WhoPlaysFragment extends Fragment {
 
                         if (distanceInMeters < (Distance * 1000)) {
                             populateArray(date, place, user, numberOfPlayer, type, time, key);
-
+                            Log.d("TAG", "ECCOMI");
                             //inserisco i dati nell HashMAp
                             populateMap(map, user, date, place, numberOfPlayer, type);
                         }
@@ -305,6 +315,8 @@ public class WhoPlaysFragment extends Fragment {
     }
 
     public void populateMap(HashMap<String, String> map, String user, String date, String place, String numberOfPlayer, String type){
+
+        Log.d("TAG", "ECCOMI1");
         map.put("user", user);
         map.put("date", date + ", ");
         map.put("place", place + ", ");
@@ -331,9 +343,6 @@ public class WhoPlaysFragment extends Fragment {
             e.printStackTrace();
         }
 
-        Log.d("TAG", String.valueOf((date1.getTime())));
-        Log.d("TAG", String.valueOf(System.currentTimeMillis()));
-
         if ((date1.getTime() - System.currentTimeMillis()) < 0) {
             DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference();
             databaseReference1.child("Partite").child(key).setValue(null);
@@ -341,5 +350,34 @@ public class WhoPlaysFragment extends Fragment {
         }
 
         return false;
+    }
+
+    public void getLocation() {
+        if (!(ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(getContext(), ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUESR_LOCATION);
+        }
+        else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+
+                Log.d("TAG", String.valueOf(longitude));
+            }
+
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUESR_LOCATION:
+                getLocation();;
+                break;
+        }
     }
 }
