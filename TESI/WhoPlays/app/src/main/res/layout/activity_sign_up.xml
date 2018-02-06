@@ -15,6 +15,7 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="200px"
         android:hint="Name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:inputType="text"/>
 
     <EditText
@@ -24,6 +25,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="40px"
         android:hint="Surname"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:inputType="text"/>
 
     <EditText
@@ -33,6 +35,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="40px"
         android:hint="Email"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@."
         android:inputType="textEmailAddress" />
 
     <EditText
