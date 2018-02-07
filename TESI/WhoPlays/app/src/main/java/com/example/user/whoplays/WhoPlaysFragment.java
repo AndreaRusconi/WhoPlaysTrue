@@ -55,7 +55,7 @@ public class WhoPlaysFragment extends Fragment {
     ArrayList<String> arrayDelete = new ArrayList<>();
     String Ordine;
     String Tipo;
-    Integer Distance;
+    Float Distance;
     Boolean flag;
     Float distanceInMeters;
     Double latitude;
@@ -75,7 +75,7 @@ public class WhoPlaysFragment extends Fragment {
 
         Ordine = getArguments().getString("sort");
         Tipo = getArguments().getString("type");
-        Distance = getArguments().getInt("distance", 0);
+        Distance = getArguments().getFloat("distance", 0);
 
         if (Ordine == null) {
             Ordine = "date";
@@ -235,7 +235,7 @@ public class WhoPlaysFragment extends Fragment {
 
                         if (distanceInMeters < (Distance * 1000)) {
                             populateArray(date, place, user, numberOfPlayer, type, time, key);
-                            Log.d("TAG", "ECCOMI");
+                            Log.d("TAGGA", "ECCOMI");
                             //inserisco i dati nell HashMAp
                             populateMap(map, user, date, place, numberOfPlayer, type);
                         }

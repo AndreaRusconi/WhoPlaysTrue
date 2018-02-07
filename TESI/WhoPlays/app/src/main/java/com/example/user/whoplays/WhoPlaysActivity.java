@@ -90,25 +90,37 @@ public class WhoPlaysActivity extends AppCompatActivity
         Intent intent = getIntent();
         String sort = intent.getStringExtra("sort");
         String type = intent.getStringExtra("type");
-        Integer distance = intent.getIntExtra("distance", 0 );
+        Float distance = intent.getFloatExtra("distance", 0 );
 
         bundle = new Bundle();
         bundle.putString("sort", sort);
         bundle.putString("type", type);
-        bundle.putInt("distance", distance);
+        bundle.putFloat("distance", distance);
 
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startActivity(new Intent(getBaseContext(),CreateAdsActivity.class));
             }
         });
+        FloatingActionButton fab2 = findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getBaseContext(),CreateAdsActivity.class));
+            }
+        });
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

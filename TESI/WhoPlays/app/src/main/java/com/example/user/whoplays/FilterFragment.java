@@ -61,7 +61,7 @@ public class FilterFragment extends Fragment implements OnClickListener{
         seekBarDistance.setProgress(0);
         t.setText(0 +" km");
         provaBottone.setOnClickListener(this);
-         ripristina.setOnClickListener(this);
+        ripristina.setOnClickListener(this);
 
 
 
@@ -113,7 +113,7 @@ String sort;
 
             intent.putExtra("sort", sort);
             intent.putExtra("type", spinnerMatchType.getSelectedItem().toString());
-            intent.putExtra("distance", seekBarDistance.getProgress());
+            intent.putExtra("distance", (float) seekBarDistance.getProgress());
 
             this.startActivity(intent);
         }
