@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 
 import com.google.firebase.database.ChildEventListener;
@@ -88,7 +89,6 @@ public class WhoPlaysFragment extends Fragment {
         } else {
             locationManager = (LocationManager)getActivity().getSystemService(getContext().LOCATION_SERVICE);
             getLocation();
-            flag = false;
         }
 
     }
@@ -355,6 +355,7 @@ public class WhoPlaysFragment extends Fragment {
     public void getLocation() {
         if (!(ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(getContext(), ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUESR_LOCATION);
+            flag = true;
         }
         else {
             Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -362,10 +363,12 @@ public class WhoPlaysFragment extends Fragment {
             if (location != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-
-                Log.d("TAG", String.valueOf(longitude));
+                flag = false;
             }
-
+            else {
+                flag = true;
+                Toast.makeText(getActivity(), "Non é possibile usare la posizione, assicurarsi che sia attiva la geolocalizzazione", Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
