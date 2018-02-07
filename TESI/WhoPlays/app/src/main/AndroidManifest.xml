@@ -30,7 +30,7 @@
             android:label="SingUp"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        />
+
 
         <activity
             android:name=".ModPassActivity"
@@ -46,6 +46,12 @@
         <activity
             android:name=".FilterActivity"
             android:label="@string/menu_filter"
+            android:theme="@style/DialogTheme"
+            android:screenOrientation="portrait"
+        />
+        <activity
+            android:name=".ChoiceTypeMatchActivity"
+            android:label="@string/choice_label"
             android:theme="@style/DialogTheme"
             android:screenOrientation="portrait"
         />

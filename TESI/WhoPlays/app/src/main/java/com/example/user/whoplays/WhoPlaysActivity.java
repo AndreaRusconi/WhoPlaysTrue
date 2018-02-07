@@ -107,17 +107,10 @@ public class WhoPlaysActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getBaseContext(),CreateAdsActivity.class));
+                startActivity(new Intent(getBaseContext(),ChoiceTypeMatchActivity.class));
             }
         });
-        FloatingActionButton fab2 = findViewById(R.id.fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                startActivity(new Intent(getBaseContext(),CreateAdsActivity.class));
-            }
-        });
 
 
 

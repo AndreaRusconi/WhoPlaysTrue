@@ -28,31 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/new_team2" />
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_marginBottom="85dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:src="@drawable/new_player"
-        app:backgroundTint="@color/fui_bgPhone"
-        app:layout_anchor="@id/fab"
-        app:layout_anchorGravity="top" />
-
-
-
-
-
-
-
-
+        app:srcCompat="@drawable/add" />
 
 </android.support.design.widget.CoordinatorLayout>

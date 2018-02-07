@@ -87,5 +87,9 @@
     <string name="button_filter">Applica</string>
     <string name="type_of_match_home">Tipo partita:</string>
     <string name="my_team">Le mie squadre</string>
+    <string name="choice_label">Inserisci un nuovo annuncio</string>
+    <string name="text_view_choice_type_activity">Sei in cerca di...</string>
+    <string name="button_player_choice_type_activity">Giocatori</string>
+    <string name="button_team_choice_type_activity">Squadra</string>
 
 </resources>
