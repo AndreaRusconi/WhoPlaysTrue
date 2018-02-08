@@ -1,52 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background">
-
-    <TableRow
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp">
+    android:background="#68AC61">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="modifica password : "
-            android:textColor="#fff"
-            android:textSize="15dp" />
+    <Button
+        android:id="@+id/button_elimina_account"
+        style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
+        android:layout_width="157dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:text="Elimina account"
+        android:textAlignment="center"
+        android:textColor="#68AC61"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        tools:layout_editor_absoluteY="118dp" />
 
-        <Button
-            android:id="@+id/button_modifica_password"
-            style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="modifica password "
-            android:textColor="#008000" />
-    </TableRow>
+    <Button
+        android:id="@+id/button_modifica_password"
+        style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
+        android:layout_width="160dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="36dp"
+        android:layout_weight="1"
+        android:text="Modifica password"
+        android:textColor="#68AC61"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        tools:layout_editor_absoluteY="31dp" />
 
-    <TableRow
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_marginStart="16dp"
+        android:layout_weight="2"
+        android:text="Modifica password:"
+        android:textColor="#fff"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="31dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="elimina account : "
-            android:textColor="#fff"
-            android:textSize="15dp" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="145dp"
+        android:layout_height="23dp"
+        android:layout_weight="1"
+        android:text="Elimina account:"
+        android:textColor="#fff"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="118dp" />/>
 
-        <Button
-            android:id="@+id/button_elimina_account"
-            style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Elimina account "
-            android:textColor="#008000" />/>
-    </TableRow>
 
-</TableLayout>
+</android.support.constraint.ConstraintLayout>
