@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#589E48"
+    android:background="#68AC61"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -44,7 +44,7 @@
        android:layout_marginEnd="8dp"
        android:layout_marginStart="8dp"
        android:background="#FFF"
-       android:textColor="#589E48"
+       android:textColor="#68AC61"
        android:textStyle="bold"
        android:elevation="5dp"
        android:text="Login"
@@ -64,7 +64,7 @@
        android:layout_marginEnd="8dp"
        android:layout_marginStart="8dp"
        android:background="#FFF"
-       android:textColor="#589E48"
+       android:textColor="#68AC61"
        android:textStyle="bold"
        android:text="Sing up"
        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
