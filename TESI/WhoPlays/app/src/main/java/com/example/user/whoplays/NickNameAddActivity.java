@@ -56,80 +56,13 @@ public class NickNameAddActivity extends Activity implements View.OnClickListene
             if (nickNameEditText.getText().toString() != null) {
 
 
-                private void setCheckName(final FindPlayerActivity.MyCallback myCallback){
-                    databaseReference.child("Giocatori").orderByChild("nickName").addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                            if (dataSnapshot.child("nickName").toString().equals(nickNameEditText.getText().toString())) {
-                                Toast.makeText(NickNameAddActivity.this, "Nick-name gia in uso", Toast.LENGTH_SHORT).show();
-                                flag = true;
-                            }
-                        }
-
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-
-                    });
-                    myCallback.onCallback();
-                }
-
                 setCheckName(new FindPlayerActivity.MyCallback() {
                     @Override
                     public void onCallback() {
-
-
-                        databaseReference.child("Giocatori").orderByChild("email").equalTo(email).addChildEventListener(new ChildEventListener() {
-
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                                final String key = dataSnapshot.getKey();
-                                databaseReference.child("Giocatori").child(key).child("nickName").setValue(nickNameEditText.getText().toString());
-                                Intent intent = new Intent(getBaseContext(), WhoPlaysActivity.class);
-                                startActivity(intent);
-                            }
-
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                            });
-
+                        if (flag) {
+                            Toast.makeText(NickNameAddActivity.this, "Nick-name gia in uso", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
                 });
             }
             else {
@@ -137,6 +70,41 @@ public class NickNameAddActivity extends Activity implements View.OnClickListene
             }
 
         }
+    }
+
+
+    private void setCheckName(final FindPlayerActivity.MyCallback myCallback){
+        databaseReference.child("Giocatori").orderByChild("nickName").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                if (dataSnapshot.child("nickName").toString().equals(nickNameEditText.getText().toString())) {
+                    flag = true;
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+        myCallback.onCallback();
     }
 
 

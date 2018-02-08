@@ -334,8 +334,32 @@ public class CreateAdsActivity extends AppCompatActivity {
             dateView.setError("Required.");
             valid = false;
         } else {
-            dateView.setError(null);
+            if (!TextUtils.isEmpty(time)) {
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String inputDateStr = date;
+                String inputTimeStr = time;
+                Date date1 = null;
+                try {
+                    date1 = inputFormat.parse(inputDateStr + " " + inputTimeStr);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String outputDateStr = outputFormat.format(date1);
+
+                Log.d("TAG", String.valueOf((date1.getTime())));
+                Log.d("TAG", String.valueOf(System.currentTimeMillis()));
+
+
+                if ((date1.getTime() - System.currentTimeMillis()) < 0) {
+                    valid = false;
+                    Toast.makeText(getBaseContext(), "Inserito orario passato", Toast.LENGTH_SHORT).show();
+                }
+                return valid;
+            }
         }
+
+
 
         String field = textViewCampo.getText().toString();
         if (TextUtils.isEmpty(field)) {
@@ -356,30 +380,6 @@ public class CreateAdsActivity extends AppCompatActivity {
         }
         else {
             numberOfPlayer.setError(null);
-        }
-
-
-
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String inputDateStr = date;
-        String inputTimeStr = time;
-        Date date1 = null;
-        try {
-            date1 = inputFormat.parse(inputDateStr + " " +inputTimeStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String outputDateStr = outputFormat.format(date1);
-
-        Log.d("TAG", String.valueOf((date1.getTime())));
-        Log.d("TAG", String.valueOf(System.currentTimeMillis()));
-
-
-
-        if ((date1.getTime() -  System.currentTimeMillis()) < 0) {
-            valid = false;
-            Toast.makeText(getBaseContext(), "Inserito orario passato", Toast.LENGTH_SHORT).show();
         }
 
 
