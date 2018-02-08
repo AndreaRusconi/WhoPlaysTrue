@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-   android:orientation="vertical"
-    android:background="@drawable/login_background"
     android:layout_gravity="center"
-    >
+    android:background="#68AC61"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
 
 
    <EditText
@@ -17,34 +17,40 @@
        android:layout_alignParentTop="true"
        android:layout_centerHorizontal="true"
        android:layout_gravity="center"
-       android:layout_marginTop="60dp"
+       android:layout_marginBottom="8dp"
+       android:layout_marginEnd="8dp"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
        android:ems="10"
        android:hint="E-mail"
-       android:inputType="textEmailAddress" />
+       android:inputType="textEmailAddress"
+       android:selectAllOnFocus="false"
+       app:layout_constraintBottom_toTopOf="@+id/editText_password_login"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.78"
+       android:textColor="#FFF"
+       android:textColorHint="#FFF"/>
 
-   <EditText
-       android:id="@+id/editText_password_login"
-       android:layout_width="294dp"
-       android:layout_height="60dp"
-       android:layout_alignStart="@+id/editText_email_login"
-       android:layout_below="@+id/editText_email_login"
-       android:layout_gravity="center"
-       android:layout_marginTop="50dp"
-       android:ems="10"
-       android:hint="Passowrd"
-       android:inputType="textPassword"
-
-      />
-
-   <Button style="@style/Base.Widget.AppCompat.Button.Colored"
+   <Button
        android:id="@+id/button_login"
        android:layout_width="120dp"
        android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
        android:layout_centerVertical="true"
        android:layout_gravity="center"
-       android:layout_marginTop="60dp"
-       android:text="Login" />
+       android:layout_marginBottom="24dp"
+       android:layout_marginEnd="8dp"
+       android:layout_marginStart="8dp"
+       android:background="#FFF"
+       android:textColor="#68AC61"
+       android:textStyle="bold"
+       android:elevation="5dp"
+       android:text="Login"
+       app:layout_constraintBottom_toTopOf="@+id/button_sign_up"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent" />
 
    <Button
        android:id="@+id/button_sign_up"
@@ -54,8 +60,16 @@
        android:layout_alignEnd="@+id/button_login"
        android:layout_alignParentBottom="true"
        android:layout_gravity="center"
-       android:layout_marginTop="40dp"
-       android:text="Sing up" />
+       android:layout_marginBottom="52dp"
+       android:layout_marginEnd="8dp"
+       android:layout_marginStart="8dp"
+       android:background="#FFF"
+       android:textColor="#68AC61"
+       android:textStyle="bold"
+       android:text="Sing up"
+       app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent" />
 
 
    <com.google.android.gms.common.SignInButton
@@ -65,7 +79,31 @@
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
        android:layout_gravity="center"
-       android:layout_marginTop="20dp"></com.google.android.gms.common.SignInButton>
+       android:layout_marginBottom="80dp"
+       android:layout_marginEnd="8dp"
+       android:layout_marginStart="8dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.common.SignInButton>
+
+   <EditText
+       android:id="@+id/editText_password_login"
+       android:layout_width="294dp"
+       android:layout_height="60dp"
+       android:layout_alignStart="@+id/editText_email_login"
+       android:layout_below="@+id/editText_email_login"
+       android:layout_gravity="center"
+       android:layout_marginBottom="28dp"
+       android:layout_marginEnd="8dp"
+       android:layout_marginStart="8dp"
+       android:textColor="#FFF"
+       android:textColorHint="#FFF"
+       android:ems="10"
+       android:hint="Passowrd"
+       android:inputType="textPassword"
+       app:layout_constraintBottom_toTopOf="@+id/button_login"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent" />
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
