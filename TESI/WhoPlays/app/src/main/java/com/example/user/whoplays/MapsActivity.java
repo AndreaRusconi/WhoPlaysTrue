@@ -33,12 +33,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button confirmButton;
     Place place0 = null;
     String address;
+    private Integer[] ids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        ids = new Integer[]{1, 1001, 1002, 1003, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                            17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 1005, 27, 28, 29, 30, 31, 32, 33,
+                            35, 36, 37, 38, 39, 40, 41, 42, 1007, 43, 45, 46, 48, 49, 50, 51, 1008,
+                            52, 53, 54, 55, 56, 1009, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 1010,
+                            1011, 67, 68, 70, 71, 72, 73, 74, 75, 76, 1015, 1016, 1017, 1014,
+                            77, 1018, 78, 79, 80, 1019, 1020, 82, 83, 84, 85, 87, 88, 1021, 1022, 89,
+                            90, 1029, 91, 92, 93, 94, 95, 96};
 
         confirmButton = findViewById(R.id.confirm_place_button);
         placeAutoComplete = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete);
@@ -118,16 +125,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void addMarker(Place p){
 
-        MarkerOptions markerOptions = new MarkerOptions();
+        boolean flag = true;
+        p.getPlaceTypes();
+        for (int i=0; i<p.getPlaceTypes().size(); i++){
+            for (int j=0; j<ids.length; j++){
+                if( p.getPlaceTypes().contains(ids[j]) ) {
+                   Toast.makeText(this, "Posto selezionato non valido", Toast.LENGTH_SHORT).show();
+                   flag = false;
+                   break;
+               }
+            }
+        }
 
-        markerOptions.position(p.getLatLng());
-        markerOptions.title(p.getName()+"");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        if (flag) {
 
-        mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            mMap.clear();
+            MarkerOptions markerOptions = new MarkerOptions();
 
+            markerOptions.position(p.getLatLng());
+            markerOptions.title(p.getName() + "");
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
+            mMap.addMarker(markerOptions);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            Log.d("TAG", String.valueOf(p.getPlaceTypes()));
+        }
     }
 
     @Override
