@@ -91,5 +91,7 @@
     <string name="text_view_choice_type_activity">Sei in cerca di...</string>
     <string name="button_player_choice_type_activity">Giocatori</string>
     <string name="button_team_choice_type_activity">Squadra</string>
+    <string name="insert_nick_name_edit_text">Inserisci qui il tuo nick-name</string>
+    <string name="nick_name_button">Salva nick-name</string>
 
 </resources>

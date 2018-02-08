@@ -21,6 +21,7 @@ public class ChoiceTypeMatchActivity extends Activity implements View.OnClickLis
 
     private Button choiceTeamButton;
     private Button choicePlayerButton;
+    private TextView choiceTypeTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class ChoiceTypeMatchActivity extends Activity implements View.OnClickLis
 
         choicePlayerButton = findViewById(R.id.button_player_choice_type_activity);
         choiceTeamButton = findViewById(R.id.button_team_choice_type_activity);
+        choiceTypeTextView = findViewById(R.id.text_view_choice_type_activity);
 
         choiceTeamButton.setOnClickListener(this);
         choicePlayerButton.setOnClickListener(this);

@@ -42,6 +42,7 @@ public class WhoPlaysActivity extends AppCompatActivity
     Bundle bundle = new Bundle();
     boolean check = false;
     NavigationView navigationView;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class WhoPlaysActivity extends AppCompatActivity
         final String email = user.getEmail();
 
 
+
         if (user.getDisplayName() == null){
             startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
         }
@@ -59,12 +61,12 @@ public class WhoPlaysActivity extends AppCompatActivity
 
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
 
-            Query query = databaseReference.orderByChild("email").equalTo(email);
+            final Query query = databaseReference.orderByChild("email").equalTo(email);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (!dataSnapshot.exists()) {
-                        String id = databaseReference.push().getKey();
+                        id = databaseReference.push().getKey();
                         Player player = new Player(id, name, email);
                         databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
                             @Override
@@ -77,6 +79,39 @@ public class WhoPlaysActivity extends AppCompatActivity
                             }
                         });
                     }
+
+                    query.addChildEventListener(new ChildEventListener() {
+
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            if (!dataSnapshot.child("nickName").exists()) {
+
+                                Intent intent = new Intent(getBaseContext(),NickNameAddActivity.class);
+                                startActivity(intent);
+                            }
+
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
                 @Override

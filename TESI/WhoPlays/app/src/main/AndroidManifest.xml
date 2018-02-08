@@ -50,6 +50,12 @@
             android:screenOrientation="portrait"
         />
         <activity
+            android:name=".NickNameAddActivity"
+            android:label="Inserisci nick-name"
+            android:theme="@style/DialogTheme"
+            android:screenOrientation="portrait"
+        />
+        <activity
             android:name=".ChoiceTypeMatchActivity"
             android:label="@string/choice_label"
             android:theme="@style/DialogTheme"
