@@ -62,25 +62,7 @@ public class WhoPlaysActivity extends AppCompatActivity
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
 
             final Query query = databaseReference.orderByChild("email").equalTo(email);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.exists()) {
-                        id = databaseReference.push().getKey();
-                        Player player = new Player(id, name, email);
-                        databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                if (databaseError != null) {
-                                    Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
-                                }
-                            }
-                        });
-                    }
-
-                    query.addChildEventListener(new ChildEventListener() {
+            query.addChildEventListener(new ChildEventListener() {
 
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -114,13 +96,6 @@ public class WhoPlaysActivity extends AppCompatActivity
                     });
                 }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }
 
         Intent intent = getIntent();
         String sort = intent.getStringExtra("sort");

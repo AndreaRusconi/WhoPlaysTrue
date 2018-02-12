@@ -57,7 +57,6 @@ public class CreateAdsActivity extends AppCompatActivity {
     private String id;
     FirebaseUser user;
     private String latLng;
-    public String keyG = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,33 +77,11 @@ public class CreateAdsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validateForm()) {
+
                     id = databaseReference.child("Partite").push().getKey();
 
-
-
-
-
-
                     Team team = new Team(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), user.getDisplayName(), latLng );
-
-                    Query query = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-
-                                for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                                    // do with your result
-                                   keyG = issue.child("playerId").getValue().toString();
-
-                                }
-
-                                Log.d("TAG KEY", keyG);
-
-
-                                databaseReference.child("Giocatori").child(keyG).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
+                    databaseReference.child("Giocatori").child(user.getUid()).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                         if (databaseError != null) {
@@ -114,12 +91,7 @@ public class CreateAdsActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
+
 
 
 
@@ -131,7 +103,7 @@ public class CreateAdsActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
-                                databaseReference.child("partecipanti").child(keyG).setValue(user.getDisplayName());
+                                databaseReference.child("partecipanti").child(user.getUid()).setValue(user.getDisplayName());
                                 Intent intent = new Intent(getBaseContext(),WhoPlaysActivity.class);
                                 startActivity(intent);
                             }

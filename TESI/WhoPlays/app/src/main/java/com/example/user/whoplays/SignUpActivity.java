@@ -17,6 +17,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,7 +37,7 @@ public class SignUpActivity extends Activity {
     private EditText mEmailField;
     private EditText mPasswordField;
 
-    private Button  mCreateAccountButton;
+    private Button mCreateAccountButton;
     private FirebaseUser user;
     private FirebaseAuth mAuth;
 
@@ -49,9 +55,9 @@ public class SignUpActivity extends Activity {
 
         mCreateAccountButton = findViewById(R.id.button_create_account);
 
-        mCreateAccountButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                if(validateForm()){
+        mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (validateForm()) {
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 }
             }
@@ -61,7 +67,7 @@ public class SignUpActivity extends Activity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void createAccount (String email, String password) {
+    private void createAccount(String email, String password) {
         // [START create_user_with_email]
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -78,7 +84,7 @@ public class SignUpActivity extends Activity {
                             if (user != null) {
                                 Log.d("TAG", name);
                                 UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(name + " " +cognome)
+                                        .setDisplayName(name + " " + cognome)
                                         .build();
 
                                 user.updateProfile(profile)
@@ -90,6 +96,9 @@ public class SignUpActivity extends Activity {
                                         });
 
                             }
+
+                            writeNodeUser();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -118,11 +127,9 @@ public class SignUpActivity extends Activity {
         if (TextUtils.isEmpty(password)) {
             mPasswordField.setError("Required.");
             valid = false;
-        }
-        else if (password.length() < 6) {
+        } else if (password.length() < 6) {
             mPasswordField.setError("Password too short");
-        }
-        else {
+        } else {
             mPasswordField.setError(null);
         }
 
@@ -143,8 +150,32 @@ public class SignUpActivity extends Activity {
         }
 
 
-
-
         return valid;
     }
+
+    public void writeNodeUser() {
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
+
+        String id = mAuth.getCurrentUser().getUid();
+        String name = mNameField.getText().toString();
+        String cognome = mSurnameField.getText().toString();
+        String email = mEmailField.getText().toString();
+
+        Player player = new Player(id, name + " " + cognome, email);
+        databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+
+
 }
