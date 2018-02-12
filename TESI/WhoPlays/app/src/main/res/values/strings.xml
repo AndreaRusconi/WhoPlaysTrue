@@ -93,5 +93,6 @@
     <string name="button_team_choice_type_activity">Squadra</string>
     <string name="insert_nick_name_edit_text">Inserisci qui il tuo nick-name</string>
     <string name="nick_name_button">Salva nick-name</string>
+    <string name="add_new_team_my_team">aggiungi muova squadra</string>
 
 </resources>

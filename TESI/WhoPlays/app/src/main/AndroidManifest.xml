@@ -50,6 +50,18 @@
             android:screenOrientation="portrait"
         />
         <activity
+            android:name=".CreateTeamActivity"
+            android:label="Crea la tua squadra"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+        />
+        <activity
+            android:name=".TeamViewActivity"
+            android:label="Distinta della squadra"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+        />
+        <activity
             android:name=".NickNameAddActivity"
             android:label="Inserisci nick-name"
             android:theme="@style/DialogTheme"

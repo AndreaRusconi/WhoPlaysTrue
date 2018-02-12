@@ -55,6 +55,7 @@ public class CreateAdsActivity extends AppCompatActivity {
     private EditText numberOfPlayer;
     private Button confirmCreation;
     private String id;
+    private String nickName;
     FirebaseUser user;
     private String latLng;
 
@@ -70,6 +71,7 @@ public class CreateAdsActivity extends AppCompatActivity {
 
         confirmCreation = findViewById(R.id.confirm_ads_creation_button);
         user = FirebaseAuth.getInstance().getCurrentUser();
+        nickName = databaseReference.child("Giocatori").child(user.getUid()).child("nickName").toString();
         final String emailG = user.getEmail();
 
 
@@ -80,7 +82,7 @@ public class CreateAdsActivity extends AppCompatActivity {
 
                     id = databaseReference.child("Partite").push().getKey();
 
-                    Team team = new Team(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), user.getDisplayName(), latLng );
+                    Team team = new Team(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), nickName, latLng );
                     databaseReference.child("Giocatori").child(user.getUid()).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -103,7 +105,7 @@ public class CreateAdsActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
-                                databaseReference.child("partecipanti").child(user.getUid()).setValue(user.getDisplayName());
+                                databaseReference.child("partecipanti").child(user.getUid()).setValue(nickName);
                                 Intent intent = new Intent(getBaseContext(),WhoPlaysActivity.class);
                                 startActivity(intent);
                             }

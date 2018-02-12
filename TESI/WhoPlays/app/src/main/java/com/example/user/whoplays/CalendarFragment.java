@@ -20,6 +20,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +37,10 @@ public class CalendarFragment extends Fragment {
     ArrayList<String> arrayKey = new ArrayList<>();
     ArrayList<HashMap<String, String>> data = new ArrayList<>();
     ListView listView;
+    private String nickName;
     private String emailUser;
+    private FirebaseUser user;
+
 
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         listView = view.findViewById(R.id.listViewCalendar);
         emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        nickName = databaseReference.child("Giocatori").child(user.getUid()).child("nickName").toString();
         Log.d("TEG", "ECCOMI");
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -54,7 +60,7 @@ public class CalendarFragment extends Fragment {
 
                 for (DataSnapshot issue : dataSnapshot.child("partecipanti").getChildren()) {
 
-                    if (issue.getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+                    if (issue.getValue().toString().equals(nickName)) {
                         Log.d("NEWTAG", issue.getValue().toString());
                         String user = dataSnapshot.child("user").getValue().toString();
                         String place = dataSnapshot.child("place").getValue().toString();
@@ -75,7 +81,7 @@ public class CalendarFragment extends Fragment {
 
                         //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
                         int[] to = {R.id.itemPlaceCalendarTextView, R.id.itemDateCalendarTextView, R.id.itemTimeCalendarTextView, R.id.itemTypeCalendarTextView};
-                        
+
                         SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
                         listView.setAdapter(adapter);
 

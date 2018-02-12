@@ -75,6 +75,8 @@ public class FindPlayerActivity extends AppCompatActivity{
     String type;
     String number;
     String user;
+    String nickName;
+    FirebaseUser userFireBase;
     String time;
     String key;
     Boolean registered = false;
@@ -108,9 +110,10 @@ public class FindPlayerActivity extends AppCompatActivity{
         listView = findViewById(R.id.listViewFindPlayer);
         //*************************************************************************************************************************
 
-
+        userFireBase = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        nickName = databaseReference.child("Giocatori").child(userFireBase.getUid()).child("nickName").toString();
         databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
 
 
@@ -149,7 +152,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
 
 
-        final FirebaseUser userFireBase = FirebaseAuth.getInstance().getCurrentUser();
+
         final String emailG = userFireBase.getEmail();
 
 
@@ -227,7 +230,6 @@ public class FindPlayerActivity extends AppCompatActivity{
                                 .show();
                         break;
                     case 1:
-                        databaseReference.child("Partite").child(key).child("partecipanti").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(null);
                         Integer addNumber = Integer.parseInt(number) + 1;
                         databaseReference.child("Partite").child(key).child("numberOfPlayer").setValue(addNumber);
 
@@ -242,9 +244,9 @@ public class FindPlayerActivity extends AppCompatActivity{
                                                 Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
                                             }
                                         }
-                                    });
+                         });
 
-                                    databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(null);
+                        databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(null);
 
 
 
@@ -266,7 +268,7 @@ public class FindPlayerActivity extends AppCompatActivity{
                         //*****************************************************************
 
                         Query query1 = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
-                        databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(nickName);
 
                         databaseReference.child("Giocatori").child(userFireBase.getUid()).child("idPartita").child(key).setValue(key, new DatabaseReference.CompletionListener() {
                                         @Override
@@ -350,7 +352,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
                         // do something with the individual "issues"
                         Log.d("TAG", issue.getValue().toString());
-                        if (issue.getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+                        if (issue.getValue().toString().equals(nickName)) {
                             Log.d("TAG", issue.getValue().toString());
                             registered = true;
                         }
@@ -373,7 +375,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
     private void setButton() {
 
-        if (user.equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+        if (user.equals(nickName)) {
             addMeButton.setText("Cancella partita");
             playerType = 0;
         } else if (registered) {

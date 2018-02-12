@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_my_team"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="4dp"
+        android:visibility="visible"
+        card_view:cardBackgroundColor="#FFF"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="15dp"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.0"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="@dimen/cardview_default_elevation"
+            android:minWidth="@dimen/cardview_default_radius">
+
+
+            <TextView
+                android:id="@+id/itemFounderMyTeamTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginEnd="36dp"
+                android:text="@string/item_creator_who_plays"
+                android:textColor="#68AC61"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                card_view:layout_constraintBaseline_toBaselineOf="@+id/itemDateMyTeamTextView"
+                card_view:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/itemDateMyTeamTextView"
+                android:layout_width="77dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/item_foundation_my_team"
+                android:textColor="#68AC61"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/itemFounderMyTeamTextView"
+                card_view:layout_constraintHorizontal_bias="0.357"
+                />
+
+            <TextView
+                android:id="@+id/itemNameMyTeamTextView"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_span="3"
+                android:layout_weight="1"
+                android:text="@string/item_name_my_team"
+                android:textColor="#68AC61"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.421"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="0.0" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>
