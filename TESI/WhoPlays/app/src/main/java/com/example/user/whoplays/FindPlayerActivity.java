@@ -79,7 +79,6 @@ public class FindPlayerActivity extends AppCompatActivity{
     String key;
     Boolean registered = false;
     Integer playerType;
-    String keyG ;
 
 
     @Override
@@ -100,9 +99,6 @@ public class FindPlayerActivity extends AppCompatActivity{
         addMeButton = findViewById(R.id.add_me_ads_button);
         letMeSee = findViewById(R.id.let_me_see_textView);
 
-
-
-
         creatorTextView = findViewById(R.id.creator_textView);
         typeTextView = findViewById(R.id.type_of_match_ads);
         placeTextView = findViewById(R.id.place_ads);
@@ -110,7 +106,7 @@ public class FindPlayerActivity extends AppCompatActivity{
         dateTextView = findViewById(R.id.date_ads);
         numberTextView = findViewById(R.id.number_of_player_ads);
         listView = findViewById(R.id.listViewFindPlayer);
-//*************************************************************************************************************************
+        //*************************************************************************************************************************
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -118,53 +114,42 @@ public class FindPlayerActivity extends AppCompatActivity{
         databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
 
 
-                                                                     @Override
-                                                                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String keyCompare = dataSnapshot.getKey();
+                if (keyCompare.equals(key)) {
+                    user = dataSnapshot.child("user").getValue().toString();
+                    place = dataSnapshot.child("place").getValue().toString();
+                    date = dataSnapshot.child("date").getValue().toString();
+                    type = dataSnapshot.child("typeOfMatch").getValue().toString();
+                    number = dataSnapshot.child("numberOfPlayer").getValue().toString();
+                    time = dataSnapshot.child("time").getValue().toString();
 
-                                                                         String keyCompare = dataSnapshot.getKey();
-                                                                         if (keyCompare.equals(key)) {
-
-                                                                             user = dataSnapshot.child("user").getValue().toString();
-                                                                             place = dataSnapshot.child("place").getValue().toString();
-                                                                             date = dataSnapshot.child("date").getValue().toString();
-                                                                             type = dataSnapshot.child("typeOfMatch").getValue().toString();
-                                                                             number = dataSnapshot.child("numberOfPlayer").getValue().toString();
-                                                                             time = dataSnapshot.child("time").getValue().toString();
-
-                                                                             creatorTextView.setText(user);
-                                                                             typeTextView.setText(type);
-                                                                             placeTextView.setText(place);
-                                                                             timeTextView.setText(time);
-                                                                             dateTextView.setText(date);
-                                                                             numberTextView.setText(number);
-                                                                         }
-                                                                     }
-
-                                                                     @Override
-                                                                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                                                     }
-
-                                                                     @Override
-                                                                     public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                                                     }
-
-                                                                     @Override
-                                                                     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                                                     }
-
-                                                                     @Override
-                                                                     public void onCancelled(DatabaseError databaseError) {
-
-                                                                     }
-                                                                 });
+                    creatorTextView.setText(user);
+                    typeTextView.setText(type);
+                    placeTextView.setText(place);
+                    timeTextView.setText(time);
+                    dateTextView.setText(date);
+                    numberTextView.setText(number);
+                }
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
 
 
-        FirebaseUser userFireBase = FirebaseAuth.getInstance().getCurrentUser();
-        String userG = userFireBase.getDisplayName();
+        final FirebaseUser userFireBase = FirebaseAuth.getInstance().getCurrentUser();
         final String emailG = userFireBase.getEmail();
 
 
@@ -197,7 +182,7 @@ public class FindPlayerActivity extends AppCompatActivity{
                                             @Override
                                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                                 String kG = dataSnapshot.child("playerId").getValue().toString();
-                                                
+
                                                 for (DataSnapshot issue : dataSnapshot.child("idPartita").getChildren()) {
                                                     // do with your result
                                                     if (issue.getValue().toString().equals(key)){
@@ -248,20 +233,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
                         //******************************************************************************
 
-                        Query query = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
-                        query.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    keyG = null;
-                                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                                        // do with your result
-                                        keyG = issue.child("playerId").getValue().toString();
-                                    }
-
-                                    Log.d("TAG KEY", keyG);
-
-                                    databaseReference.child("Giocatori").child(keyG).child("idPartita").child(key).setValue(null, new DatabaseReference.CompletionListener() {
+                         databaseReference.child("Giocatori").child(userFireBase.getUid()).child("idPartita").child(key).setValue(null, new DatabaseReference.CompletionListener() {
                                         @Override
                                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                             if (databaseError != null) {
@@ -272,13 +244,9 @@ public class FindPlayerActivity extends AppCompatActivity{
                                         }
                                     });
 
-                                    databaseReference.child("Partite").child(key).child("partecipanti").child(keyG).setValue(null);
-                                }
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        });
+                                    databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(null);
+
+
 
 
 
@@ -298,21 +266,9 @@ public class FindPlayerActivity extends AppCompatActivity{
                         //*****************************************************************
 
                         Query query1 = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
-                        query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    String keyG = null;
-                                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                                        // do with your result
-                                        keyG = issue.child("playerId").getValue().toString();
-                                    }
+                        databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
-                                    Log.d("TAG KEY", keyG);
-
-                                    databaseReference.child("Partite").child(key).child("partecipanti").child(keyG).setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-
-                                    databaseReference.child("Giocatori").child(keyG).child("idPartita").child(key).setValue(key, new DatabaseReference.CompletionListener() {
+                        databaseReference.child("Giocatori").child(userFireBase.getUid()).child("idPartita").child(key).setValue(key, new DatabaseReference.CompletionListener() {
                                         @Override
                                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                             if (databaseError != null) {
@@ -322,12 +278,9 @@ public class FindPlayerActivity extends AppCompatActivity{
                                             }
                                         }
                                     });
-                                }
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        });
+
+
+
 
 
                         //*********************************************************
