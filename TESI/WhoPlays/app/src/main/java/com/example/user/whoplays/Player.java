@@ -9,13 +9,15 @@ public class Player {
     public String playerId;
     public String name;
     public String email;
+    public String nickName;
 
     public Player(){}
 
-    public Player(String playerId, String name, String email){
+    public Player(String playerId, String name, String email, String nickName){
         this.playerId = playerId;
         this.name = name;
         this.email = email;
+        this.nickName = nickName;
     }
 
 }

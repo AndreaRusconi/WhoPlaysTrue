@@ -21,7 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static android.content.ContentValues.TAG;
@@ -36,11 +35,12 @@ public class SignUpActivity extends Activity {
     private EditText mSurnameField;
     private EditText mEmailField;
     private EditText mPasswordField;
+    private EditText mNicknameField;
 
     private Button mCreateAccountButton;
     private FirebaseUser user;
     private FirebaseAuth mAuth;
-
+    boolean nicknameFlag = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,12 +52,13 @@ public class SignUpActivity extends Activity {
         mSurnameField = findViewById(R.id.sign_up_surname);
         mEmailField = findViewById(R.id.sign_up_email);
         mPasswordField = findViewById(R.id.sign_up_password);
+        mNicknameField = findViewById(R.id.sign_up_nickname);
 
         mCreateAccountButton = findViewById(R.id.button_create_account);
 
         mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (validateForm()) {
+                if (validateForm() && !checkNickname()) {
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 }
             }
@@ -161,8 +162,9 @@ public class SignUpActivity extends Activity {
         String name = mNameField.getText().toString();
         String cognome = mSurnameField.getText().toString();
         String email = mEmailField.getText().toString();
+        String nickname = mNicknameField.getText().toString();
 
-        Player player = new Player(id, name + " " + cognome, email);
+        Player player = new Player(id, name + " " + cognome, email, nickname);
         databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -176,6 +178,31 @@ public class SignUpActivity extends Activity {
 
     }
 
+    public boolean checkNickname () {
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
+
+        databaseReference.orderByChild("nickName").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    Log.d("TAG", data.toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
+        return nicknameFlag;
+
+    }
 
 
 }

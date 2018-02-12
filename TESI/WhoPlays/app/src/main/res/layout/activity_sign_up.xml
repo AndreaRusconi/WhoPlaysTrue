@@ -29,6 +29,16 @@
         android:inputType="text"/>
 
     <EditText
+        android:id="@+id/sign_up_nickname"
+        android:layout_width="400px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40px"
+        android:hint="Nickname"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789.-_"
+        android:inputType="text"/>
+
+    <EditText
         android:id="@+id/sign_up_email"
         android:layout_width="400px"
         android:layout_height="wrap_content"

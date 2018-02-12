@@ -36,6 +36,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by io on 22/12/2017.
@@ -204,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            writeNodeUser();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -242,5 +246,27 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    public void writeNodeUser() {
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
+
+        String id = mAuth.getCurrentUser().getUid();
+
+        Player player = new Player(id, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), FirebaseAuth.getInstance().getCurrentUser().getEmail(), null);
+        databaseReference.child(id).setValue(player, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+
 
 }
