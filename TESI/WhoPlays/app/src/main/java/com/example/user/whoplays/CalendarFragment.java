@@ -63,6 +63,7 @@ public class CalendarFragment extends Fragment {
                         databaseReference.child("Partite").child(dataSnapshot.getValue().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+
                                 if (dataSnapshot.exists()) {
                                 String place = dataSnapshot.child("place").getValue().toString();
                                 String date = dataSnapshot.child("date").getValue().toString();
@@ -82,9 +83,6 @@ public class CalendarFragment extends Fragment {
                                 //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
                                 int[] to = {R.id.itemPlaceCalendarTextView, R.id.itemDateCalendarTextView, R.id.itemTimeCalendarTextView, R.id.itemTypeCalendarTextView};
 
-                                SimpleAdapter adapter = new SimpleAdapter(getContext(), data, resource, from, to);
-                                listView.setAdapter(adapter);
-
                                 arrayKey.add(key);
 
                                 //inserisco i dati nell HashMAp
@@ -95,14 +93,19 @@ public class CalendarFragment extends Fragment {
                                 map.put("type", type);
                                 //inserisco l hashMap nell arrayList
                                 data.add(map);
+
+                                    SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                                    listView.setAdapter(adapter);
                                 }
                             }
+
 
                             @Override
                             public void onCancelled (DatabaseError databaseError){
 
                             }
                         });
+
 
 
 
