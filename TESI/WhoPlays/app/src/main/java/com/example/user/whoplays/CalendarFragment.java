@@ -57,16 +57,16 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d("HEREEEE", dataSnapshot.getValue().toString());
+                Log.d("HERE1245", dataSnapshot.getValue().toString());
 
-                for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        databaseReference.child("Partite").child(issue.getValue().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        databaseReference.child("Partite").child(dataSnapshot.getValue().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String user = dataSnapshot.child("user").getValue().toString();
+                                if (dataSnapshot.exists()) {
                                 String place = dataSnapshot.child("place").getValue().toString();
-                                String date =  dataSnapshot.child("date").getValue().toString();
-                                String type =  dataSnapshot.child("typeOfMatch").getValue().toString();
-                                String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
+                                String date = dataSnapshot.child("date").getValue().toString();
+                                String type = dataSnapshot.child("typeOfMatch").getValue().toString();
                                 String time = dataSnapshot.child("time").getValue().toString();
                                 String key = dataSnapshot.getKey();
                                 String address = dataSnapshot.child("latLng").getValue().toString();
@@ -82,29 +82,30 @@ public class CalendarFragment extends Fragment {
                                 //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
                                 int[] to = {R.id.itemPlaceCalendarTextView, R.id.itemDateCalendarTextView, R.id.itemTimeCalendarTextView, R.id.itemTypeCalendarTextView};
 
-                                SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                                SimpleAdapter adapter = new SimpleAdapter(getContext(), data, resource, from, to);
                                 listView.setAdapter(adapter);
 
                                 arrayKey.add(key);
 
                                 //inserisco i dati nell HashMAp
 
-                                map.put("time", time +", ");
+                                map.put("time", time + ", ");
                                 map.put("date", date + ", ");
                                 map.put("place", place);
                                 map.put("type", type);
                                 //inserisco l hashMap nell arrayList
                                 data.add(map);
+                                }
                             }
 
                             @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                            public void onCancelled (DatabaseError databaseError){
 
                             }
                         });
 
 
-                    }
+
 
                 }
 

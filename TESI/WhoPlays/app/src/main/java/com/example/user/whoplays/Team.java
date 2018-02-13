@@ -6,7 +6,7 @@ package com.example.user.whoplays;
 
 public class Team {
 
-    public String playerId;
+    public String idPartita;
     public String typeOfMatch;
     public String date;
     public String time;
@@ -17,8 +17,8 @@ public class Team {
 
     public Team(){}
 
-    public Team(String playerId, String typeOfMatch, String date, String time, String place, Integer numberOfPlayer, String user, String latLng){
-        this.playerId = playerId;
+    public Team(String idPartita, String typeOfMatch, String date, String time, String place, Integer numberOfPlayer, String user, String latLng){
+        this.idPartita = idPartita;
         this.typeOfMatch = typeOfMatch;
         this.date = date;
         this.time = time;

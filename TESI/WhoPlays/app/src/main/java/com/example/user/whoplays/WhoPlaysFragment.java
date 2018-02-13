@@ -276,6 +276,7 @@ public class WhoPlaysFragment extends Fragment {
 
                 Intent intent = new Intent(getContext(), FindPlayerActivity.class);
                 intent.putExtra("key", arrayKey.get(position));
+                Log.d("KEYY", arrayKey.get(position));
                 startActivity(intent);
             }
         });

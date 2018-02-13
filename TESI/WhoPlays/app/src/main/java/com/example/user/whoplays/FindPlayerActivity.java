@@ -98,6 +98,8 @@ public class FindPlayerActivity extends AppCompatActivity{
             key = extras.getString("key");
         }
 
+
+
         addMeButton = findViewById(R.id.add_me_ads_button);
         letMeSee = findViewById(R.id.let_me_see_textView);
 
@@ -112,6 +114,21 @@ public class FindPlayerActivity extends AppCompatActivity{
 
         userFireBase = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+        databaseReference.child("Giocatori").child(userFireBase.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nickName = dataSnapshot.child("nickName").getValue().toString();
+                Log.d("TEGGONEONE", nickName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
 
 
         databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
@@ -266,7 +283,7 @@ public class FindPlayerActivity extends AppCompatActivity{
                         Integer subNumber = Integer.parseInt(number) - 1;
                         databaseReference.child("Partite").child(key).child("numberOfPlayer").setValue(subNumber);
                         //*****************************************************************
-
+                        Log.d("TEGGONEONE", nickName);
                         Query query1 = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
                         databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(nickName);
 
@@ -320,7 +337,21 @@ public class FindPlayerActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
 
-                nickName = databaseReference.child("Giocatori").child(userFireBase.getUid()).child("nickName").toString();
+                databaseReference.child("Giocatori").child(userFireBase.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        nickName = dataSnapshot.child("nickName").getValue().toString();
+                        Log.d("TEGGONEONE", nickName);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // ...
+                    }
+                });
+
+
+
 
 
                 Log.d("TAG", "log zero");
@@ -353,6 +384,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
                         // do something with the individual "issues"
                         Log.d("TAG", issue.getValue().toString());
+                        //Log.d("TEGGONEONE", nickName);
                         if (issue.getValue().toString().equals(nickName)) {
                             Log.d("TAG", issue.getValue().toString());
                             registered = true;
@@ -375,7 +407,7 @@ public class FindPlayerActivity extends AppCompatActivity{
 
 
     private void setButton() {
-
+      //  Log.d("TEGGONEONE", nickName);
         if (user.equals(nickName)) {
             addMeButton.setText("Cancella partita");
             playerType = 0;
