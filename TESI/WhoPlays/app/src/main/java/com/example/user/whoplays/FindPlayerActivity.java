@@ -113,7 +113,7 @@ public class FindPlayerActivity extends AppCompatActivity{
         userFireBase = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        nickName = databaseReference.child("Giocatori").child(userFireBase.getUid()).child("nickName").toString();
+
         databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
 
 
@@ -320,6 +320,7 @@ public class FindPlayerActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
 
+                nickName = databaseReference.child("Giocatori").child(userFireBase.getUid()).child("nickName").toString();
 
 
                 Log.d("TAG", "log zero");

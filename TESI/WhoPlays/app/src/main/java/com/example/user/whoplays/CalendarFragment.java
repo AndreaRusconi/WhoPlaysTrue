@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,40 +59,51 @@ public class CalendarFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        databaseReference.child("Partite").child(issue.getValue().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String user = dataSnapshot.child("user").getValue().toString();
+                                String place = dataSnapshot.child("place").getValue().toString();
+                                String date =  dataSnapshot.child("date").getValue().toString();
+                                String type =  dataSnapshot.child("typeOfMatch").getValue().toString();
+                                String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
+                                String time = dataSnapshot.child("time").getValue().toString();
+                                String key = dataSnapshot.getKey();
+                                String address = dataSnapshot.child("latLng").getValue().toString();
 
-                        String user = dataSnapshot.child("user").getValue().toString();
-                        String place = dataSnapshot.child("place").getValue().toString();
-                        String date = dataSnapshot.child("date").getValue().toString();
-                        String type = dataSnapshot.child("typeOfMatch").getValue().toString();
-                        String numberOfPlayer = dataSnapshot.child("numberOfPlayer").getValue().toString();
-                        String time = dataSnapshot.child("time").getValue().toString();
-                        String key = dataSnapshot.getKey();
-                        String address = dataSnapshot.child("latLng").getValue().toString();
+                                HashMap<String, String> map = new HashMap<>();
 
-                        HashMap<String, String> map = new HashMap<>();
+                                //resource è il layout di come voglio ogni singolo item
+                                int resource = R.layout.listview_item_calendar;
 
-                        //resource è il layout di come voglio ogni singolo item
-                        int resource = R.layout.listview_item_calendar;
+                                //qui salvo una stringa con gli stessi nomi messi nell hashMAp
+                                String[] from = {"place", "date", "time", "type"};
 
-                        //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-                        String[] from = {"place", "date", "time", "type"};
+                                //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
+                                int[] to = {R.id.itemPlaceCalendarTextView, R.id.itemDateCalendarTextView, R.id.itemTimeCalendarTextView, R.id.itemTypeCalendarTextView};
 
-                        //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-                        int[] to = {R.id.itemPlaceCalendarTextView, R.id.itemDateCalendarTextView, R.id.itemTimeCalendarTextView, R.id.itemTypeCalendarTextView};
+                                SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
+                                listView.setAdapter(adapter);
 
-                        SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
-                        listView.setAdapter(adapter);
+                                arrayKey.add(key);
 
-                        arrayKey.add(key);
+                                //inserisco i dati nell HashMAp
 
-                        //inserisco i dati nell HashMAp
+                                map.put("time", time +", ");
+                                map.put("date", date + ", ");
+                                map.put("place", place);
+                                map.put("type", type);
+                                //inserisco l hashMap nell arrayList
+                                data.add(map);
+                            }
 
-                        map.put("time", time +", ");
-                        map.put("date", date + ", ");
-                        map.put("place", place);
-                        map.put("type", type);
-                        //inserisco l hashMap nell arrayList
-                        data.add(map);
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
                     }
 
                 }
