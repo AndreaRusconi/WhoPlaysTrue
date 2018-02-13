@@ -71,47 +71,68 @@ public class CreateAdsActivity extends AppCompatActivity {
 
         confirmCreation = findViewById(R.id.confirm_ads_creation_button);
         user = FirebaseAuth.getInstance().getCurrentUser();
-        nickName = databaseReference.child("Giocatori").child(user.getUid()).child("nickName").toString();
+
         final String emailG = user.getEmail();
 
 
         confirmCreation.setOnClickListener(new View.OnClickListener() {
+            public Team team;
+
             @Override
             public void onClick(View view) {
                 if (validateForm()) {
 
+
+
+
+
                     id = databaseReference.child("Partite").push().getKey();
 
-                    Team team = new Team(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), nickName, latLng );
-                    databaseReference.child("Giocatori").child(user.getUid()).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
-                                    @Override
-                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                        if (databaseError != null) {
-                                            Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
 
-
-
-
-
-                    databaseReference.child("Partite").child(id).setValue(team, new DatabaseReference.CompletionListener() {
+                     databaseReference.child("Giocatori").child(user.getUid()).child("idPartita").child(id).setValue(id, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             if (databaseError != null) {
                                 Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
-                                databaseReference.child("partecipanti").child(user.getUid()).setValue(nickName);
-                                Intent intent = new Intent(getBaseContext(),WhoPlaysActivity.class);
-                                startActivity(intent);
+                                Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
                             }
+                        }
+                    });
+
+                    databaseReference.child("Giocatori").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            nickName = dataSnapshot.child("nickName").getValue().toString();
+                            Log.d("TAG", nickName);
+                            team = new Team(id, spinnerTypeOfMatch.getSelectedItem().toString(), dateView.getText().toString(), timeVIew.getText().toString(), textViewCampo.getText().toString(), Integer.parseInt(numberOfPlayer.getText().toString()), nickName, latLng );
+
+                            databaseReference.child("Partite").child(id).setValue(team, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    if (databaseError != null) {
+                                        Toast.makeText(getBaseContext(), "Data could not be saved. " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getBaseContext(), "Data saved successfully.", Toast.LENGTH_SHORT ).show();
+                                        databaseReference.child("partecipanti").child(user.getUid()).setValue(nickName);
+                                        Intent intent = new Intent(getBaseContext(),WhoPlaysActivity.class);
+                                        startActivity(intent);
+                                    }
+
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
+
+
+
 
                 }
 

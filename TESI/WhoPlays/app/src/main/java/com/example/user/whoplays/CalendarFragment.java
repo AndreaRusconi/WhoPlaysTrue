@@ -49,19 +49,16 @@ public class CalendarFragment extends Fragment {
         listView = view.findViewById(R.id.listViewCalendar);
         emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        nickName = databaseReference.child("Giocatori").child(user.getUid()).child("nickName").toString();
         Log.d("TEG", "ECCOMI");
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
+        databaseReference.child("Giocatori").child(user.getUid()).child("idPartita").addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                for (DataSnapshot issue : dataSnapshot.child("partecipanti").getChildren()) {
+                for (DataSnapshot issue : dataSnapshot.getChildren()) {
 
-                    if (issue.getValue().toString().equals(nickName)) {
-                        Log.d("NEWTAG", issue.getValue().toString());
                         String user = dataSnapshot.child("user").getValue().toString();
                         String place = dataSnapshot.child("place").getValue().toString();
                         String date = dataSnapshot.child("date").getValue().toString();
@@ -98,7 +95,7 @@ public class CalendarFragment extends Fragment {
                     }
 
                 }
-            }
+
 
 
             @Override
