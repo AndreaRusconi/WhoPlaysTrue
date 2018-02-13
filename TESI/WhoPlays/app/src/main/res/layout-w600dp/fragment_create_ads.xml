@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:background="@drawable/login_background"
+    android:fitsSystemWindows="true"
     tools:context=".CreateAdsActivity">
 
         <android.support.design.widget.AppBarLayout
@@ -22,148 +22,146 @@
         </android.support.design.widget.AppBarLayout>
 
         <TableRow
-            android:layout_marginTop="80sp"
             android:layout_marginLeft="30sp"
-            android:layout_marginRight="30sp">
+            android:layout_marginRight="30sp"
+            android:layout_marginTop="80sp">
+
                 <TextView
                     android:id="@+id/type_of_match_textView"
-                    android:layout_weight="1"
-                    android:textStyle="italic"
-                    android:textSize="20sp"
-                    android:textColor="#FFF"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/match_type"
-                    />
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
 
                 <Spinner
                     android:id="@+id/type_of_match_spinner"
                     android:layout_width="match_parent"
-                    android:textColor="#FFF"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    />
+                    android:textColor="#FFF" />
         </TableRow>
 
         <TableRow
-           android:layout_marginTop="5sp"
             android:layout_marginLeft="30sp"
-            android:layout_marginRight="30sp">
+            android:layout_marginRight="30sp"
+            android:layout_marginTop="5sp">
 
-        <TextView
-            android:id="@+id/set_date_textView"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            android:textColor="#FFF"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/set_date"
-            />
+                <TextView
+                    android:id="@+id/set_date_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/set_date"
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
 
-        <TextView
-            android:id="@+id/button1"
-            android:textSize="20sp"
-            android:textColor="#FFF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="setDate"
-            android:hint="@string/set_date_button" />
-</TableRow>
+                <TextView
+                    android:id="@+id/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/set_date_button"
+                    android:onClick="setDate"
+                    android:textColor="#FFF"
+                    android:textSize="20sp" />
+        </TableRow>
+
         <TableRow
-            android:layout_marginTop="5sp"
             android:layout_marginLeft="30sp"
-            android:layout_marginRight="30sp">
+            android:layout_marginRight="30sp"
+            android:layout_marginTop="5sp">
 
                 <TextView
                     android:id="@+id/set_time_textView"
-                    android:textSize="20sp"
-                    android:textColor="#FFF"
-                    android:layout_weight="1"
-                    android:textStyle="italic"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/set_time"
-                    />
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/button"
-                    android:textSize="20sp"
-                    android:textColor="#FFF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:hint="@string/set_time_button"
                     android:onClick="setTime"
-                    android:hint="@string/set_time_button" />
+                    android:textColor="#FFF"
+                    android:textSize="20sp" />
 
 
         </TableRow>
+
         <TableRow
-            android:layout_marginTop="5sp"
             android:layout_marginLeft="30sp"
-            android:layout_marginRight="30sp">
+            android:layout_marginRight="30sp"
+            android:layout_marginTop="5sp">
+
                 <TextView
                     android:id="@+id/set_place_textView"
-                    android:layout_weight="1"
-                    android:textColor="#FFF"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textStyle="italic"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/set_place"
-                    />
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
                 <TextView
                     android:id="@+id/set_place_button"
-                    android:textColor="#FFF"
                     android:layout_width="match_parent"
-                    android:textSize="20sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:hint="@string/set_place_button"
                     android:onClick="setTime"
-                    android:hint="@string/set_place_button" />
+                    android:textColor="#FFF"
+                    android:textSize="20sp" />
         </TableRow>
+
         <TableRow
-            android:layout_marginTop="5sp"
             android:layout_marginLeft="30sp"
-            android:layout_marginRight="30sp">>
+            android:layout_marginRight="30sp"
+            android:layout_marginTop="5sp">>
+
                 <TextView
                     android:id="@+id/number_of_player_textView"
-                    android:layout_weight="1"
-                    android:textColor="#FFF"
-                    android:textSize="20sp"
-                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:text="@string/number_of_player"
-                    />
+                    android:textColor="#FFF"
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/number_of_player_editText"
-                    android:layout_weight="1"
-                    android:textColor="#FFF"
-                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="number"
-                    />
+                    android:textColor="#FFF" />
 
         </TableRow>
-                <Button
-                    android:id="@+id/confirm_ads_creation_button"
-                    style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
 
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="200dp"
-                    android:textAlignment="center"
-                    android:textSize="18dp"
-                    android:text="@string/confirm_ads_creation_button"
-                    android:layout_marginLeft="200dp"
-                    android:textColor="#008000" />
-                    />
+        <Button
+            android:id="@+id/confirm_ads_creation_button"
+            style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
 
-
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200dp"
+            android:layout_marginRight="200dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/confirm_ads_creation_button"
+            android:textAlignment="center"
+            android:textColor="#008000"
+            android:textSize="18dp" />
+        />
 
 
 </TableLayout>
