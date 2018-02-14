@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -35,7 +36,9 @@ public class MyTeamFragment extends Fragment {
     DatabaseReference databaseReference;
     ArrayList<String> arrayKey = new ArrayList<>();
     ArrayList<HashMap<String, String>> data = new ArrayList<>();
-    private TextView addNewTeam;
+    private Button addNewTeam;
+    private Button searchTeam;
+
     private ListView listView;
 
 
@@ -45,9 +48,17 @@ public class MyTeamFragment extends Fragment {
         getActivity().setTitle(R.string.my_team);
         View view = inflater.inflate(R.layout.fragment_my_team, null);
 
-
-        addNewTeam = view.findViewById(R.id.add_new_team_my_team_text_view);
+        addNewTeam = view.findViewById(R.id.add_new_team_my_team_button);
         addNewTeam.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
+
+                startActivity(new Intent(getContext(), CreateTeamActivity.class));
+            }
+        });
+
+        searchTeam = view.findViewById(R.id.search_team_my_team_button);
+        searchTeam.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
 
