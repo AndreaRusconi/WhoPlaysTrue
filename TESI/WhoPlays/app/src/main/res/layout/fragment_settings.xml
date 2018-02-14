@@ -33,6 +33,7 @@
         android:layout_weight="1"
         android:text="Modifica password"
         android:textColor="#68AC61"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
