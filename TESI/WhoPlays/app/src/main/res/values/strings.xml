@@ -95,5 +95,9 @@
     <string name="nick_name_button">Salva nick-name</string>
     <string name="add_new_team_my_team">Aggiungi una nuova squadra</string>
     <string name="search_team_my_team_text_view">Cerca una squadra gia esistente</string>
+    <string name="delete_match_find_player_button">Cancella partita</string>
+    <string name="remove_partecipation_find_player_button">Togli partecipazione</string>
+    <string name="addMe_find_player_button">Aggiungimi alla partita</string>
+    <string name="match_full_find_player_button">Partita completa</string>
 
 </resources>
