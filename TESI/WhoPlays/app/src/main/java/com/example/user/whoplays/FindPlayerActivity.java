@@ -49,10 +49,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by io on 20/01/2018.
- */
-
 public class FindPlayerActivity extends AppCompatActivity{
 
     private TextView creatorTextView;
@@ -62,11 +58,11 @@ public class FindPlayerActivity extends AppCompatActivity{
     private TextView timeTextView;
     private TextView numberTextView;
     private Button  letMeSee;
+    private Button addMeButton;
     private ListView listView;
+
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
     ArrayList<String> arrayIdPartita = new ArrayList<>();
-
-    private Button addMeButton;
 
     DatabaseReference databaseReference;
     DatabaseReference databaseReference1;
@@ -88,21 +84,20 @@ public class FindPlayerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_player);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        Toolbar toolbar = findViewById(R.id.toolbar1);
         setTitle("Distinta");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_18dp);
         setSupportActionBar(toolbar);
 
+        // prendo la chiave della partita
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             key = extras.getString("key");
         }
 
 
-
         addMeButton = findViewById(R.id.add_me_ads_button);
         letMeSee = findViewById(R.id.let_me_see_textView);
-
         creatorTextView = findViewById(R.id.creator_textView);
         typeTextView = findViewById(R.id.type_of_match_ads);
         placeTextView = findViewById(R.id.place_ads);
@@ -110,12 +105,12 @@ public class FindPlayerActivity extends AppCompatActivity{
         dateTextView = findViewById(R.id.date_ads);
         numberTextView = findViewById(R.id.number_of_player_ads);
         listView = findViewById(R.id.listViewFindPlayer);
-        //*************************************************************************************************************************
 
         userFireBase = FirebaseAuth.getInstance().getCurrentUser();
+        // connessione al database
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-
+        // query per prendere il mio nickName
         databaseReference.child("Giocatori").child(userFireBase.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,13 +125,17 @@ public class FindPlayerActivity extends AppCompatActivity{
         });
 
 
-
+        // query per trovare le partite
         databaseReference.child("Partite").addChildEventListener(new ChildEventListener() {
 
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                //prendo la chiave di ogni partita nel database
                 String keyCompare = dataSnapshot.getKey();
+
+                //cerco la chiave uguale alla chiave della partita cliccata nell whoPlaysFragment
                 if (keyCompare.equals(key)) {
                     user = dataSnapshot.child("user").getValue().toString();
                     place = dataSnapshot.child("place").getValue().toString();
@@ -145,6 +144,7 @@ public class FindPlayerActivity extends AppCompatActivity{
                     number = dataSnapshot.child("numberOfPlayer").getValue().toString();
                     time = dataSnapshot.child("time").getValue().toString();
 
+                    //dopo aver preso i dati setto ogni widget della pagina
                     creatorTextView.setText(user);
                     typeTextView.setText(type);
                     placeTextView.setText(place);
@@ -167,12 +167,6 @@ public class FindPlayerActivity extends AppCompatActivity{
             }
         });
 
-
-
-
-        final String emailG = userFireBase.getEmail();
-
-
         setCheckId(new MyCallback() {
             @Override
             public void onCallback() {
@@ -181,31 +175,37 @@ public class FindPlayerActivity extends AppCompatActivity{
             }
         });
 
-
         addMeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (playerType) {
+
+                    // caso in cui io sono il creatore della partita
                     case 0:
                         new AlertDialog.Builder(FindPlayerActivity.this)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setTitle("Cancella annuncio")
-                                .setMessage("Sei sicuro di voler eliminare l'annuncio?")
+                                .setTitle("Cancella partita")
+                                .setMessage("Sei sicuro di voler eliminare la partita?")
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-
+                                        //preno dal database tutti i giocatori
                                         databaseReference.child("Giocatori").addChildEventListener(new ChildEventListener() {
-
-
                                             @Override
                                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                               //salvo la chiave di ogni giocatore
                                                 String kG = dataSnapshot.child("playerId").getValue().toString();
 
+                                                //per ogni giocatore prendo la chiave di tutte le partite
                                                 for (DataSnapshot issue : dataSnapshot.child("idPartita").getChildren()) {
                                                     // do with your result
+
+                                                    //controllo se la chiave della partita è uguale alla chiave della partita cliccata
                                                     if (issue.getValue().toString().equals(key)){
+
+                                                        //se è uguale tolgo l' id partita dal giocatore
                                                         DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
                                                         databaseReference2.child("Giocatori").child(kG).child("idPartita").child(issue.getValue().toString()).removeValue();
                                                     }
@@ -233,25 +233,24 @@ public class FindPlayerActivity extends AppCompatActivity{
                                             }
                                         });
 
-
-                                        //***************************************************************************************
-
+                                        //cancello la partita dal database
                                         databaseReference.child("Partite").child(key).setValue(null);
                                         Toast.makeText(getBaseContext(), "Partita eliminata", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
-
                                     }
-
                                 })
                                 .setNegativeButton("No", null)
                                 .show();
                         break;
+
+                    // caso in cui sono iscritto e voglio togliere la partecipazione
                     case 1:
                         Integer addNumber = Integer.parseInt(number) + 1;
+
+                        //libero un posto per la partita
                         databaseReference.child("Partite").child(key).child("numberOfPlayer").setValue(addNumber);
 
-                        //******************************************************************************
-
+                        //tolgo l'id partita dalle mie partite
                          databaseReference.child("Giocatori").child(userFireBase.getUid()).child("idPartita").child(key).setValue(null, new DatabaseReference.CompletionListener() {
                                         @Override
                                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -263,30 +262,25 @@ public class FindPlayerActivity extends AppCompatActivity{
                                         }
                          });
 
+                         //tolgo il mio nickName dai partecipanti alla partita
                         databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(null);
 
-
-
-
-
-
-
-
-                         //************************************************************************
                         Toast.makeText(getBaseContext(), "Hai annullato la partecipazione", Toast.LENGTH_SHORT).show();
                         stopAlarm();
                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
                         break;
 
-
+                    // caso in cui mi aggiungo ad una partita
                     case 2:
                         Integer subNumber = Integer.parseInt(number) - 1;
+
+                        //occupo un posto libero
                         databaseReference.child("Partite").child(key).child("numberOfPlayer").setValue(subNumber);
-                        //*****************************************************************
-                        Log.d("TEGGONEONE", nickName);
-                        Query query1 = databaseReference.child("Giocatori").orderByChild("email").equalTo(emailG);
+
+                        //aggiungo il mio nickName tra i partecipanti alla partita
                         databaseReference.child("Partite").child(key).child("partecipanti").child(userFireBase.getUid()).setValue(nickName);
 
+                        //aggiungo l'id della partita tra le mie partite
                         databaseReference.child("Giocatori").child(userFireBase.getUid()).child("idPartita").child(key).setValue(key, new DatabaseReference.CompletionListener() {
                                         @Override
                                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -298,26 +292,22 @@ public class FindPlayerActivity extends AppCompatActivity{
                                         }
                                     });
 
-
-
-
-
-                        //*********************************************************
-                        Toast.makeText(getBaseContext(), "Ti sei aggiunto alla partita", Toast.LENGTH_SHORT).show();
+                         Toast.makeText(getBaseContext(), "Ti sei aggiunto alla partita", Toast.LENGTH_SHORT).show();
                         startAlarm();
                         startActivity(new Intent(getBaseContext(), WhoPlaysActivity.class));
                         break;
+
+                     //caso in cui la partita è piena
                     case 3:
                         Toast.makeText(getBaseContext(), "La partita é giá completa", Toast.LENGTH_SHORT).show();
                         break;
                 }
-
             }
 
 
         });
 
-
+        //on click sul bottone che mi porta al campo
         letMeSee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -327,9 +317,9 @@ public class FindPlayerActivity extends AppCompatActivity{
                 startActivity(mapIntent);
             }
         });
-
     }
 
+    //controllo se sono il fondatore/partecipante/estraneo riguardo quella partita
     private void setCheckId(final MyCallback myCallback){
         databaseReference.child("Partite").child(key).child("partecipanti").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -341,117 +331,89 @@ public class FindPlayerActivity extends AppCompatActivity{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         nickName = dataSnapshot.child("nickName").getValue().toString();
-                        Log.d("TEGGONEONE", nickName);
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         // ...
                     }
                 });
 
-
-
-
-
                 Log.d("TAG", "log zero");
                 if (dataSnapshot.exists()) {
-
-
 
                     Log.d("TAG", "primo log");
                     for (DataSnapshot issue : dataSnapshot.getChildren()) {
 
                         String giocatore = issue.getValue().toString();
+
                         //creo una hasHmap ad ogni ciclo
                         HashMap<String, String> map = new HashMap<>();
+
                         //resource è il layout di come voglio ogni singolo item
                         int resource = R.layout.listview_item_find_player;
+
                         //qui salvo una stringa con gli stessi nomi messi nell hashMAp
                         String[] from = {"nome_giocatore", "numero_partite "};
+
                         //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
                         int[] to = {R.id.nome_giocatore_item_find_player};
 
                         SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), data, resource, from, to);
                         listView.setAdapter(adapter);
 
-                        // do something with the individual "issues"
-                        Log.d("TAG",giocatore);
-
                         map.put("nome_giocatore", giocatore);
-
                         data.add(map);
 
-                        // do something with the individual "issues"
-                        Log.d("TAG", issue.getValue().toString());
-                        //Log.d("TEGGONEONE", nickName);
                         if (issue.getValue().toString().equals(nickName)) {
                             Log.d("TAG", issue.getValue().toString());
                             registered = true;
                         }
                     }
                 }
-                // ...
                 myCallback.onCallback();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
-                // ...
             }
         });
-
     }
 
-
     private void setButton() {
-      //  Log.d("TEGGONEONE", nickName);
+
         if (user.equals(nickName)) {
-            addMeButton.setText("Cancella partita");
+            addMeButton.setText(R.string.delete_match_find_player_button);
             playerType = 0;
         } else if (registered) {
-            addMeButton.setText("Togli partecipazione");
+            addMeButton.setText(R.string.remove_partecipation_find_player_button);
             playerType = 1;
         }
         else {
             if (Integer.parseInt(number) > 0) {
-                addMeButton.setText("Aggiungimi alla partita");
+                addMeButton.setText(R.string.addMe_find_player_button);
                 playerType = 2;
             }
             else {
-                addMeButton.setText("Partita completa");
+                addMeButton.setText(R.string.match_full_find_player_button);
                 playerType = 3;
             }
         }
-
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.create_ads, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -459,6 +421,7 @@ public class FindPlayerActivity extends AppCompatActivity{
         void onCallback();
     }
 
+    //registrazione notifica
     private void startAlarm() {
 
         AlarmManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
@@ -469,9 +432,6 @@ public class FindPlayerActivity extends AppCompatActivity{
         String codice = date + time;
         Integer id = codice.hashCode();
         pendingIntent = PendingIntent.getBroadcast(this, id, myIntent, 0);
-
-
-
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd/M/yyyy h:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -487,11 +447,9 @@ public class FindPlayerActivity extends AppCompatActivity{
 
         Long difference = date.getTime() - System.currentTimeMillis();
         manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + difference - 30*60*1000, pendingIntent);
-
     }
 
-
-
+    //eliminazione notifica
     private void stopAlarm() {
 
         AlarmManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
@@ -503,8 +461,5 @@ public class FindPlayerActivity extends AppCompatActivity{
         PendingIntent sender = PendingIntent.getBroadcast(this, id , myIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(sender);
-
     }
-
-
 }
