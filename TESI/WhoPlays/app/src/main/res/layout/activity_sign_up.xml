@@ -1,71 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
     android:layout_gravity="center">
 
 
     <EditText
         android:id="@+id/sign_up_name"
-        android:layout_width="400px"
+        android:layout_width="164dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="200px"
-        android:hint="Name"
+        android:layout_gravity="center"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="40dp"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        android:inputType="text"/>
+        android:hint="Name"
+        android:inputType="text"
+        android:textColorHint="#68AC61"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/sign_up_surname"
-        android:layout_width="400px"
+        android:layout_width="164dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40px"
-        android:hint="Surname"
+        android:layout_marginEnd="98dp"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="16dp"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        android:inputType="text"/>
+        android:hint="Surname"
+        android:inputType="text"
+        android:textColorHint="#68AC61"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_name" />
 
     <EditText
         android:id="@+id/sign_up_nickname"
-        android:layout_width="400px"
+        android:layout_width="164dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40px"
-        android:hint="Nickname"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="98dp"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="16dp"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789.-_"
-        android:inputType="text"/>
+        android:hint="Nickname"
+        android:inputType="text"
+        android:textColorHint="#68AC61"
+        app:layout_constraintBottom_toTopOf="@+id/sign_up_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_surname" />
 
     <EditText
         android:id="@+id/sign_up_email"
-        android:layout_width="400px"
+        android:layout_width="164dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40px"
-        android:hint="Email"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="98dp"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="16dp"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@."
-        android:inputType="textEmailAddress" />
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#68AC61"
+        app:layout_constraintBottom_toTopOf="@+id/sign_up_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_nickname" />
 
     <EditText
         android:id="@+id/sign_up_password"
-        android:layout_gravity="center"
-        android:layout_width="400px"
+        android:layout_width="164dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="39dp"
+        android:layout_marginEnd="98dp"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="16dp"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColorHint="#68AC61"
+        app:layout_constraintBottom_toTopOf="@+id/button_create_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_email" />
 
 
     <Button
         android:id="@+id/button_create_account"
         style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
-        android:layout_width="400px"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60px"
-        android:textColor="#008000"
-        android:text="Create Account" />
+        android:layout_marginBottom="91dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="40dp"
+        android:background="#68AC61"
+        android:text="Create Account"
+        android:textColor="#FFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_password" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

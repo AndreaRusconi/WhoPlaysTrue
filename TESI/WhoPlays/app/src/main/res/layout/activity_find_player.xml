@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/login_background">
+    android:background="#68AC61">
 
 
     <android.support.design.widget.AppBarLayout
@@ -171,7 +171,8 @@
         android:layout_marginRight="15dp"
         android:layout_height="wrap_content"
         android:text="@string/add_me"
-        android:textColor="#008000"
+        android:textAlignment="center"
+        android:textColor="#68AC61"
         />
 
     <Button
@@ -182,9 +183,10 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_gravity="start"
+        android:textAlignment="center"
         android:text="@string/address_textView"
-        android:textColor="#008000"
-        android:textStyle="italic" />
+        android:textColor="#68AC61"
+        android:textStyle="italic|bold" />
 
     <TextView
         android:layout_width="match_parent"
