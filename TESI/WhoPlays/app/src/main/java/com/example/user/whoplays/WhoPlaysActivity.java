@@ -40,7 +40,6 @@ public class WhoPlaysActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Bundle bundle = new Bundle();
-    boolean check = false;
     NavigationView navigationView;
     String id;
 
@@ -53,65 +52,22 @@ public class WhoPlaysActivity extends AppCompatActivity
         final String email = user.getEmail();
 
 
-
+        //richiamo l'Activity se non appare il nome
         if (user.getDisplayName() == null){
             startActivity(new Intent(getBaseContext(),WhoPlaysActivity.class));
         }
-        else {
 
-            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-project-1498298521137.firebaseio.com/Giocatori");
-
-            final Query query = databaseReference.orderByChild("email").equalTo(email);
-            query.addChildEventListener(new ChildEventListener() {
-
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            if (!dataSnapshot.child("nickName").exists()) {
-
-                                Intent intent = new Intent(getBaseContext(),NickNameAddActivity.class);
-                                startActivity(intent);
-                            }
-
-                        }
-
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-
+        // prendo i dati inviati dallla filterActivity
         Intent intent = getIntent();
         String sort = intent.getStringExtra("sort");
         String type = intent.getStringExtra("type");
         Float distance = intent.getFloatExtra("distance", 0 );
 
-        bundle = new Bundle();
-        bundle.putString("sort", sort);
-        bundle.putString("type", type);
-        bundle.putFloat("distance", distance);
-
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // set the toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // set fab
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,28 +77,29 @@ public class WhoPlaysActivity extends AppCompatActivity
             }
         });
 
-
-
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // set menu laterale
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
         View hView =  navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.nav_name);
-        TextView nav_mail = (TextView)hView.findViewById(R.id.nav_mail);
-        nav_user.setText((CharSequence) name);
-        nav_mail.setText((CharSequence) email);
+        TextView nav_user = hView.findViewById(R.id.nav_name);
+        TextView nav_mail = hView.findViewById(R.id.nav_mail);
+        nav_user.setText(name);
+        nav_mail.setText(email);
 
-        //inserisco il nodo giocatore nel database
+        // invio i dati ad whoPlaysFragment
+        bundle = new Bundle();
+        bundle.putString("sort", sort);
+        bundle.putString("type", type);
+        bundle.putFloat("distance", distance);
 
-     Fragment fragment = new WhoPlaysFragment();
+        Fragment fragment = new WhoPlaysFragment();
         fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -154,7 +111,7 @@ public class WhoPlaysActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -227,15 +184,11 @@ public class WhoPlaysActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
         Fragment fragment = null;
-
         int id = item.getItemId();
 
         switch (id) {
@@ -263,10 +216,8 @@ public class WhoPlaysActivity extends AppCompatActivity
                 break;
         }
 
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-
         ft.replace(R.id.screen_area,fragment);
         ft.commit();
 

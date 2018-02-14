@@ -72,6 +72,8 @@ public class WhoPlaysFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
+        //  prendo gli argomenti passati dalla FilterActivity
+        //  se sono vuoti assegno i valori di default
 
 
         Ordine = getArguments().getString("sort");
@@ -101,7 +103,12 @@ public class WhoPlaysFragment extends Fragment {
         listView = view.findViewById(R.id.listViewWhoPlays);
 
         // Leggiamo i dati senza il filtro sulla distanza
+
         if (flag) {
+
+            //  connessione al database
+            //  prendo i dati ordinati per data o numero giocatori
+
             databaseReference = FirebaseDatabase.getInstance().getReference();
             databaseReference.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
 
@@ -118,11 +125,13 @@ public class WhoPlaysFragment extends Fragment {
                     String key = dataSnapshot.getKey();
                     String address = dataSnapshot.child("latLng").getValue().toString();
 
-                    //controllo scadenza della partita
+                    //  controllo scadenza della partita
                     if (!checkDeadline(date, time, key)) {
 
+                        //  controllo il tipo di partita 5/7/11
                         if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
 
+                            // creo hashMap per ogni risultato
                             HashMap<String, String> map = new HashMap<>();
 
                             //resource è il layout di come voglio ogni singolo item
@@ -135,7 +144,7 @@ public class WhoPlaysFragment extends Fragment {
                             int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
 
                             if (getActivity() != null) {
-// Code goes here.
+
                                 SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
                                 listView.setAdapter(adapter);
 
@@ -169,8 +178,10 @@ public class WhoPlaysFragment extends Fragment {
 
                 }
             });
+            // leggiamo i dati con il filtro sulla distanza
         } else {
 
+            //connessione al database
             DatabaseReference mdatabaseReference1 = FirebaseDatabase.getInstance().getReference();
             mdatabaseReference1.child("Partite").orderByChild(Ordine).addChildEventListener(new ChildEventListener() {
 
@@ -208,7 +219,7 @@ public class WhoPlaysFragment extends Fragment {
 
                         try {
 
-
+                            // calcolo la distanza selezionata nei filtri
                             Geocoder selected_place_geocoder = new Geocoder(getContext());
                             List<Address> address1;
                             address1 = selected_place_geocoder.getFromLocationName(address, 1);
@@ -269,6 +280,7 @@ public class WhoPlaysFragment extends Fragment {
             });
         }
 
+        // onCLickListener per ogni item della listView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -315,6 +327,7 @@ public class WhoPlaysFragment extends Fragment {
         arrayKey.add(key);
     }
 
+    // salviamo i dati nell hashMap
     public void populateMap(HashMap<String, String> map, String user, String date, String place, String numberOfPlayer, String type){
 
         Log.d("TAG", "ECCOMI1");
