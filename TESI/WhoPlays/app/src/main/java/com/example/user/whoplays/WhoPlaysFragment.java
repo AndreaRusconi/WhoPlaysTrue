@@ -26,11 +26,13 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,6 +63,7 @@ public class WhoPlaysFragment extends Fragment {
     Float distanceInMeters;
     Double latitude;
     Double longitude;
+    String nickName;
 
 
     ListView listView;
@@ -150,7 +153,7 @@ public class WhoPlaysFragment extends Fragment {
 
                                 populateArray(date, place, user, numberOfPlayer, type, time, key);
 
-                               //inserisco i dati nell HashMAp
+                                //inserisco i dati nell HashMAp
                                 populateMap(map, user, date, place, numberOfPlayer, type);
                             }
                         }
@@ -225,7 +228,7 @@ public class WhoPlaysFragment extends Fragment {
                             address1 = selected_place_geocoder.getFromLocationName(address, 1);
                             if (address1 == null) {
                                 //do nothing
-                             } else {
+                            } else {
                                 Address location = address1.get(0);
 
                                 double lat = location.getLatitude();
@@ -246,7 +249,6 @@ public class WhoPlaysFragment extends Fragment {
 
                         if (distanceInMeters < (Distance * 1000)) {
                             populateArray(date, place, user, numberOfPlayer, type, time, key);
-                            Log.d("TAGGA", "ECCOMI");
                             //inserisco i dati nell HashMAp
                             populateMap(map, user, date, place, numberOfPlayer, type);
                         }
@@ -283,18 +285,41 @@ public class WhoPlaysFragment extends Fragment {
         // onCLickListener per ogni item della listView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
+            public void onItemClick(AdapterView<?> parent, View view, final int position,
                                     long id) {
 
-                Intent intent = new Intent(getContext(), FindPlayerActivity.class);
-                intent.putExtra("key", arrayKey.get(position));
-                Log.d("KEYY", arrayKey.get(position));
-                startActivity(intent);
+                checkNickName(position, new FindPlayerActivity.MyCallback() {
+                    @Override
+                    public void onCallback() {
+                        Intent intent = new Intent(getContext(), FindPlayerActivity.class);
+                        intent.putExtra("key", arrayKey.get(position));
+                        intent.putExtra("nickName", nickName);
+                        startActivity(intent);
+                    }
+
+                });
             }
+
         });
         return view;
     }
 
+
+    private void checkNickName(int position, final FindPlayerActivity.MyCallback myCallback1) {
+        databaseReference.child("Giocatori").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nickName = dataSnapshot.child("nickName").getValue().toString();
+                myCallback1.onCallback();
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -330,7 +355,6 @@ public class WhoPlaysFragment extends Fragment {
     // salviamo i dati nell hashMap
     public void populateMap(HashMap<String, String> map, String user, String date, String place, String numberOfPlayer, String type){
 
-        Log.d("TAG", "ECCOMI1");
         map.put("user", user);
         map.put("date", date + ", ");
         map.put("place", place + ", ");

@@ -137,16 +137,39 @@ public class CalendarFragment extends Fragment {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
+            public void onItemClick(AdapterView<?> parent, View view, final int position,
                                     long id) {
 
-                Intent intent = new Intent(getContext(), FindPlayerActivity.class);
-                intent.putExtra("key", arrayKey.get(position));
-                startActivity(intent);
+                checkNickName(position, new FindPlayerActivity.MyCallback() {
+                    @Override
+                    public void onCallback() {
+                        Intent intent = new Intent(getContext(), FindPlayerActivity.class);
+                        intent.putExtra("key", arrayKey.get(position));
+                        intent.putExtra("nickName", nickName);
+                        startActivity(intent);
+                    }
+
+                });
             }
         });
 
         return view;
+    }
+
+    private void checkNickName(int position, final FindPlayerActivity.MyCallback myCallback1) {
+        databaseReference.child("Giocatori").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nickName = dataSnapshot.child("nickName").getValue().toString();
+                myCallback1.onCallback();
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
     }
 
 
