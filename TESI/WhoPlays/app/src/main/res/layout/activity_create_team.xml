@@ -21,43 +21,60 @@
     </android.support.design.widget.AppBarLayout>
 
     <TableLayout
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="100sp"
-        android:paddingStart="10sp"
-        android:paddingEnd="10sp">
+        android:paddingTop="80sp"
+        android:paddingStart="25sp"
+        android:paddingEnd="25sp">
 
         <TableRow
             android:layout_marginTop="10sp">
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:layout_marginEnd="5sp"/>
             <ImageButton
+                android:layout_weight="1"
                 android:contentDescription="add photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="#68ac61"
-                    android:textColor="#68ac61"
-                    android:textSize="30sp"
-                    android:hint="Nome squadra"/>
-                <EditText
-                    android:layout_marginTop="10sp"
-                    android:textSize="30sp"
-                    android:textColorHint="#68ac61"
-                    android:textColor="#68ac61"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Colori sociali"/>
-            </LinearLayout>
+
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="10sp">
+            android:layout_marginTop="30sp">
+            <EditText
+                android:layout_span="2"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#68ac61"
+                android:textColor="#68ac61"
+                android:textSize="30sp"
+                android:hint="Nome squadra"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="20sp">
+
+            <EditText
+                android:layout_span="2"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textColorHint="#68ac61"
+                android:textColor="#68ac61"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Colori sociali"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="20sp">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +86,7 @@
                 android:layout_span="2"/>
         </TableRow>
         <TableRow
-            android:layout_marginTop="10sp">
+            android:layout_marginTop="20sp">
             <EditText
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -83,10 +100,8 @@
 
         <TableRow
             android:gravity="center_horizontal"
-            android:layout_marginTop="25sp">
+            android:layout_marginTop="40sp">
             <Button
-
-
                 android:id="@+id/save_data_create_team_button"
                 android:text="@string/create_team_create_team_button"
                 android:padding="10sp"
