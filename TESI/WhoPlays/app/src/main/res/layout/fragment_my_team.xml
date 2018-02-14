@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout android:orientation="vertical"
-    android:background="#68AC61"
-    android:id="@+id/tableLayout1"
+<TableLayout
+    android:orientation="vertical"
+    android:background="#FFF"
+    android:id="@+id/tableLayoutMyTeam"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
 
         <TableRow
             android:layout_height="wrap_content"
@@ -18,13 +18,11 @@
                 android:padding="5sp"
                 android:layout_marginStart="15sp"
                 android:layout_weight="1"
-                android:textColor="#68AC61"
+                android:textColor="#FFF"
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/my_button_bg"
-
-                />
+                android:background="@drawable/my_button_bg" />
 
             <Button
                 android:text="@string/add_new_team_my_team_button"
@@ -33,13 +31,11 @@
                 android:layout_marginStart="15sp"
                 android:layout_marginEnd="15sp"
                 android:layout_weight="1"
-                android:textColor="#68AC61"
+                android:textColor="#FFF"
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/my_button_bg"
-                />
-
+                android:background="@drawable/my_button_bg" />
         </TableRow>
 
         <TableRow>
@@ -49,11 +45,5 @@
                 android:id="@+id/list_view_my_team"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
         </TableRow>
-
-
-
-
-
 </TableLayout>

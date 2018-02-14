@@ -99,5 +99,6 @@
     <string name="remove_partecipation_find_player_button">Togli partecipazione</string>
     <string name="addMe_find_player_button">Aggiungimi alla partita</string>
     <string name="match_full_find_player_button">Partita completa</string>
+    <string name="create_team_create_team_button">Crea squadra</string>
 
 </resources>
