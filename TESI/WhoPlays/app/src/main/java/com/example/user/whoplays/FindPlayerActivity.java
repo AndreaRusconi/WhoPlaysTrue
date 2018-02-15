@@ -78,11 +78,18 @@ public class FindPlayerActivity extends AppCompatActivity{
     Boolean registered = false;
     Integer playerType;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_player);
+
+        userFireBase = FirebaseAuth.getInstance().getCurrentUser();
+        // connessione al database
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+
+
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setTitle("Distinta");
@@ -93,6 +100,7 @@ public class FindPlayerActivity extends AppCompatActivity{
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             key = extras.getString("key");
+            nickName = extras.getString("nickName");
         }
 
 
@@ -105,24 +113,6 @@ public class FindPlayerActivity extends AppCompatActivity{
         dateTextView = findViewById(R.id.date_ads);
         numberTextView = findViewById(R.id.number_of_player_ads);
         listView = findViewById(R.id.listViewFindPlayer);
-
-        userFireBase = FirebaseAuth.getInstance().getCurrentUser();
-        // connessione al database
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        // query per prendere il mio nickName
-        databaseReference.child("Giocatori").child(userFireBase.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                nickName = dataSnapshot.child("nickName").getValue().toString();
-                Log.d("TEGGONEONE", nickName);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // ...
-            }
-        });
 
 
         // query per trovare le partite
@@ -164,14 +154,6 @@ public class FindPlayerActivity extends AppCompatActivity{
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        setCheckId(new MyCallback() {
-            @Override
-            public void onCallback() {
-
-                setButton();
             }
         });
 
@@ -317,26 +299,26 @@ public class FindPlayerActivity extends AppCompatActivity{
                 startActivity(mapIntent);
             }
         });
+
+        setCheckId(new MyCallback() {
+            @Override
+            public void onCallback() {
+                setButton();
+            }
+        });
+
+
     }
 
     //controllo se sono il fondatore/partecipante/estraneo riguardo quella partita
     private void setCheckId(final MyCallback myCallback){
+
         databaseReference.child("Partite").child(key).child("partecipanti").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
 
-                databaseReference.child("Giocatori").child(userFireBase.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        nickName = dataSnapshot.child("nickName").getValue().toString();
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // ...
-                    }
-                });
 
                 Log.d("TAG", "log zero");
                 if (dataSnapshot.exists()) {
