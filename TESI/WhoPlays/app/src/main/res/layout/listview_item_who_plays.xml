@@ -28,8 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="3dp">
                 <TableRow>
 
@@ -37,7 +37,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="60dp"
                         android:padding="1dp"
-                        android:src="@drawable/icon"
+                        android:src="@drawable/calcio_a_sette"
                         android:layout_marginEnd="4dp"/>
 
                     <LinearLayout
@@ -49,27 +49,28 @@
                         <TextView
                             android:id="@+id/itemTypeWhoPlaysTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_span="3"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/item_type_who_plays"
                             android:textColor="#000"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             />
+                        <TextView
+                            android:id="@+id/itemPlaceWhoPlaysTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/item_place_who_plays"
+                            android:textColor="#000"
+                            android:textSize="18sp" />
+
 
                         <TableLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TableRow>
-                                <TextView
-                                    android:id="@+id/itemPlaceWhoPlaysTextView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/item_place_who_plays"
-                                    android:textColor="#000"
-                                    android:textSize="18sp" />
+
 
                                 <TextView
                                     android:id="@+id/itemDateWhoPlaysTextView"
@@ -80,6 +81,15 @@
                                     android:textSize="18sp"/>
 
                                 <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/itemTimeWhoPlaysTextView"
+                                    android:text="@string/item_time_who_plays"
+                                    android:textColor="#000"
+                                    android:textSize="18sp"/>
+
+                                <TextView
+                                    android:textAlignment="textEnd"
                                     android:id="@+id/itemCreatorWhoPlaysTextView"
                                     android:layout_width="match_parent"
                                     android:layout_weight="1"

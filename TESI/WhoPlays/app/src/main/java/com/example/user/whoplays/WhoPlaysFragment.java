@@ -4,6 +4,7 @@ import android.*;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.DataSetObserver;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -131,7 +133,7 @@ public class WhoPlaysFragment extends Fragment {
                     //  controllo scadenza della partita
                     if (!checkDeadline(date, time, key)) {
 
-                        //  controllo il tipo di partita 5/7/11
+                        //  controllo il tipo di partita calcoio_a_cinque/calcio_a_sette/calcio_a_undici
                         if (Tipo.equals(type) || Tipo.equals("Tutte le partite")) {
 
                             // creo hashMap per ogni risultato
@@ -141,10 +143,10 @@ public class WhoPlaysFragment extends Fragment {
                             int resource = R.layout.listview_item_who_plays;
 
                             //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-                            String[] from = {"user", "place", "date", "numberOfPlayer"};
+                            String[] from = {"user", "place", "date", "numberOfPlayer","time"};
 
                             //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-                            int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
+                            int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView,R.id.itemTimeWhoPlaysTextView};
 
                             if (getActivity() != null) {
 
@@ -154,7 +156,7 @@ public class WhoPlaysFragment extends Fragment {
                                 populateArray(date, place, user, numberOfPlayer, type, time, key);
 
                                 //inserisco i dati nell HashMAp
-                                populateMap(map, user, date, place, numberOfPlayer, type);
+                                populateMap(map, user, date, place, numberOfPlayer, type, time);
                             }
                         }
                     }
@@ -211,10 +213,11 @@ public class WhoPlaysFragment extends Fragment {
                         int resource = R.layout.listview_item_who_plays;
 
                         //qui salvo una stringa con gli stessi nomi messi nell hashMAp
-                        String[] from = {"user", "place", "date", "numberOfPlayer"};
+                        String[] from = {"user", "place", "date", "numberOfPlayer","time"};
 
                         //qui salvo un altro array contenenti l id di ogni widget del mio singolo item
-                        int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView};
+                        int[] to = {R.id.itemCreatorWhoPlaysTextView, R.id.itemPlaceWhoPlaysTextView, R.id.itemDateWhoPlaysTextView, R.id.itemTypeWhoPlaysTextView, R.id.itemTimeWhoPlaysTextView};
+
 
 
                         SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, resource, from, to);
@@ -250,7 +253,7 @@ public class WhoPlaysFragment extends Fragment {
                         if (distanceInMeters < (Distance * 1000)) {
                             populateArray(date, place, user, numberOfPlayer, type, time, key);
                             //inserisco i dati nell HashMAp
-                            populateMap(map, user, date, place, numberOfPlayer, type);
+                            populateMap(map, user, date, place, numberOfPlayer, type,time);
                         }
 
 
@@ -353,13 +356,14 @@ public class WhoPlaysFragment extends Fragment {
     }
 
     // salviamo i dati nell hashMap
-    public void populateMap(HashMap<String, String> map, String user, String date, String place, String numberOfPlayer, String type){
+    public void populateMap(HashMap<String, String> map, String user, String date, String place, String numberOfPlayer, String type, String time){
 
         map.put("user", user);
         map.put("date", date + ", ");
-        map.put("place", place + ", ");
+        map.put("place", place);
+        map.put("time", time);
         if (Integer.parseInt(numberOfPlayer) > 0) {
-            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori" + " per " + type);
+            map.put("numberOfPlayer", "Cerco " + numberOfPlayer + " giocatori");
         } else {
             map.put("numberOfPlayer", "La partita é completa");
         }
